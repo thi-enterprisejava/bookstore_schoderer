@@ -6,7 +6,7 @@
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          id="WebApp_ID" version="2.5">
 
-    <display-name>JavaServerFaces</display-name>
+    <display-name>BookStore</display-name>
 
     <!-- Change to "Production" when you are ready to deploy -->
     <context-param>
