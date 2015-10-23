@@ -5,14 +5,36 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-<head>
+<h:head>
     <title>BookStore</title>
-</head>
-<h:body>
-   <h1>#{msg['common.book']}</h1>
-    <h:outputLabel value="Hello, world! !!!"/>
-</h:body>
 
+</h:head>
+<h:body>
+
+
+    <ui:composition template="template.xhtml">
+        <ui:define name="content">
+            <h:form>
+                <div class="search-bar">
+                    <h:inputText  style="width: 70%">
+                      <f:passThroughAttribute name="placeholder" value="#{msg['search.search']}"/>
+                    </h:inputText>
+                    <h:commandButton value="submit" type="submit"  styleClass="button-primary"/>
+                </div>
+            </h:form>
+
+            <h1 id="book-position" class="fancyTitleFont">BookStore</h1>
+
+
+
+
+        </ui:define>
+
+
+    </ui:composition>
+
+
+</h:body>
 
 
 </html>
