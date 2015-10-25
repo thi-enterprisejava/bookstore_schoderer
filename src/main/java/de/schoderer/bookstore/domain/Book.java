@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by michael on 23.10.15.
  */
-public class Book implements Serializable{
+public class Book implements Serializable {
     private String title;
     private String author;
     private String description;

@@ -14,7 +14,7 @@ public class BackgroundImageBean {
     private static final Random random = new Random();
 
 
-    public String getRandomImage(){
+    public String getRandomImage() {
         return BACKGROUND_IMAGE_TEMPLATE.replace("%NUMBER%", String.valueOf(random.nextInt(4)));
     }
 

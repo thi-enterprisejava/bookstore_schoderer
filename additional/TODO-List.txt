@@ -1,0 +1,11 @@
+•	Als Benutzer möchte ich bestehende Informationsobjekte suchen und auflisten
+•	Als Benutzer möchte ich Details zu einem Informationsobjekt ansehen
+•	Als Benutzer möchte ich mich registrieren
+•	Als Benutzer möchte ich mich anmelden
+•	Als angemeldeter Benutzer möchte ich ein neues Informationsobjekt anlegen
+•	Als angemeldeter Benutzer möchte ich ein Informationsobjekt bearbeiten
+•	Als angemeldeter Benutzer möchte ich ein Informationsobjekt löschen
+•	Als angemeldeter Benutzer möchte ich ein Bild zu einem Informationsobjekt hinterlegen
+
+DONE -  	Als System möchte ich per REST-API auf Informationsobjekte zugreifen
+DONE - 	Als System möchte ich per SOAP Web Service auf Informationsobjekte zugreifen

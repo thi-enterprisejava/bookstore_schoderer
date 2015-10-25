@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.rest;
+package de.schoderer.bookstore.webservice.rest;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
