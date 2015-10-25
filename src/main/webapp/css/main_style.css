@@ -1,18 +1,20 @@
 @import url(https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css);
+@import url(https://fonts.googleapis.com/css?family=Lobster);
+/*
+@import url(https://fonts.googleapis.com/css?family=Lobster|Pacifico);
 
 
 @font-face {
     font-family: bookStoreFont;
     src: url("../font/cityscape font.ttf");
 }
-
+*/
 
 body{
     background-color: #000000;
     /*
     background-image: url("../img/book_0.jpg");
 */
-
 
 
 }
@@ -29,9 +31,13 @@ body{
 
 
 .fancyTitleFont{
-    font-size: 15vw;
+    font-size: 7vw;
     color: rgba(255, 255, 255, 1);
-    font-family: bookStoreFont, serif;
+    /*
+    font-family: 'Pacifico', cursive;
+    */
+    font-family: 'Lobster', cursive;
+
 }
 
 
