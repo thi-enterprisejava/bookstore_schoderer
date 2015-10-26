@@ -12,11 +12,23 @@
 
 </head>
 <h:body>
+
+    <div class="search-bar">
+        <h:form>
+            <h:inputText style="width: 70%">
+                <f:passThroughAttribute name="placeholder" value="#{msg['search.search']}"/>
+            </h:inputText>
+            <h:commandButton value="submit" type="submit" styleClass="button-primary"/>
+        </h:form>
+    </div>
+
     <ui:insert name="content">
         Couldn't load jsf-content
 
     </ui:insert>
 
+
+    <h1 id="book-position" class="fancyTitleFont">BookStore</h1>
 
     <f:passThroughAttribute name="style" value="#{backgroundImageBean.randomImage}"/>
 </h:body>
