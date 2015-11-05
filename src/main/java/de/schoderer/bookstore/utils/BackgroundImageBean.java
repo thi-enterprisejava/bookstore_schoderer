@@ -10,7 +10,7 @@ import java.util.Random;
 @Named
 @Singleton
 public class BackgroundImageBean {
-    private static final String BACKGROUND_IMAGE_TEMPLATE = "background-image: url(img/book_%NUMBER%.jpg);";
+    private static final String BACKGROUND_IMAGE_TEMPLATE = "background-image: url(img/book_%NUMBER%.jpg) no-repeat center center fixed;";
     private static final Random random = new Random();
 
 

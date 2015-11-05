@@ -2,6 +2,7 @@ package de.schoderer.bookstore.db;
 
 import de.schoderer.bookstore.domain.Book;
 
+import javax.ejb.Singleton;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
