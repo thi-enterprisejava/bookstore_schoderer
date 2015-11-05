@@ -2,6 +2,7 @@ package de.schoderer.bookstore.db;
 
 import de.schoderer.bookstore.domain.Book;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * <p>
  * Simple interface, which provides the CRUD-Methods for the persistence
  */
-public interface BookPersistence {
+public interface BookPersistence extends Serializable{
 
     List<Book> fetchAllBooks();
 
