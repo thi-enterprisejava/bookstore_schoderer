@@ -18,10 +18,33 @@ public class SearchBean implements Serializable {
     @Inject
     private BookPersistence persistence;
 
+    private String search;
+    private List<Book> searchResults;
+
+    public String fetchAllBooks(){
+        searchResults = persistence.fetchAllBooks();
+        return "listResults";
+    }
+
+    public String doSearch(){
+        searchResults = persistence.fetchAllBooksByTitle(search);
+        return "listResults";
+    }
 
 
+    public String getSearch() {
+        return search;
+    }
 
-    public List<Book> fetchAllBooks(){
-        return persistence.fetchAllBooks();
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    public List<Book> getSearchResults() {
+        return searchResults;
+    }
+
+    public void setSearchResults(List<Book> searchResults) {
+        this.searchResults = searchResults;
     }
 }

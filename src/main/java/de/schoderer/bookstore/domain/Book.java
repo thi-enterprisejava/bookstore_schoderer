@@ -2,7 +2,9 @@ package de.schoderer.bookstore.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by michael on 23.10.15.
@@ -13,7 +15,7 @@ public class Book implements Serializable {
     private String description;
     private int publishedYear;
     private String isbn;
-    private List<String> tags;
+    private List<Tag> tags;
 
 
     public Book() {
@@ -69,11 +71,11 @@ public class Book implements Serializable {
         this.isbn = isbn;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public List<Tag> getTags() {
+        return (tags);
     }
 
-    public void setTags(List<String> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 

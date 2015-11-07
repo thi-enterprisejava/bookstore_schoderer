@@ -16,12 +16,12 @@
                 </div>
                 <h:form class="row center col s12">
                     <div class="input-field col s8 offset-s2">
-                    <h:inputText id="searchField" class="white-text" type="text">
+                    <h:inputText id="searchField" class="white-text" type="text" value="#{searchBean.search}">
                         <f:passThroughAttribute name="placeholder" value="#{msg['common.title']}, Tag..."/>
                     </h:inputText>
                         <label class="orange-text" for="searchField">#{msg['common.search']}</label>
                     </div>
-                        <a id="searchIcon" class="left s1 z-depth-3 btn-floating btn-large waves-effect waves-light orange"><i class="material-icons">search</i></a>
+                        <h:commandLink id="searchIcon" class="left s1 z-depth-3 btn-floating btn-large waves-effect waves-light orange midIcon" action="#{searchBean.doSearch()}"><i class="material-icons">search</i></h:commandLink>
                 </h:form>
             </div>
         </div>

@@ -30,57 +30,83 @@
 
 
 <div class="container">
-    <div class="row s12">
-        <div class="card small  col s2 z-depth-3">
-            <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator resize" src="http://ecx.images-amazon.com/images/I/51tHYEDI86L._SX313_BO1,204,203,200_.jpg">
-            </div>
-            <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
+    <div id="detailPane" class="row">
+        <h5>Add new book</h5>
+        <form class="col s12">
 
-                <p><a href="#">This is a link</a></p>
-            </div>
-            <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i
-                        class="material-icons right">close</i></span>
 
-                <p>Here is some more information about this product that is only revealed once clicked on.</p>
+            <div class="input-field col s12">
+                <input id="bookName" type="text" class="validate black-text">
+                <label for="bookName" class="black-text">Booktitle</label>
             </div>
-        </div>
-        <div class="card small card-small  col s2">
-            <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator resize" src="../img/book5.jpg">
-            </div>
-            <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
 
-                <p><a href="#">This is a link</a></p>
+            <p><b>Author</b></p>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="authorFirstname" type="text" class="validate black-text">
+                    <label for="authorFirstname" class="black-text">Firstname</label>
+                </div>
+                <div class="input-field col s6">
+                    <input  id="authorSurname" type="text" class="validate black-text">
+                    <label for="authorSurname" class="black-text">Surname</label>
+                </div>
             </div>
-            <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i
-                        class="material-icons right">close</i></span>
+            <p><b>Details</b></p>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="textarea1" class="materialize-textarea black-text"></textarea>
+                    <label for="textarea1" class="black-text">Description</label>
+                </div>
+            </div>
 
-                <p>Here is some more information about this product that is only revealed once clicked on.</p>
-            </div>
-        </div>
-        <div class="card small   col s3">
-            <div class="card-image waves-effect waves-block waves-light">
-                <img class="activator resize" src="../img/book5.jpg">
-            </div>
-            <div class="card-content">
-                <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
 
-                <p><a href="#">This is a link</a></p>
-            </div>
-            <div class="card-reveal">
-                <span class="card-title grey-text text-darken-4">Card Title<i
-                        class="material-icons right">close</i></span>
+            <div class="row">
+                <div class="input-field col s3 ">
+                    <input id="year" type="number" class="validate black-text">
+                    <label for="year" class="black-text">Published year</label>
+                </div>
+                <div class="input-field col s3 ">
+                    <input id="isbn" type="text" class="validate black-text">
+                    <label for="isbn" class=" black-text">ISBN</label>
+                </div>
+                <div class="input-field col s4">
+                    <input id="tags" type="text" class="validate black-text">
+                    <label for="tags" class=" black-text">Tags</label>
+                </div>
+                <a id="searchIcon" class="waves-effect waves-light btn s1 z-depth-2 orange">Add Tag</a>
 
-                <p>Here is some more information about this product that is only revealed once clicked on.</p>
             </div>
-        </div>
+            <div class="row">
+                <div class="chip">
+                    Tag
+                    <i class="material-icons">close</i>
+                </div><div class="chip">
+                Tag
+                <i class="material-icons">close</i>
+            </div><div class="chip">
+                Tag
+                <i class="material-icons">close</i>
+            </div><div class="chip">
+                Tag
+                <i class="material-icons">close</i>
+            </div><div class="chip">
+                Tag
+                <i class="material-icons">close</i>
+            </div><div class="chip">
+                Tag
+                <i class="material-icons">close</i>
+            </div><div class="chip">
+                Tag
+                <i class="material-icons">close</i>
+            </div>
+            </div>
+            <a class="waves-effect waves-light btn z-depth-2 orange" ><i class="material-icons left">cloud</i>submit</a>
 
+        </form>
     </div>
+
+
+    </form>
 
 </div>
 </div>

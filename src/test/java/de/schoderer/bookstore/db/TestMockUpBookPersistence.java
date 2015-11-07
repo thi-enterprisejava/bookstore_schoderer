@@ -1,6 +1,7 @@
 package de.schoderer.bookstore.db;
 
 import de.schoderer.bookstore.domain.Book;
+import de.schoderer.bookstore.domain.Tag;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -48,7 +49,7 @@ public class TestMockUpBookPersistence {
     public void testFetchBookByTag() {
         Book book = new Book("Book of Testing", "Konor Test", "Wow all those tests", 2014, "9257004");
         String search = "Test";
-        book.getTags().add(search);
+        book.getTags().add(new Tag(search));
         persistence.saveBook(book);
         List<Book> searchedBooks = persistence.fetchAllBooksByTag(search);
         assertFalse("No books found", searchedBooks.isEmpty());

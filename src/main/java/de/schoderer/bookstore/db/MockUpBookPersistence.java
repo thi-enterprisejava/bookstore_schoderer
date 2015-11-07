@@ -1,6 +1,7 @@
 package de.schoderer.bookstore.db;
 
 import de.schoderer.bookstore.domain.Book;
+import de.schoderer.bookstore.domain.Tag;
 
 import javax.ejb.Singleton;
 import java.util.ArrayList;
@@ -33,7 +34,9 @@ public class MockUpBookPersistence implements BookPersistence {
 
     protected Book createBook(String title, String author, String description, int year, String isbn, String... tags) {
         Book book = new Book(title, author, description, year, isbn);
-        book.getTags().addAll(Arrays.asList(tags));
+        for(String tag : tags){
+            book.getTags().add(new Tag(tag));
+        }
         return book;
 
     }
@@ -52,7 +55,7 @@ public class MockUpBookPersistence implements BookPersistence {
     @Override
     public List<Book> fetchAllBooksByTag(String tag) {
         String lowerCaseTag = tag.toLowerCase();
-        return books.stream().filter(book -> book.getTags().stream().anyMatch(listTag -> listTag.toLowerCase().contains(lowerCaseTag))).collect(Collectors.toList());
+        return books.stream().filter(book -> book.getTags().stream().anyMatch(listTag -> listTag.getTag().toLowerCase().contains(lowerCaseTag))).collect(Collectors.toList());
     }
 
     @Override
