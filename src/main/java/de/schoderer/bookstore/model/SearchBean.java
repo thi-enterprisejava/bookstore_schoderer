@@ -2,6 +2,7 @@ package de.schoderer.bookstore.model;
 
 import de.schoderer.bookstore.db.BookPersistence;
 import de.schoderer.bookstore.domain.Book;
+import de.schoderer.bookstore.utils.Pages;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -16,6 +17,9 @@ import java.util.List;
 @SessionScoped
 public class SearchBean implements Serializable {
     @Inject
+    private ActivePageBean navBean;
+
+    @Inject
     private BookPersistence persistence;
 
     private String search;
@@ -23,12 +27,12 @@ public class SearchBean implements Serializable {
 
     public String fetchAllBooks(){
         searchResults = persistence.fetchAllBooks();
-        return "listResults";
+        return navBean.switchPage(Pages.LIST);
     }
 
     public String doSearch(){
         searchResults = persistence.fetchAllBooksByTitle(search);
-        return "listResults";
+        return navBean.switchPage(Pages.LIST);
     }
 
 

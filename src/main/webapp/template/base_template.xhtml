@@ -21,21 +21,14 @@
         <h:form>
         <div class="nav-wrapper container">
             <a id="logo-container" href="index.xhtml" class="brand-logo fancyTitleFont">BookStore</a>
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
 
             <ul class="right hide-on-med-and-down">
-                <li id="navIndex"><a href="index.xhtml">#{msg['common.search']}</a></li>
-                <li id="navList"><h:commandLink action="#{searchBean.fetchAllBooks()}">List all</h:commandLink></li>
-                <li id="navAdd"><a href="addBook.xhtml">#{msg['common.add']}</a></li>
+                <li id="navIndex" class="#{activePageBean.indexPage}"><a href="#{activePageBean.switchPage('INDEX')}">#{msg['common.search']}</a></li>
+                <li id="navList" class="#{activePageBean.listResultsPage}"><h:commandLink action="#{searchBean.fetchAllBooks()}">List all</h:commandLink></li>
+                <li id="navAdd" class="#{activePageBean.addBookPage}"><a href="#{activePageBean.switchPage('ADD')}">#{msg['common.add']}</a></li>
                 <li id="navImpress"><a href="impress.xhtml">Impressum</a></li>
             </ul>
 
-            <ul id="nav-mobile" class="side-nav">
-                <li><a href="index.xhtml">#{msg['common.search']}</a></li>
-                <li><a href="listResults.xhtml">List all</a></li>
-                <li><a href="add.xhtml">#{msg['common.add']}</a></li>
-                <li><a href="impress.xhtml">Impressum</a></li>
-            </ul>
         </div>
         </h:form>
     </nav>

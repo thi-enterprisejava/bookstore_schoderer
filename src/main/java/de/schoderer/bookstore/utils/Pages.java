@@ -4,7 +4,7 @@ package de.schoderer.bookstore.utils;
  * Created by schod on 05.11.2015.
  */
 public enum Pages {
-    SEARCH("index.xhtml"), LIST("listResults.xhtml");
+    INDEX("index"), LIST("listResults"), ADD("addBook.xhtml");
 
 
     private String fileName;
