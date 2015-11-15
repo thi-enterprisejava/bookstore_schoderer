@@ -10,29 +10,32 @@
     <ui:define name="body">
 
         <div class="container">
-            <div id="detailPane" class="row center">
-                <h:form class="col s12">
 
+            <h:form class="col s12">
+                <div class="row center detailPane">
 
                     <div class="input-field col s12">
                         <h:inputText id="bookName" type="text" class="validate black-text"
                                      value="#{addBookBean.newBook.title}"/>
                         <label for="bookName" class="black-text">Booktitle</label>
                     </div>
-
-                    <div class="row">
-                        <div class="input-field col s6">
-                            <h:inputText id="authorFirstname" type="text" class="validate black-text"
-                                         value="#{addBookBean.newBook.author}"/>
-                            <label for="authorFirstname" class="black-text">Firstname</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <h:inputText id="authorSurname" type="text" class="validate black-text"
-                                         value="#{addBookBean.newBook.author}"/>
-                            <label for="authorSurname" class="black-text">Surname</label>
-                        </div>
+                </div>
+                <div class="row center detailPane">
+                    <p>Author</p>
+                    <div class="input-field col s6">
+                        <h:inputText id="authorFirstname" type="text" class="validate black-text"
+                                     value="#{addBookBean.newBook.author}"/>
+                        <label for="authorFirstname" class="black-text">Firstname</label>
                     </div>
-                    <div class="row">
+                    <div class="input-field col s6">
+                        <h:inputText id="authorSurname" type="text" class="validate black-text"
+                                     value="#{addBookBean.newBook.author}"/>
+                        <label for="authorSurname" class="black-text">Surname</label>
+                    </div>
+                </div>
+                <div class="row center detailPane">
+                    <p>Details</p>
+                    <div class="row  center">
                         <div class="input-field col s12">
                             <h:inputTextarea id="textarea1" class="materialize-textarea black-text"
                                              value="#{addBookBean.newBook.description}"/>
@@ -41,7 +44,7 @@
                     </div>
 
 
-                    <div class="row">
+                    <div class="row center">
                         <div class="input-field col s3 ">
                             <h:inputText id="year" type="number" class="validate black-text"
                                          value="#{addBookBean.newBook.publishedYear}"/>
@@ -54,7 +57,7 @@
                         </div>
 
                     </div>
-                    <div class="row">
+                    <div class="row center">
                         <div class="input-field col s4">
                             <h:inputText id="tags" type="text" class="validate black-text" value="#{addBookBean.tag}"/>
                             <label for="tags" class=" black-text">Tags</label>
@@ -64,7 +67,7 @@
                                        action="#{addBookBean.doAddTag()}">Add Tag</h:commandLink>
 
                     </div>
-                    <div class="row">
+                    <div class="row center">
                         <ui:repeat value="#{addBookBean.newBook.tags}" var="tags">
                             <div class="chip">
                                 #{tags.tag}
@@ -72,14 +75,14 @@
                             </div>
                         </ui:repeat>
                     </div>
+
                     <div class="row center">
-                        <h:commandLink class="waves-effect waves-light btn z-depth-2 orange" action="#{addBookBean.doSave}"><i
+                        <h:commandLink class="waves-effect waves-light btn z-depth-2 orange"
+                                       action="#{addBookBean.doSave}"><i
                                 class="material-icons left">cloud</i>submit</h:commandLink>
                     </div>
-                </h:form>
-            </div>
-
-
+                </div>
+            </h:form>
         </div>
 
 
