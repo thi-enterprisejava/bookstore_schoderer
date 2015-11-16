@@ -1,19 +1,26 @@
 package de.schoderer.bookstore.domain;
 
+import javax.persistence.Entity;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by michael on 23.10.15.
  */
+@Entity
 public class Book implements Serializable {
+    private long id;
     private String title;
     private String author;
     private String description;
     private int publishedYear;
     private String isbn;
-    private List<String> tags;
+    private String imageLocation;
+    private String fileLocation;
+    private List<Tag> tags;
 
 
     public Book() {
@@ -27,6 +34,14 @@ public class Book implements Serializable {
         this.description = description;
         this.publishedYear = publishedYear;
         this.isbn = isbn;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -69,11 +84,27 @@ public class Book implements Serializable {
         this.isbn = isbn;
     }
 
-    public List<String> getTags() {
-        return tags;
+    public String getImageLocation() {
+        return imageLocation;
     }
 
-    public void setTags(List<String> tags) {
+    public void setImageLocation(String imageLocation) {
+        this.imageLocation = imageLocation;
+    }
+
+    public String getFileLocation() {
+        return fileLocation;
+    }
+
+    public void setFileLocation(String fileLocation) {
+        this.fileLocation = fileLocation;
+    }
+
+    public List<Tag> getTags() {
+        return (tags);
+    }
+
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 

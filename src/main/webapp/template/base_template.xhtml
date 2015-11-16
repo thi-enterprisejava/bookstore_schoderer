@@ -11,26 +11,26 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css" media="screen,projection" />
     <link href="css/main_style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-
+    <ui:insert name="header">
+    </ui:insert>
 </h:head>
 
 
 <h:body>
 
-    <nav class="blue-grey darken-2" role="navigation">
+    <nav class="blue-grey darken-3" role="navigation">
+        <h:form>
         <div class="nav-wrapper container">
-            <a id="logo-container" href="#" class="brand-logo fancyTitleFont">BookStore</a>
+            <a id="logo-container" href="index.xhtml" class="brand-logo fancyTitleFont">BookStore</a>
+
             <ul class="right hide-on-med-and-down">
-                <li><a href="index.html">#{msg['common.search']}</a></li>
-                <li><a href="add.html">#{msg['common.add']}</a></li>
+                <li id="navIndex" class="#{activePageBean.indexPage}"><a href="#{activePageBean.switchPage('INDEX')}">#{msg['common.search']}</a></li>
+                <li id="navList" class="#{activePageBean.listResultsPage}"><h:commandLink action="#{searchBean.fetchAllBooks()}">List all</h:commandLink></li>
+                <li id="navAdd" class="#{activePageBean.addBookPage}"><a href="#{activePageBean.switchPage('ADD')}">#{msg['common.add']}</a></li>
             </ul>
 
-            <ul id="nav-mobile" class="side-nav">
-                <li><a href="index.html">#{msg['common.search']}</a></li>
-                <li><a href="add.html">#{msg['common.add']}</a></li>
-            </ul>
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
         </div>
+        </h:form>
     </nav>
     <ui:insert name="body">
         Couldn't insert body....
@@ -40,8 +40,8 @@
 
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
-
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 
 
 </h:body>
