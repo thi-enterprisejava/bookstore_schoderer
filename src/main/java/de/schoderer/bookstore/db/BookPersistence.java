@@ -12,11 +12,15 @@ import java.util.List;
  */
 public interface BookPersistence extends Serializable{
 
+
+
     List<Book> fetchAllBooks();
 
     List<Book> fetchAllBooksByTitle(String title);
 
     List<Book> fetchAllBooksByTag(String tag);
+
+    Book fetchBookByID(long id);
 
     void saveBook(Book book);
 
