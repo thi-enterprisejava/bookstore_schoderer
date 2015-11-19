@@ -1,25 +1,25 @@
 package de.schoderer.bookstore.domain;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 /**
  * Created by michael on 23.10.15.
  */
-@Entity
-public class Book implements Serializable {
-    private long id;
+@Entity(name = "book")
+public class Book extends IdentifyableDBObject implements Serializable {
     private String title;
     private String author;
     private String description;
     private int publishedYear;
     private String isbn;
-    private String imageLocation;
-    private String fileLocation;
+    @OneToOne
+    private DataFileLocation data;
+    @ManyToMany
+    @ElementCollection(fetch = FetchType.LAZY)
     private List<Tag> tags;
 
 
@@ -36,13 +36,7 @@ public class Book implements Serializable {
         this.isbn = isbn;
     }
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getTitle() {
         return title;
@@ -84,20 +78,12 @@ public class Book implements Serializable {
         this.isbn = isbn;
     }
 
-    public String getImageLocation() {
-        return imageLocation;
+    public DataFileLocation getData() {
+        return data;
     }
 
-    public void setImageLocation(String imageLocation) {
-        this.imageLocation = imageLocation;
-    }
-
-    public String getFileLocation() {
-        return fileLocation;
-    }
-
-    public void setFileLocation(String fileLocation) {
-        this.fileLocation = fileLocation;
+    public void setData(DataFileLocation data) {
+        this.data = data;
     }
 
     public List<Tag> getTags() {
@@ -118,5 +104,20 @@ public class Book implements Serializable {
                 ", isbn='" + isbn + '\'' +
                 ", tags=" + tags +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return Objects.equals(title, book.title) &&
+                Objects.equals(author, book.author) &&
+                Objects.equals(isbn, book.isbn);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, author, isbn);
     }
 }
