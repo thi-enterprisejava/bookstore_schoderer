@@ -9,17 +9,23 @@ import java.util.Objects;
 /**
  * Created by michael on 23.10.15.
  */
-@Entity(name = "book")
-public class Book extends IdentifyableDBObject implements Serializable {
+@Entity
+public class Book implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+
     private String title;
     private String author;
     private String description;
     private int publishedYear;
     private String isbn;
+
     @OneToOne
     private DataFileLocation data;
+
     @ManyToMany
-    @ElementCollection(fetch = FetchType.LAZY)
     private List<Tag> tags;
 
 
@@ -36,7 +42,13 @@ public class Book extends IdentifyableDBObject implements Serializable {
         this.isbn = isbn;
     }
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -120,4 +132,5 @@ public class Book extends IdentifyableDBObject implements Serializable {
     public int hashCode() {
         return Objects.hash(title, author, isbn);
     }
+
 }
