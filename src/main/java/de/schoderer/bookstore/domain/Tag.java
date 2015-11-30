@@ -1,31 +1,22 @@
 package de.schoderer.bookstore.domain;
 
-import javax.persistence.Embeddable;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * Created by schod on 07.11.2015.
  */
-@Embeddable
+@Entity
 public class Tag implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @Column(unique = true)
     private String tag;
+    @ManyToMany(targetEntity = Book.class, mappedBy="tags", fetch = FetchType.EAGER)
+    private List<Book> book;
 
     public Tag() {
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public Tag(String tag) {

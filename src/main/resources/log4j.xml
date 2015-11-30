@@ -2,7 +2,7 @@
                      xmlns:log4j='http://jakarta.apache.org/log4j/'>
 
 
-    <appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
+    <appender name="fileAppender" class="org.apache.log4j.ConsoleAppender">
         <param name="append" value="false"/>
         <param name="file" value="log4j.log"/>
 

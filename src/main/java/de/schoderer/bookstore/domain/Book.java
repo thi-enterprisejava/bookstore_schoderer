@@ -10,10 +10,10 @@ import java.util.Objects;
  * Created by michael on 23.10.15.
  */
 @Entity
+@Table(name = "book")
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "book_id")
     private long id;
 
 
@@ -23,16 +23,17 @@ public class Book implements Serializable {
     private int publishedYear;
     private String isbn;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private DataFileLocation data;
 
-    @ElementCollection
-    @CollectionTable(name = "Tags", joinColumns = {@JoinColumn(name = "book_id")})
-    private List<Tag> tags = new ArrayList<>();
+    @ManyToMany(targetEntity = Tag.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name="BOOK_TAG")
+    private List<Tag> tags;
 
 
     public Book() {
-
+        tags = new ArrayList<>();
+        data = new DataFileLocation();
     }
 
     public Book(String title, String author, String description, int publishedYear, String isbn) {
@@ -99,6 +100,7 @@ public class Book implements Serializable {
     public void setData(DataFileLocation data) {
         this.data = data;
     }
+
 
     public List<Tag> getTags() {
         return (tags);

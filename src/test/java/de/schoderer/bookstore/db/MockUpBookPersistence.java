@@ -80,4 +80,9 @@ public class MockUpBookPersistence implements BookPersistence {
             books.remove(book);
         }
     }
+
+    @Override
+    public void saveTag(Tag tag) {
+
+    }
 }

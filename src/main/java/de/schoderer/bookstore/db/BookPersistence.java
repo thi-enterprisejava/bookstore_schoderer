@@ -1,6 +1,7 @@
 package de.schoderer.bookstore.db;
 
 import de.schoderer.bookstore.domain.Book;
+import de.schoderer.bookstore.domain.Tag;
 
 import java.io.Serializable;
 import java.util.List;
@@ -26,4 +27,6 @@ public interface BookPersistence extends Serializable {
     void updateBook(Book book);
 
     void removeBook(Book book);
+
+    void saveTag(Tag tag);
 }

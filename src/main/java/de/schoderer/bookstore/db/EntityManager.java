@@ -1,6 +1,7 @@
 package de.schoderer.bookstore.db;
 
 import de.schoderer.bookstore.domain.Book;
+import de.schoderer.bookstore.domain.Tag;
 import de.schoderer.bookstore.utils.interceptor.TimeLogging;
 
 import javax.ejb.Stateless;
@@ -65,5 +66,10 @@ public class EntityManager implements BookPersistence {
     @Override
     public void removeBook(Book book) {
         em.remove(book);
+    }
+
+    @Override
+    public void saveTag(Tag tag) {
+        em.persist(tag);
     }
 }
