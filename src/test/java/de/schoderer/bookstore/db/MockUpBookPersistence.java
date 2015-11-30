@@ -3,10 +3,7 @@ package de.schoderer.bookstore.db;
 import de.schoderer.bookstore.domain.Book;
 import de.schoderer.bookstore.domain.Tag;
 
-import javax.ejb.Singleton;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +30,7 @@ public class MockUpBookPersistence implements BookPersistence {
 
     protected Book createBook(String title, String author, String description, int year, String isbn, String... tags) {
         Book book = new Book(title, author, description, year, isbn);
-        for(String tag : tags){
+        for (String tag : tags) {
             book.getTags().add(new Tag(tag));
         }
         return book;
@@ -60,7 +57,7 @@ public class MockUpBookPersistence implements BookPersistence {
     @Override
     public Book fetchBookByID(long id) {
         //FIXME very very dirty....
-        return books.get((int)(id));
+        return books.get((int) (id));
     }
 
     @Override

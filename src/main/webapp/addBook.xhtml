@@ -28,6 +28,7 @@
                 </div>
                 <div class="row center detailPane">
                     <p>Author</p>
+
                     <div class="input-field col s12">
                         <h:inputText id="authorName" type="text" class="validate black-text"
                                      value="#{currentBookBean.currentBook.author}"/>
@@ -37,6 +38,7 @@
                 </div>
                 <div class="row center detailPane">
                     <p>Details</p>
+
                     <div class="row  center">
                         <div class="input-field col s12">
                             <h:inputTextarea id="textarea1" class="materialize-textarea black-text"
@@ -61,7 +63,8 @@
                     </div>
                     <div class="row center">
                         <div class="input-field col s4">
-                            <h:inputText id="tags" type="text" class="validate black-text" value="#{currentBookBean.tag}"/>
+                            <h:inputText id="tags" type="text" class="validate black-text"
+                                         value="#{currentBookBean.tag}"/>
                             <label for="tags" class=" black-text">#{msg['add.tags']}</label>
                         </div>
                         <h:commandLink immediate="false" id="searchIcon"

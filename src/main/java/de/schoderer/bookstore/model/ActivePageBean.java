@@ -11,20 +11,20 @@ import java.io.Serializable;
  */
 @Named
 @SessionScoped
-public class ActivePageBean implements Serializable{
+public class ActivePageBean implements Serializable {
     private static final String ACTIVE_CSS_CLASS = "active";
     private String addBookPage = "";
     private String indexPage = "active";
     private String listResultsPage = "";
 
 
-    public String switchPage(String page){
+    public String switchPage(String page) {
         return switchPage(Pages.valueOf(page));
     }
 
-    public String switchPage(Pages page){
+    public String switchPage(Pages page) {
         resetCssClassStrings();
-        switch(page){
+        switch (page) {
 
             case INDEX:
                 indexPage = ACTIVE_CSS_CLASS;
@@ -40,9 +40,7 @@ public class ActivePageBean implements Serializable{
     }
 
 
-
-
-    private void resetCssClassStrings(){
+    private void resetCssClassStrings() {
         addBookPage = "";
         indexPage = "";
         listResultsPage = "";

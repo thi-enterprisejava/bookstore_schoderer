@@ -1,21 +1,20 @@
 package de.schoderer.bookstore.domain;
 
-import javax.persistence.Entity;
+import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Created by schod on 07.11.2015.
  */
-@Entity
-public class Tag {
+@Embeddable
+public class Tag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-
     private String tag;
 
     public Tag() {
@@ -48,6 +47,7 @@ public class Tag {
         Tag tag1 = (Tag) o;
         return Objects.equals(tag, tag1.tag);
     }
+
 
     @Override
     public int hashCode() {

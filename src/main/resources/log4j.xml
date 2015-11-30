@@ -3,17 +3,17 @@
 
 
     <appender name="fileAppender" class="org.apache.log4j.RollingFileAppender">
-        <param name="append" value="false" />
-        <param name="file" value="log4j.log" />
+        <param name="append" value="false"/>
+        <param name="file" value="log4j.log"/>
 
         <layout class="org.apache.log4j.PatternLayout">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </layout>
     </appender>
 
     <root>
-        <level value="DEBUG" />
-        <appender-ref ref="fileAppender" />
+        <level value="DEBUG"/>
+        <appender-ref ref="fileAppender"/>
     </root>
 
 </log4j:configuration>

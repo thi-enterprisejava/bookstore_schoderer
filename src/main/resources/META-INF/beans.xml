@@ -9,6 +9,5 @@
         <class>de.schoderer.bookstore.utils.interceptor.TimeLoggingInterceptor</class>
 
 
-
     </interceptors>
 </beans>

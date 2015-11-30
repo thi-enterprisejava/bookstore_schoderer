@@ -29,12 +29,14 @@ public class EntityManager implements BookPersistence {
         TypedQuery<Book> query = em.createQuery("SELECT b FROM Book as b", Book.class);
         return query.getResultList();
     }
+
     @Override
     public List<Book> fetchAllBooksByTitle(String title) {
         TypedQuery<Book> query = em.createQuery("SELECT b FROM Book as b where b.title like :booktitle", Book.class);
         query.setParameter("booktitle", title);
         return query.getResultList();
     }
+
     @Override
     public List<Book> fetchAllBooksByTag(String tag) {
         // TODO

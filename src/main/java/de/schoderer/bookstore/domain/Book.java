@@ -13,6 +13,7 @@ import java.util.Objects;
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "book_id")
     private long id;
 
 
@@ -25,12 +26,13 @@ public class Book implements Serializable {
     @OneToOne
     private DataFileLocation data;
 
-    @ManyToMany
-    private List<Tag> tags;
+    @ElementCollection
+    @CollectionTable(name = "Tags", joinColumns = {@JoinColumn(name = "book_id")})
+    private List<Tag> tags = new ArrayList<>();
 
 
     public Book() {
-        tags = new ArrayList<>();
+
     }
 
     public Book(String title, String author, String description, int publishedYear, String isbn) {

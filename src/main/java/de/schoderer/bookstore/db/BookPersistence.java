@@ -10,8 +10,7 @@ import java.util.List;
  * <p>
  * Simple interface, which provides the CRUD-Methods for the persistence
  */
-public interface BookPersistence extends Serializable{
-
+public interface BookPersistence extends Serializable {
 
 
     List<Book> fetchAllBooks();

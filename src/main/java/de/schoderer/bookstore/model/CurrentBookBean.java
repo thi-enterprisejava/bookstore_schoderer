@@ -32,7 +32,7 @@ public class CurrentBookBean implements Serializable {
     public void doSetCurrentBook() {
         if (id > 0) {
             currentBook = persistence.fetchBookByID(id);
-        }else {
+        } else {
             currentBook = new Book();
         }
     }

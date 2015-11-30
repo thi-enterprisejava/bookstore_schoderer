@@ -19,7 +19,7 @@ public class TimeLoggingInterceptor {
             return ic.proceed();
         } finally {
             long end = System.currentTimeMillis();
-            System.out.println(String.format("Called method %s of class %s took:\t ms", ic.getMethod().getName(),ic.getMethod().getDeclaringClass().getCanonicalName(), end-start));
+            System.out.println(String.format("Called method %s of class %s took:\t ms", ic.getMethod().getName(), ic.getMethod().getDeclaringClass().getCanonicalName(), end - start));
         }
     }
 }
