@@ -35,7 +35,6 @@ public class SearchBean implements Serializable {
         return navBean.switchPage(Pages.LIST);
     }
 
-
     public String getSearch() {
         return search;
     }

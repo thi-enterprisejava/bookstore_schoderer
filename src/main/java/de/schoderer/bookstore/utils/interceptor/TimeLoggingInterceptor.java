@@ -1,5 +1,7 @@
 package de.schoderer.bookstore.utils.interceptor;
 
+import org.apache.log4j.Logger;
+
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
@@ -12,6 +14,8 @@ import javax.interceptor.InvocationContext;
 @TimeLogging
 @Interceptor
 public class TimeLoggingInterceptor {
+    private static final Logger LOG = Logger.getLogger(TimeLoggingInterceptor.class);
+
     @AroundInvoke
     public Object profile(InvocationContext ic) throws Exception {
         long start = System.currentTimeMillis();
@@ -19,7 +23,7 @@ public class TimeLoggingInterceptor {
             return ic.proceed();
         } finally {
             long end = System.currentTimeMillis();
-            System.out.println(String.format("Called method %s of class %s took:\t ms", ic.getMethod().getName(), ic.getMethod().getDeclaringClass().getCanonicalName(), end - start));
+           LOG.info(String.format("Called method %s of class %s took:\t %s ms", ic.getMethod().getName(), ic.getMethod().getDeclaringClass().getCanonicalName(), end - start));
         }
     }
 }

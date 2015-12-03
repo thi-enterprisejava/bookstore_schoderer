@@ -4,8 +4,7 @@ import de.schoderer.bookstore.db.BookPersistence;
 import de.schoderer.bookstore.domain.Book;
 import de.schoderer.bookstore.domain.Tag;
 import de.schoderer.bookstore.utils.Pages;
-import org.primefaces.event.FileUploadEvent;
-import org.primefaces.model.UploadedFile;
+import org.apache.log4j.Logger;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -15,7 +14,6 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
 
 /**
  * Created by schod on 07.11.2015.
@@ -23,6 +21,7 @@ import java.util.Optional;
 @Named
 @RequestScoped
 public class CurrentBookBean implements Serializable {
+    private static final Logger LOG = Logger.getLogger(CurrentBookBean.class);
 
     private static final Path paths = Paths.get(System.getProperty("user.home"), "files");
     @Inject
@@ -32,8 +31,6 @@ public class CurrentBookBean implements Serializable {
     private long id = -1;
     private String tag;
     private Book currentBook;
-    private UploadedFile imageFile;
-    private UploadedFile bookFile;
 
     @Inject
     public CurrentBookBean(BookPersistence persistence) throws IOException {
@@ -48,14 +45,23 @@ public class CurrentBookBean implements Serializable {
         if (id > 0) {
             currentBook = persistence.fetchBookByID(id);
         } else {
+            LOG.info("Setting currentBook to new");
             currentBook = new Book();
         }
     }
 
 
     public void doAddTag() {
-        if (!"".equals(tag)) {
+        if (tag!= null && !tag.isEmpty()) {
             currentBook.getTags().add(new Tag(tag));
+            LOG.info("Added Tag: "+tag);
+            tag = "";
+        }
+    }
+    public void doAddTag(String string) {
+        if (!"".equals(string)) {
+            currentBook.getTags().add(new Tag(tag));
+            LOG.info("Added Tag: "+tag);
             tag = "";
         }
     }
@@ -72,34 +78,14 @@ public class CurrentBookBean implements Serializable {
     }
     */
 
-    public String doSave() {
-        Optional<Path> filePath = uploadFiles(imageFile);
-        filePath.ifPresent(path -> currentBook.getData().setImageLocation(path.toAbsolutePath().toString()));
-        filePath = uploadFiles(bookFile);
-        filePath.ifPresent(path -> currentBook.getData().setFileLocation(path.toAbsolutePath().toString()));
-        currentBook.getTags().add(new Tag("TestTag"));
+    public void doSave() {
+        LOG.info("Saveing book:" + currentBook +" - With Tags: "+ currentBook.getTags().size());
         persistence.saveBook(currentBook);
         currentBook = new Book();
-        return pageSwitcher.switchPage(Pages.INDEX);
+        //return pageSwitcher.switchPage(Pages.INDEX);
     }
 
-    private Optional<Path> uploadFiles(UploadedFile file) {
-        Optional<Path> filePath = Optional.empty();
-        if (file != null) {
-            try {
-                Path path = paths.resolve(file.getFileName());
-                Files.write(path, file.getContents());
-                filePath = Optional.of(path);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return filePath;
-    }
 
-    public void handleFileUpload(FileUploadEvent event) {
-            this.imageFile = event.getFile();
-    }
 
     public long getId() {
         return id;
@@ -125,19 +111,4 @@ public class CurrentBookBean implements Serializable {
         this.tag = tag;
     }
 
-    public UploadedFile getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(UploadedFile imageFile) {
-        this.imageFile = imageFile;
-    }
-
-    public UploadedFile getBookFile() {
-        return bookFile;
-    }
-
-    public void setBookFile(UploadedFile bookFile) {
-        this.bookFile = bookFile;
-    }
 }

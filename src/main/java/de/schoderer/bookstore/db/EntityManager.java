@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * Created by schod on 21.11.2015.
  */
-@TimeLogging
 @Named
 @Stateless
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -54,6 +53,7 @@ public class EntityManager implements BookPersistence {
     @Override
     @Transactional
     public void saveBook(Book book) {
+        //TODO save tags seperate
         em.persist(book);
     }
 

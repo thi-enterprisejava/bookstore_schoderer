@@ -10,7 +10,6 @@ import java.util.Objects;
  * Created by michael on 23.10.15.
  */
 @Entity
-@Table(name = "book")
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +26,7 @@ public class Book implements Serializable {
     private DataFileLocation data;
 
     @ManyToMany(targetEntity = Tag.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name="BOOK_TAG")
+    @JoinTable()
     private List<Tag> tags;
 
 
@@ -110,17 +109,6 @@ public class Book implements Serializable {
         this.tags = tags;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", description='" + description + '\'' +
-                ", publishedYear=" + publishedYear +
-                ", isbn='" + isbn + '\'' +
-                ", tags=" + tags +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -137,4 +125,18 @@ public class Book implements Serializable {
         return Objects.hash(title, author, isbn);
     }
 
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", description='" + description + '\'' +
+                ", publishedYear=" + publishedYear +
+                ", isbn='" + isbn + '\'' +
+                ", data=" + data +
+                ", tags=" + tags +
+                '}';
+    }
 }

@@ -2,6 +2,7 @@ package de.schoderer.bookstore.db;
 
 import de.schoderer.bookstore.domain.Book;
 import de.schoderer.bookstore.domain.Tag;
+import de.schoderer.bookstore.utils.interceptor.TimeLogging;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
  * <p>
  * Simple interface, which provides the CRUD-Methods for the persistence
  */
+@TimeLogging
 public interface BookPersistence extends Serializable {
 
 
