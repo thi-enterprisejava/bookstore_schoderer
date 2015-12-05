@@ -20,15 +20,19 @@ public interface BookPersistence extends Serializable {
 
     List<Book> fetchAllBooksByTitle(String title);
 
-    List<Book> fetchAllBooksByTag(String tag);
+    List<Book> fetchAllBooksWithTagID(long tagId);
 
     Book fetchBookByID(long id);
 
-    void saveBook(Book book);
+    Book saveBook(Book book);
 
-    void updateBook(Book book);
+    Book updateBook(Book book);
 
     void removeBook(Book book);
 
-    void saveTag(Tag tag);
+    Tag saveTag(Tag tag);
+
+    Tag fetchTagByID(long id);
+
+    Tag fetchTagByName(String name);
 }

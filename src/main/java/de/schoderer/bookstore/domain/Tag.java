@@ -9,18 +9,32 @@ import java.util.Objects;
  * Created by schod on 07.11.2015.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name="Tag.findLike",query = "SELECT t FROM Tag t WHERE  t.tag LIKE :name"),
+        @NamedQuery(name="Tag.findByName", query =  "SELECT t FROM Tag t WHERE  t.tag = :name"),
+
+})
 public class Tag implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @Column(unique = true)
     private String tag;
-    @ManyToMany(targetEntity = Book.class, fetch = FetchType.EAGER)
-    private List<Book> book;
 
     public Tag() {
     }
 
     public Tag(String tag) {
         this.tag = tag;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTag() {
@@ -43,5 +57,12 @@ public class Tag implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(tag);
+    }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "tag='" + tag + '\'' +
+                '}';
     }
 }

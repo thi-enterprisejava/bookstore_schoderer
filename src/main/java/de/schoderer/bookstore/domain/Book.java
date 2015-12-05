@@ -10,6 +10,12 @@ import java.util.Objects;
  * Created by michael on 23.10.15.
  */
 @Entity
+@NamedQueries({
+
+        @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
+        @NamedQuery(name="Book.findByName", query = "SELECT b FROM Book b WHERE b.title LIKE :booktitle")
+       // @NamedQuery(name = "Book.findBooksWithTagId", query = "SELECT b FROM Book b WHERE b.id IN (SELECT bt.id FROM Book bt WHERE bt.tags = :tagid)")
+})
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +32,6 @@ public class Book implements Serializable {
     private DataFileLocation data;
 
     @ManyToMany(targetEntity = Tag.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable()
     private List<Tag> tags;
 
 

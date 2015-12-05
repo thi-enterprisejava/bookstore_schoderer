@@ -19,6 +19,13 @@
     <ui:define name="body">
         <div class="container">
             <h:form class="col s12" enctype="multipart/form-data">
+                <h:panelGroup rendered="#{currentBookBean.hasErrors}" styleClass="row center detailPane">
+
+
+                </h:panelGroup>
+
+
+
                 <div class="row center detailPane">
 
                     <div class="input-field col s12">
@@ -82,13 +89,10 @@
                 <div class="row center detailPane">
                     <!--- Update-Param for userFeedback -->
                     <div class="col s6">
-                        <!--- -->
+                        <h:inputFile id="imageFile" value="#{currentBookBean.imageFile}" />
                     </div>
                     <div class="col s6">
-                        <!--- -->
-                    </div>
-                    <div class="col s6">
-                        <!--- -->
+                        <h:inputFile id="bookFile" value="#{currentBookBean.bookFile}" />
                     </div>
                 </div>
                 <div class="row center detailPane">

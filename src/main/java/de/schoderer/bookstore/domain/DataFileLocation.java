@@ -58,4 +58,13 @@ public class DataFileLocation {
     public int hashCode() {
         return Objects.hash(imageLocation, fileLocation);
     }
+
+    @Override
+    public String toString() {
+        return "DataFileLocation{" +
+                "id=" + id +
+                ", imageLocation='" + imageLocation + '\'' +
+                ", fileLocation='" + fileLocation + '\'' +
+                '}';
+    }
 }

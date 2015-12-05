@@ -11,6 +11,7 @@ import javax.inject.Named;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +19,6 @@ import java.util.List;
  */
 @Named
 @Stateless
-@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class EntityManager implements BookPersistence {
 
     @PersistenceContext
@@ -26,23 +26,22 @@ public class EntityManager implements BookPersistence {
 
     @Override
     public List<Book> fetchAllBooks() {
-        TypedQuery<Book> query = em.createQuery("SELECT b FROM Book as b", Book.class);
+        TypedQuery<Book> query = em.createNamedQuery("Book.findAll", Book.class);
         return query.getResultList();
     }
 
     @Override
     public List<Book> fetchAllBooksByTitle(String title) {
-        TypedQuery<Book> query = em.createQuery("SELECT b FROM Book as b where b.title like :booktitle", Book.class);
+        TypedQuery<Book> query = em.createNamedQuery("Book.findByName", Book.class);
         query.setParameter("booktitle", title);
         return query.getResultList();
     }
 
     @Override
-    public List<Book> fetchAllBooksByTag(String tag) {
-        // TODO
-        // /TypedQuery<Book> query = em.createQuery("SELECT b FROM Book as b where b.tags = :booktitle", Book.class);
-        //query.setParameter("booktitle", title);
-        return null;
+    public List<Book> fetchAllBooksWithTagID(long tagId) {
+        //TypedQuery<Book> query = em.createNamedQuery("Book.findBooksWithTagId", Book.class);
+        //query.setParameter("tagid", tagId);
+        return new ArrayList<>();
     }
 
     @Override
@@ -52,15 +51,20 @@ public class EntityManager implements BookPersistence {
 
     @Override
     @Transactional
-    public void saveBook(Book book) {
+    public Book saveBook(Book book) {
+
         //TODO save tags seperate
         em.persist(book);
+        // Should normally be automatically done at the end of transaction.
+        //em.flush();
+        return book;
     }
 
     @Override
     @Transactional
-    public void updateBook(Book book) {
+    public Book updateBook(Book book) {
         em.merge(book);
+        return book;
     }
 
     @Override
@@ -69,7 +73,19 @@ public class EntityManager implements BookPersistence {
     }
 
     @Override
-    public void saveTag(Tag tag) {
+    public Tag saveTag(Tag tag) {
         em.persist(tag);
+        return tag;
+    }
+
+    @Override
+    public Tag fetchTagByID(long id) {
+        return em.find(Tag.class, id);
+    }
+
+    @Override
+    public Tag fetchTagByName(String name) {
+        TypedQuery<Tag> query = em.createNamedQuery("Tag.findByName", Tag.class);
+        return query.getSingleResult();
     }
 }
