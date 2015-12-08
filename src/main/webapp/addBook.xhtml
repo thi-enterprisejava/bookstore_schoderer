@@ -42,7 +42,7 @@
                     <div class="row center">
                         <div class="input-field col s3 ">
                             <h:inputText id="year" type="number" class="validate black-text"
-                                         value="#{currentBookBean.currentBook.publishedYear}"/>
+                                         value="#{currentBookBean.currentBook.publishedYear}" converter="javax.faces.Integer"/>
                             <label for="year" class="black-text">#{msg['add.publishedYear']}</label>
                         </div>
                         <div class="input-field col s3 ">

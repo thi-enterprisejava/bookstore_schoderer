@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -26,6 +27,7 @@ public class CurrentBookBean implements Serializable {
     private static final Logger LOG = Logger.getLogger(CurrentBookBean.class);
     //TODO ändern!!
     private static final Path paths = Paths.get(System.getProperty("user.home"), "files");
+    private static final Random random = new Random();
 
     private ActivePageBean pageSwitcher;
     private BookPersistence persistence;
@@ -100,7 +102,7 @@ public class CurrentBookBean implements Serializable {
         try {
             String fileName = part.getSubmittedFileName();
             //CreateRandomName for file
-            filePath = paths.resolve(UUID.randomUUID().toString()+ fileName.substring(fileName.lastIndexOf(".")));
+            filePath = paths.resolve(createFileName(fileName));
             Files.copy(part.getInputStream(), filePath);
             LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());
         } catch (IOException e) {
@@ -108,6 +110,11 @@ public class CurrentBookBean implements Serializable {
             return null;
         }
         return filePath.toString();
+    }
+
+    private String createFileName(String fileName) {
+        int beginIndex = fileName.lastIndexOf(".");
+        return fileName.substring(0,beginIndex-1)+"_" + Math.abs(random.nextLong())+ fileName.substring(beginIndex);
     }
 
     public long getId() {
