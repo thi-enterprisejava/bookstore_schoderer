@@ -57,8 +57,11 @@ body {
     border-radius: 5px;
 }
 
-.rightTop {
+.rightBottom {
     bottom: 45px;
     right: 24px;
+}
+#indexSloagan{
+    font-style: italic;
 }
 

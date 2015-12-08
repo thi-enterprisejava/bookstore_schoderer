@@ -2,11 +2,11 @@ package de.schoderer.bookstore.model;
 
 import de.schoderer.bookstore.db.BookPersistence;
 import de.schoderer.bookstore.domain.Book;
+import de.schoderer.bookstore.domain.DataFileLocation;
 import de.schoderer.bookstore.domain.Tag;
-import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.Logger;
 
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
@@ -15,36 +15,35 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Created by schod on 07.11.2015.
  */
 @Named
-@RequestScoped
+@ViewScoped
 public class CurrentBookBean implements Serializable {
     private static final Logger LOG = Logger.getLogger(CurrentBookBean.class);
-
+    //TODO ändern!!
     private static final Path paths = Paths.get(System.getProperty("user.home"), "files");
-    @Inject
+
     private ActivePageBean pageSwitcher;
     private BookPersistence persistence;
 
-    private boolean hasErrors= false;
-    private long id = -1;
-    private String tag;
+    private boolean isValid = false;
     private Book currentBook;
 
+
+    private String tag;
+    private long id = -1;
     private Part imageFile;
     private Part bookFile;
 
 
     @Inject
-    public CurrentBookBean(BookPersistence persistence) throws IOException {
-        if (!Files.isDirectory(paths)) {
-            Files.createDirectories(paths);
-        }
+    public CurrentBookBean(BookPersistence persistence, ActivePageBean pageSwitcher) throws IOException {
         this.persistence = persistence;
+        this.pageSwitcher = pageSwitcher;
         currentBook = new Book();
     }
 
@@ -59,57 +58,57 @@ public class CurrentBookBean implements Serializable {
 
 
     public void doAddTag() {
-        if (tag!= null && !tag.isEmpty()) {
-            currentBook.getTags().add(new Tag(tag));
-            LOG.info("Added Tag: "+tag);
-            tag = "";
-        }
+        doAddTag(tag);
+        tag = "";
     }
+
     public void doAddTag(String string) {
-        if (!"".equals(string)) {
-            currentBook.getTags().add(new Tag(tag));
-            LOG.info("Added Tag: "+tag);
-            tag = "";
+        if (string != null && !"".equals(string)) {
+            currentBook.getTags().add(new Tag(tag.toUpperCase()));
         }
-    }
-/*
-    public void handleImageUpload(FileUploadEvent event) {
-        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, message);
+        LOG.info("Added Tag: " + tag + " - Current list size: "+currentBook.getTags().size());
     }
 
+    public void removeTag(String tag) {
+        LOG.info("Removing Tag:" + tag + " BookTags: "+currentBook.getTags().size());
+        currentBook.getTags().removeIf(bookTag -> bookTag.getTag().equals(tag));
+        LOG.info("Removed!! - BookTags: "+currentBook.getTags().size());
 
-    public void handleBookUpload(FileUploadEvent event) {
-        FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, message);
     }
-    */
 
     public void doSave() {
-        hasErrors = false;
-        LOG.info("Saveing book:" + currentBook +" - With Tags: "+ currentBook.getTags().size());
-        writeFileToHardDisk(bookFile);
+        LOG.info(" - Current list size: "+currentBook.getTags().size());
+        isValid = false;
+        currentBook.setData(uploadAndSaveFiles());
         persistence.saveBook(currentBook);
+        LOG.info("Saveing book:" + currentBook + " - With Tags: " + currentBook.getTags().size());
         currentBook = new Book();
-        //return pageSwitcher.switchPage(Pages.INDEX);
     }
 
-    private Optional<Path> writeFileToHardDisk(Part part){
-        LOG.info(part.getName());
-        Optional<Path> filePath = Optional.empty();
+
+    private DataFileLocation uploadAndSaveFiles() {
+        DataFileLocation location = new DataFileLocation();
+        location.setFileLocation(uploadAndSaveFileToHardDisk(bookFile));
+        location.setImageLocation(uploadAndSaveFileToHardDisk(imageFile));
+        return location;
+    }
+
+
+    private String uploadAndSaveFileToHardDisk(Part part) {
+        LOG.info("PartContentType: " + part.getContentType()+ " - PartName: " +part.getName()+ " Part SubmittedFiles "+ part.getSubmittedFileName());
+        Path filePath = null;
         try {
-            Path path = Paths.get(System.getProperty("user.home")).resolve("test.pdf");
-            Files.copy(part.getInputStream(), path);
-            filePath = Optional.of(path);
-            LOG.info("Success: "+path.toAbsolutePath().toString());
+            String fileName = part.getSubmittedFileName();
+            //CreateRandomName for file
+            filePath = paths.resolve(UUID.randomUUID().toString()+ fileName.substring(fileName.lastIndexOf(".")));
+            Files.copy(part.getInputStream(), filePath);
+            LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
+            return null;
         }
-
-        return filePath;
+        return filePath.toString();
     }
-
-
 
     public long getId() {
         return id;
@@ -151,11 +150,11 @@ public class CurrentBookBean implements Serializable {
         this.bookFile = bookFile;
     }
 
-    public boolean isHasErrors() {
-        return hasErrors;
+    public boolean isValid() {
+        return isValid;
     }
 
-    public void setHasErrors(boolean hasErrors) {
-        this.hasErrors = hasErrors;
+    public void setValid(boolean valid) {
+        this.isValid = valid;
     }
 }

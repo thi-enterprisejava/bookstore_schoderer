@@ -2,6 +2,7 @@ package de.schoderer.bookstore.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,6 +39,8 @@ public class Book implements Serializable {
     public Book() {
         tags = new ArrayList<>();
         data = new DataFileLocation();
+        //Set the year to the actual year
+        publishedYear = LocalDate.now().getYear();
     }
 
     public Book(String title, String author, String description, int publishedYear, String isbn) {

@@ -6,7 +6,6 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
 
-
 <ui:composition template="template/base_template.xhtml">
     <ui:define name="header">
         <f:metadata>
@@ -15,19 +14,10 @@
         </f:metadata>
     </ui:define>
 
-
     <ui:define name="body">
         <div class="container">
             <h:form class="col s12" enctype="multipart/form-data">
-                <h:panelGroup rendered="#{currentBookBean.hasErrors}" styleClass="row center detailPane">
-
-
-                </h:panelGroup>
-
-
-
                 <div class="row center detailPane">
-
                     <div class="input-field col s12">
                         <h:inputText id="bookName" type="text" class="validate black-text"
                                      value="#{currentBookBean.currentBook.title}"/>
@@ -40,7 +30,6 @@
                                      value="#{currentBookBean.currentBook.author}"/>
                         <label for="authorName" class="black-text">#{msg['common.author']}</label>
                     </div>
-
                 </div>
                 <div class="row center detailPane">
                     <div class="row  center">
@@ -50,8 +39,6 @@
                             <label for="textarea1" class="black-text">#{msg['add.description']}</label>
                         </div>
                     </div>
-
-
                     <div class="row center">
                         <div class="input-field col s3 ">
                             <h:inputText id="year" type="number" class="validate black-text"
@@ -63,36 +50,52 @@
                                          value="#{currentBookBean.currentBook.isbn}"/>
                             <label for="isbn" class=" black-text">#{msg['details.isbn']}</label>
                         </div>
-                        <div class="col s1"></div>
                         <div class="input-field col s4">
-                            <h:inputText id="tags" type="text" class="validate black-text"
+                            <h:inputText immediate="true" id="tags" type="text" class="validate black-text"
                                          value="#{currentBookBean.tag}"/>
                             <label for="tags" class=" black-text">#{msg['add.tags']}</label>
                         </div>
                         <div class="col s1">
-                            <h:commandLink immediate="true" id="searchIcon"
+                            <h:commandLink id="searchIcon"
                                            class="waves-effect waves-light btn s1 z-depth-2 orange midIcon"
                                            action="#{currentBookBean.doAddTag()}">#{msg['add.addTags']}</h:commandLink>
                         </div>
                     </div>
-
                     <div class="row left">
                         <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tags">
                             <div class="chip">
                                 #{tags.tag}
-                                <i class="material-icons black-text">close</i>
+                                <h:commandLink immediate="true" action="#{currentBookBean.removeTag(tags.tag)}"
+                                               class="material-icons black-text">close</h:commandLink>
                             </div>
                         </ui:repeat>
                     </div>
                 </div>
-
                 <div class="row center detailPane">
-                    <!--- Update-Param for userFeedback -->
-                    <div class="col s6">
-                        <h:inputFile id="imageFile" value="#{currentBookBean.imageFile}" />
-                    </div>
-                    <div class="col s6">
-                        <h:inputFile id="bookFile" value="#{currentBookBean.bookFile}" />
+                    <div class="row center">
+                        <div class="col s6">
+                            <div class="file-field input-field">
+                                <div class="btn orange">
+                                    <span>#{msg['add.image']}</span>
+                                    <h:inputFile id="imageFile" value="#{currentBookBean.imageFile}"/>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col s6">
+                            <div class="file-field input-field">
+                                <div class="btn orange">
+                                    <span>#{msg['common.book']}</span>
+                                    <h:inputFile id="bookFile" value="#{currentBookBean.bookFile}"/>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text"/>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="row center detailPane">
@@ -101,12 +104,10 @@
                                        action="#{currentBookBean.doSave()}"><i
                                 class="material-icons left">cloud</i>#{msg['common.submit']}</h:commandLink>
                     </div>
-
                 </div>
 
             </h:form>
         </div>
-
     </ui:define>
 </ui:composition>
 </html>
