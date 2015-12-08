@@ -5,23 +5,29 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<ui:composition template="template/base_template.xhtml" >
+<ui:composition template="template/base_template.xhtml">
     <ui:define name="body">
         <div class="section no-pad-bot" id="index-banner">
             <div class="container">
                 <br></br><br></br>
+
                 <h1 class="header center orange-text fancyTitleFont">BookStore</h1>
+
                 <div class="row center">
-                    <h5 class="white-text header col s12 light">#{msg['indexPage.slogan']}</h5>
+                    <h5 id="indexSloagan" class="white-text header col s12 light">#{msg['indexPage.slogan']}</h5>
                 </div>
                 <h:form class="row center col s12">
                     <div class="input-field col s8 offset-s2">
-                    <h:inputText id="searchField" class="white-text" type="text" value="#{searchBean.search}">
-                        <f:passThroughAttribute name="placeholder" value="#{msg['common.title']}, #{msg['add.tags']}..."/>
-                    </h:inputText>
+                        <h:inputText id="searchField" class="white-text" type="text" value="#{searchBean.search}">
+                            <f:passThroughAttribute name="placeholder"
+                                                    value="#{msg['common.title']}, #{msg['add.tags']}..."/>
+                        </h:inputText>
                         <label class="orange-text" for="searchField">#{msg['common.search']}</label>
                     </div>
-                        <h:commandLink id="searchIcon" class="left s1 z-depth-3 btn-floating btn-large waves-effect waves-light orange midIcon" action="#{searchBean.doSearch()}"><i class="material-icons">search</i></h:commandLink>
+                    <h:commandLink id="searchIcon"
+                                   class="left s1 z-depth-3 btn-floating btn-large waves-effect waves-light orange midIcon"
+                                   action="#{searchBean.doSearch()}"><i
+                            class="material-icons">search</i></h:commandLink>
                 </h:form>
             </div>
         </div>

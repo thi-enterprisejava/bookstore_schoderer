@@ -1,6 +1,8 @@
 package de.schoderer.bookstore.db;
 
 import de.schoderer.bookstore.domain.Book;
+import de.schoderer.bookstore.domain.Tag;
+import de.schoderer.bookstore.utils.interceptor.TimeLogging;
 
 import java.io.Serializable;
 import java.util.List;
@@ -10,21 +12,30 @@ import java.util.List;
  * <p>
  * Simple interface, which provides the CRUD-Methods for the persistence
  */
-public interface BookPersistence extends Serializable{
-
+@TimeLogging
+public interface BookPersistence extends Serializable {
 
 
     List<Book> fetchAllBooks();
 
     List<Book> fetchAllBooksByTitle(String title);
 
-    List<Book> fetchAllBooksByTag(String tag);
+    List<Book> fetchAllBooksWithTagID(long tagId);
 
     Book fetchBookByID(long id);
 
-    void saveBook(Book book);
+    Book saveBook(Book book);
 
-    void updateBook(Book book);
+    Book updateBook(Book book);
 
     void removeBook(Book book);
+
+
+    Tag saveTag(Tag tag);
+
+    Tag fetchTagByID(long id);
+
+    Tag fetchTagByName(String name);
+
+    List<Tag> fetchAllTags();
 }

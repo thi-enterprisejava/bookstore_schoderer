@@ -26,8 +26,8 @@ public class BooksRestApi {
     @GET
     @Produces("application/json")
     @Path("tag/{tag}")
-    public List<Book> getBooksByTag(@PathParam("tag") String tag) {
-        return persistence.fetchAllBooksByTag(tag);
+    public List<Book> getBooksByTag(@PathParam("tag") long tag) {
+        return persistence.fetchAllBooksWithTagID(tag);
     }
 
     @GET

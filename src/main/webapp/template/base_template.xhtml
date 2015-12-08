@@ -3,13 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-        >
+>
 
 <h:head>
 
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css" media="screen,projection" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css"
+          media="screen,projection"/>
     <link href="css/main_style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
     <ui:insert name="header">
     </ui:insert>
@@ -20,18 +21,28 @@
 
     <nav class="blue-grey darken-3" role="navigation">
         <h:form>
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="index.xhtml" class="brand-logo fancyTitleFont">BookStore</a>
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="index.xhtml" class="brand-logo fancyTitleFont">BookStore</a>
 
-            <ul class="right hide-on-med-and-down">
-                <li id="navIndex" class="#{activePageBean.indexPage}"><a href="#{activePageBean.switchPage('INDEX')}">#{msg['common.search']}</a></li>
-                <li id="navList" class="#{activePageBean.listResultsPage}"><h:commandLink action="#{searchBean.fetchAllBooks()}">List all</h:commandLink></li>
-                <li id="navAdd" class="#{activePageBean.addBookPage}"><a href="#{activePageBean.switchPage('ADD')}">#{msg['common.add']}</a></li>
-            </ul>
+                <ul class="right hide-on-med-and-down">
+                    <li id="navIndex" class="#{activePageBean.indexPage}"><a
+                            href="#{activePageBean.switchPage('INDEX')}">#{msg['common.search']}</a></li>
+                    <li id="navList" class="#{activePageBean.listResultsPage}"><h:commandLink
+                            action="#{searchBean.fetchAllBooks()}">List all</h:commandLink></li>
+                    <li id="navAdd" class="#{activePageBean.addBookPage}"><a
+                            href="#{activePageBean.switchPage('ADD')}">#{msg['common.add']}</a></li>
+                </ul>
 
-        </div>
+            </div>
         </h:form>
     </nav>
+
+    <h:panelGroup styleClass="detailPane" rendered="#{! empty facesContext.maximumSeverity}">
+
+        <h:messages errorClass="errorMessage" infoClass="infoMessage" layout="table" globalOnly="true"
+                    showDetail="false" showSummary="true"/>
+
+    </h:panelGroup>
     <ui:insert name="body">
         Couldn't insert body....
 
@@ -40,7 +51,8 @@
 
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 
 

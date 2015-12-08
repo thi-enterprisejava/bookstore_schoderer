@@ -2,9 +2,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
-
 
 <ui:composition template="template/base_template.xhtml">
     <ui:define name="header">
@@ -14,12 +14,10 @@
         </f:metadata>
     </ui:define>
 
-
     <ui:define name="body">
         <div class="container">
-            <h:form class="col s12">
+            <h:form class="col s12" enctype="multipart/form-data">
                 <div class="row center detailPane">
-
                     <div class="input-field col s12">
                         <h:inputText id="bookName" type="text" class="validate black-text"
                                      value="#{currentBookBean.currentBook.title}"/>
@@ -27,16 +25,13 @@
                     </div>
                 </div>
                 <div class="row center detailPane">
-                    <p>Author</p>
                     <div class="input-field col s12">
                         <h:inputText id="authorName" type="text" class="validate black-text"
                                      value="#{currentBookBean.currentBook.author}"/>
                         <label for="authorName" class="black-text">#{msg['common.author']}</label>
                     </div>
-
                 </div>
                 <div class="row center detailPane">
-                    <p>Details</p>
                     <div class="row  center">
                         <div class="input-field col s12">
                             <h:inputTextarea id="textarea1" class="materialize-textarea black-text"
@@ -44,12 +39,11 @@
                             <label for="textarea1" class="black-text">#{msg['add.description']}</label>
                         </div>
                     </div>
-
-
                     <div class="row center">
                         <div class="input-field col s3 ">
                             <h:inputText id="year" type="number" class="validate black-text"
-                                         value="#{currentBookBean.currentBook.publishedYear}"/>
+                                         value="#{currentBookBean.currentBook.publishedYear}"
+                                         converter="javax.faces.Integer"/>
                             <label for="year" class="black-text">#{msg['add.publishedYear']}</label>
                         </div>
                         <div class="input-field col s3 ">
@@ -57,37 +51,64 @@
                                          value="#{currentBookBean.currentBook.isbn}"/>
                             <label for="isbn" class=" black-text">#{msg['details.isbn']}</label>
                         </div>
-
-                    </div>
-                    <div class="row center">
                         <div class="input-field col s4">
-                            <h:inputText id="tags" type="text" class="validate black-text" value="#{currentBookBean.tag}"/>
+                            <h:inputText immediate="true" id="tags" type="text" class="validate black-text"
+                                         value="#{currentBookBean.tag}"/>
                             <label for="tags" class=" black-text">#{msg['add.tags']}</label>
                         </div>
-                        <h:commandLink immediate="false" id="searchIcon"
-                                       class="waves-effect waves-light btn s1 z-depth-2 orange midIcon"
-                                       action="#{currentBookBean.doAddTag()}">#{msg['add.addTags']}</h:commandLink>
-
+                        <div class="col s1">
+                            <h:commandLink id="searchIcon"
+                                           class="waves-effect waves-light btn s1 z-depth-2 orange midIcon"
+                                           action="#{currentBookBean.doAddTag()}">#{msg['add.addTags']}</h:commandLink>
+                        </div>
                     </div>
-                    <div class="row center">
+                    <div class="row left">
                         <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tags">
                             <div class="chip">
                                 #{tags.tag}
-                                <i class="material-icons black-text">close</i>
+                                <h:commandLink immediate="true" action="#{currentBookBean.removeTag(tags.tag)}"
+                                               class="material-icons black-text">close</h:commandLink>
                             </div>
                         </ui:repeat>
                     </div>
+                </div>
+                <div class="row center detailPane">
+                    <div class="row center">
+                        <div class="col s6">
+                            <div class="file-field input-field">
+                                <div class="btn orange">
+                                    <span>#{msg['add.image']}</span>
+                                    <h:inputFile id="imageFile" value="#{currentBookBean.imageFile}"/>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text"/>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="col s6">
+                            <div class="file-field input-field">
+                                <div class="btn orange">
+                                    <span>#{msg['common.book']}</span>
+                                    <h:inputFile id="bookFile" value="#{currentBookBean.bookFile}"/>
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row center detailPane">
                     <div class="row center">
                         <h:commandLink class="waves-effect waves-light btn z-depth-2 orange"
-                                       action="#{currentBookBean.doSave}"><i
+                                       action="#{currentBookBean.doSave()}"><i
                                 class="material-icons left">cloud</i>#{msg['common.submit']}</h:commandLink>
                     </div>
                 </div>
+
             </h:form>
         </div>
-
-
     </ui:define>
 </ui:composition>
 </html>

@@ -25,16 +25,15 @@ public class SearchBean implements Serializable {
     private String search;
     private List<Book> searchResults;
 
-    public String fetchAllBooks(){
+    public String fetchAllBooks() {
         searchResults = persistence.fetchAllBooks();
         return navBean.switchPage(Pages.LIST);
     }
 
-    public String doSearch(){
+    public String doSearch() {
         searchResults = persistence.fetchAllBooksByTitle(search);
         return navBean.switchPage(Pages.LIST);
     }
-
 
     public String getSearch() {
         return search;

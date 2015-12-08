@@ -1,0 +1,19 @@
+<log4j:configuration debug="true"
+                     xmlns:log4j='http://jakarta.apache.org/log4j/'>
+
+
+    <appender name="fileAppender" class="org.apache.log4j.ConsoleAppender">
+        <param name="append" value="false"/>
+        <param name="file" value="log4j.log"/>
+
+        <layout class="org.apache.log4j.PatternLayout">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </layout>
+    </appender>
+
+    <root>
+        <level value="DEBUG"/>
+        <appender-ref ref="fileAppender"/>
+    </root>
+
+</log4j:configuration>

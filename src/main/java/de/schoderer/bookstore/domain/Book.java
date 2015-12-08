@@ -2,6 +2,7 @@ package de.schoderer.bookstore.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -10,6 +11,12 @@ import java.util.Objects;
  * Created by michael on 23.10.15.
  */
 @Entity
+@NamedQueries({
+
+        @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
+        @NamedQuery(name = "Book.findByName", query = "SELECT b FROM Book b WHERE b.title LIKE :booktitle")
+        // @NamedQuery(name = "Book.findBooksWithTagId", query = "SELECT b FROM Book b WHERE b.id IN (SELECT bt.id FROM Book bt WHERE bt.tags = :tagid)")
+})
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,15 +29,18 @@ public class Book implements Serializable {
     private int publishedYear;
     private String isbn;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private DataFileLocation data;
 
-    @ManyToMany
+    @ManyToMany(targetEntity = Tag.class, fetch = FetchType.EAGER)
     private List<Tag> tags;
 
 
     public Book() {
         tags = new ArrayList<>();
+        data = new DataFileLocation();
+        //Set the year to the actual year
+        publishedYear = LocalDate.now().getYear();
     }
 
     public Book(String title, String author, String description, int publishedYear, String isbn) {
@@ -98,6 +108,7 @@ public class Book implements Serializable {
         this.data = data;
     }
 
+
     public List<Tag> getTags() {
         return (tags);
     }
@@ -106,17 +117,6 @@ public class Book implements Serializable {
         this.tags = tags;
     }
 
-    @Override
-    public String toString() {
-        return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", description='" + description + '\'' +
-                ", publishedYear=" + publishedYear +
-                ", isbn='" + isbn + '\'' +
-                ", tags=" + tags +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -133,4 +133,18 @@ public class Book implements Serializable {
         return Objects.hash(title, author, isbn);
     }
 
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", author='" + author + '\'' +
+                ", description='" + description + '\'' +
+                ", publishedYear=" + publishedYear +
+                ", isbn='" + isbn + '\'' +
+                ", data=" + data +
+                ", tags=" + tags +
+                '}';
+    }
 }

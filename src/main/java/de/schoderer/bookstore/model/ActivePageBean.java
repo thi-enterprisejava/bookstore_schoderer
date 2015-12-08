@@ -1,6 +1,7 @@
 package de.schoderer.bookstore.model;
 
 import de.schoderer.bookstore.utils.Pages;
+import org.apache.log4j.Logger;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -11,21 +12,22 @@ import java.io.Serializable;
  */
 @Named
 @SessionScoped
-public class ActivePageBean implements Serializable{
+public class ActivePageBean implements Serializable {
+    private static final Logger LOG = Logger.getLogger(ActivePageBean.class);
+
     private static final String ACTIVE_CSS_CLASS = "active";
     private String addBookPage = "";
     private String indexPage = "active";
     private String listResultsPage = "";
 
 
-    public String switchPage(String page){
+    public String switchPage(String page) {
         return switchPage(Pages.valueOf(page));
     }
 
-    public String switchPage(Pages page){
+    public String switchPage(Pages page) {
         resetCssClassStrings();
-        switch(page){
-
+        switch (page) {
             case INDEX:
                 indexPage = ACTIVE_CSS_CLASS;
                 break;
@@ -36,13 +38,12 @@ public class ActivePageBean implements Serializable{
                 addBookPage = ACTIVE_CSS_CLASS;
                 break;
         }
+        LOG.info("Switched page to: " + page.toString());
         return page.getFileName();
     }
 
 
-
-
-    private void resetCssClassStrings(){
+    private void resetCssClassStrings() {
         addBookPage = "";
         indexPage = "";
         listResultsPage = "";

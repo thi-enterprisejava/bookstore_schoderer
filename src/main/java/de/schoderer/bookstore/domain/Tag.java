@@ -1,24 +1,32 @@
 package de.schoderer.bookstore.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Created by schod on 07.11.2015.
  */
 @Entity
-public class Tag {
+@NamedQueries({
+        @NamedQuery(name = "Tag.findLike", query = "SELECT t FROM Tag t WHERE  t.tag LIKE :name"),
+        @NamedQuery(name = "Tag.findByName", query = "SELECT t FROM Tag t WHERE  t.tag = :name"),
+        @NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t")
+
+})
+public class Tag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-
+    @Column(unique = true)
     private String tag;
 
     public Tag() {
+    }
+
+    public Tag(String tag) {
+        this.tag = tag;
     }
 
     public long getId() {
@@ -27,10 +35,6 @@ public class Tag {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Tag(String tag) {
-        this.tag = tag;
     }
 
     public String getTag() {
@@ -49,8 +53,16 @@ public class Tag {
         return Objects.equals(tag, tag1.tag);
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(tag);
+    }
+
+    @Override
+    public String toString() {
+        return "Tag{" +
+                "tag='" + tag + '\'' +
+                '}';
     }
 }
