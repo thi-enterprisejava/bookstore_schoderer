@@ -4,6 +4,7 @@ import de.schoderer.bookstore.db.BookPersistence;
 import de.schoderer.bookstore.domain.Book;
 import de.schoderer.bookstore.domain.DataFileLocation;
 import de.schoderer.bookstore.domain.Tag;
+import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.Logger;
 
 import javax.faces.view.ViewScoped;
@@ -15,6 +16,9 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -77,11 +81,37 @@ public class CurrentBookBean implements Serializable {
     }
 
     public void doSave() {
-        LOG.info(" - Current list size: " + currentBook.getTags().size());
         currentBook.setData(uploadAndSaveFiles());
-        persistence.saveBook(currentBook);
+        saveTags(currentBook);
+        if (id < 0) {
+            persistence.saveBook(currentBook);
+        } else {
+            persistence.updateBook(currentBook);
+        }
         LOG.info("Saveing book:" + currentBook + " - With Tags: " + currentBook.getTags().size());
         currentBook = new Book();
+    }
+
+    /**
+     * Exchanges the Tags of the Book with the Tags in the Database (if exists)
+     * Made to make sure a Tag is unique in the Database
+     *
+     * @param currentBook
+     */
+    private void saveTags(Book currentBook) {
+        List<Tag> tagsInDatabase = persistence.fetchAllTags();
+        List<Tag> tagsWithID = new ArrayList<>(currentBook.getTags().size());
+        for (Iterator<Tag> tagIterator = currentBook.getTags().iterator(); tagIterator.hasNext(); ) {
+            Tag tag = tagIterator.next();
+            Tag databaseTag;
+            if (tagsInDatabase.contains(tag)) {
+                databaseTag = tagsInDatabase.get(tagsInDatabase.indexOf(tag));
+            } else {
+                databaseTag = persistence.saveTag(tag);
+            }
+            tagsWithID.add(databaseTag);
+        }
+        currentBook.setTags(tagsWithID);
     }
 
 
@@ -108,9 +138,31 @@ public class CurrentBookBean implements Serializable {
         return filePath.toString();
     }
 
+    /**
+     * Create a Random Filename for the file on the server (protection from accidentilly overrride)
+     *
+     * @param fileName
+     * @return
+     */
     private String createFileName(String fileName) {
         int beginIndex = fileName.lastIndexOf(".");
         return fileName.substring(0, beginIndex - 1) + "_" + Math.abs(random.nextLong()) + fileName.substring(beginIndex);
+    }
+
+
+    public String deleteBook() {
+        removeFiles();
+        persistence.removeBook(currentBook);
+        return pageSwitcher.switchPage(Pages.INDEX);
+    }
+
+    private void removeFiles() {
+        try {
+            Files.deleteIfExists(Paths.get(currentBook.getData().getFileLocation()));
+            Files.deleteIfExists(Paths.get(currentBook.getData().getImageLocation()));
+        } catch (IOException e) {
+            LOG.error(e.getMessage(), e);
+        }
     }
 
     public long getId() {

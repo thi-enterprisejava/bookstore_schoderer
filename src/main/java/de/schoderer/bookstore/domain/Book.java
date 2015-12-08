@@ -32,7 +32,7 @@ public class Book implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     private DataFileLocation data;
 
-    @ManyToMany(targetEntity = Tag.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(targetEntity = Tag.class, fetch = FetchType.EAGER)
     private List<Tag> tags;
 
 

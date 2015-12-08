@@ -11,6 +11,7 @@ import java.util.Objects;
 @NamedQueries({
         @NamedQuery(name = "Tag.findLike", query = "SELECT t FROM Tag t WHERE  t.tag LIKE :name"),
         @NamedQuery(name = "Tag.findByName", query = "SELECT t FROM Tag t WHERE  t.tag = :name"),
+        @NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t")
 
 })
 public class Tag implements Serializable {

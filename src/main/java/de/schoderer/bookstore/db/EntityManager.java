@@ -49,23 +49,29 @@ public class EntityManager implements BookPersistence {
     @Override
     @Transactional
     public Book saveBook(Book book) {
-
-        //TODO save tags seperate
         em.persist(book);
-        // Should normally be automatically done at the end of transaction.
-        //em.flush();
         return book;
     }
 
     @Override
     @Transactional
     public Book updateBook(Book book) {
+        if (!em.contains(book)) {
+            book = em.merge(book);
+        }
         em.merge(book);
         return book;
     }
 
+    /**
+     * Check if the book is in the current transaction context, if not merge it in the current context
+     * @param book
+     */
     @Override
     public void removeBook(Book book) {
+        if (!em.contains(book)) {
+            book = em.merge(book);
+        }
         em.remove(book);
     }
 
@@ -84,5 +90,11 @@ public class EntityManager implements BookPersistence {
     public Tag fetchTagByName(String name) {
         TypedQuery<Tag> query = em.createNamedQuery("Tag.findByName", Tag.class);
         return query.getSingleResult();
+    }
+
+    @Override
+    public List<Tag> fetchAllTags() {
+        TypedQuery<Tag> query = em.createNamedQuery("Tag.findAll", Tag.class);
+        return query.getResultList();
     }
 }

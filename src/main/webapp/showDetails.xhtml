@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
 >
 
 
@@ -54,9 +56,14 @@
                 <i class="large material-icons">list</i>
             </a>
             <ul>
-                <li><a class="btn-floating red"><i class="material-icons">delete</i></a></li>
-                <li><a class="btn-floating green"><i class="material-icons">mode_edit</i></a></li>
-                <li><a class="btn-floating blue"><i class="material-icons">play_for_work</i></a></li>
+                <h:form>
+                    <li><h:commandLink action="#{currentBookBean.deleteBook()}" class="btn-floating red"><i class="material-icons">delete</i></h:commandLink>
+                    </li>
+                    <li><h:commandLink action="#{activePageBean.switchPage('ADD')}" class="btn-floating green"><i class="material-icons">mode_edit</i>
+                        <f:param name="bookID" value="#{currentBookBean.currentBook.id}"/>
+                    </h:commandLink></li>
+                    <li><a class="btn-floating blue"><i class="material-icons">play_for_work</i></a></li>
+                </h:form>
             </ul>
         </div>
     </ui:define>

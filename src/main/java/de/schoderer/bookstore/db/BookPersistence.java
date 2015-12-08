@@ -30,9 +30,12 @@ public interface BookPersistence extends Serializable {
 
     void removeBook(Book book);
 
+
     Tag saveTag(Tag tag);
 
     Tag fetchTagByID(long id);
 
     Tag fetchTagByName(String name);
+
+    List<Tag> fetchAllTags();
 }
