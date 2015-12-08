@@ -14,8 +14,8 @@ import java.util.Objects;
 @NamedQueries({
 
         @NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
-        @NamedQuery(name="Book.findByName", query = "SELECT b FROM Book b WHERE b.title LIKE :booktitle")
-       // @NamedQuery(name = "Book.findBooksWithTagId", query = "SELECT b FROM Book b WHERE b.id IN (SELECT bt.id FROM Book bt WHERE bt.tags = :tagid)")
+        @NamedQuery(name = "Book.findByName", query = "SELECT b FROM Book b WHERE b.title LIKE :booktitle")
+        // @NamedQuery(name = "Book.findBooksWithTagId", query = "SELECT b FROM Book b WHERE b.id IN (SELECT bt.id FROM Book bt WHERE bt.tags = :tagid)")
 })
 public class Book implements Serializable {
     @Id

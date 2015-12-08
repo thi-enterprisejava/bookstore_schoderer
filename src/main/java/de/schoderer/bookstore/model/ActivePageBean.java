@@ -1,7 +1,6 @@
 package de.schoderer.bookstore.model;
 
 import de.schoderer.bookstore.utils.Pages;
-import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import javax.enterprise.context.SessionScoped;

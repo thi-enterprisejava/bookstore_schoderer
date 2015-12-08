@@ -16,7 +16,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Random;
-import java.util.UUID;
 
 /**
  * Created by schod on 07.11.2015.
@@ -32,7 +31,6 @@ public class CurrentBookBean implements Serializable {
     private ActivePageBean pageSwitcher;
     private BookPersistence persistence;
 
-    private boolean isValid = false;
     private Book currentBook;
 
 
@@ -68,19 +66,18 @@ public class CurrentBookBean implements Serializable {
         if (string != null && !"".equals(string)) {
             currentBook.getTags().add(new Tag(tag.toUpperCase()));
         }
-        LOG.info("Added Tag: " + tag + " - Current list size: "+currentBook.getTags().size());
+        LOG.info("Added Tag: " + tag + " - Current list size: " + currentBook.getTags().size());
     }
 
     public void removeTag(String tag) {
-        LOG.info("Removing Tag:" + tag + " BookTags: "+currentBook.getTags().size());
+        LOG.info("Removing Tag:" + tag + " BookTags: " + currentBook.getTags().size());
         currentBook.getTags().removeIf(bookTag -> bookTag.getTag().equals(tag));
-        LOG.info("Removed!! - BookTags: "+currentBook.getTags().size());
+        LOG.info("Removed!! - BookTags: " + currentBook.getTags().size());
 
     }
 
     public void doSave() {
-        LOG.info(" - Current list size: "+currentBook.getTags().size());
-        isValid = false;
+        LOG.info(" - Current list size: " + currentBook.getTags().size());
         currentBook.setData(uploadAndSaveFiles());
         persistence.saveBook(currentBook);
         LOG.info("Saveing book:" + currentBook + " - With Tags: " + currentBook.getTags().size());
@@ -97,7 +94,6 @@ public class CurrentBookBean implements Serializable {
 
 
     private String uploadAndSaveFileToHardDisk(Part part) {
-        LOG.info("PartContentType: " + part.getContentType()+ " - PartName: " +part.getName()+ " Part SubmittedFiles "+ part.getSubmittedFileName());
         Path filePath = null;
         try {
             String fileName = part.getSubmittedFileName();
@@ -114,7 +110,7 @@ public class CurrentBookBean implements Serializable {
 
     private String createFileName(String fileName) {
         int beginIndex = fileName.lastIndexOf(".");
-        return fileName.substring(0,beginIndex-1)+"_" + Math.abs(random.nextLong())+ fileName.substring(beginIndex);
+        return fileName.substring(0, beginIndex - 1) + "_" + Math.abs(random.nextLong()) + fileName.substring(beginIndex);
     }
 
     public long getId() {
@@ -157,11 +153,4 @@ public class CurrentBookBean implements Serializable {
         this.bookFile = bookFile;
     }
 
-    public boolean isValid() {
-        return isValid;
-    }
-
-    public void setValid(boolean valid) {
-        this.isValid = valid;
-    }
 }

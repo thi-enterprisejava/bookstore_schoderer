@@ -19,7 +19,7 @@
 
 <h:body>
 
-    <nav class="blue-grey darken-3" role="navigation" >
+    <nav class="blue-grey darken-3" role="navigation">
         <h:form>
             <div class="nav-wrapper container">
                 <a id="logo-container" href="index.xhtml" class="brand-logo fancyTitleFont">BookStore</a>
@@ -37,9 +37,10 @@
         </h:form>
     </nav>
 
-    <h:panelGroup styleClass="detailPane"  rendered="#{! empty facesContext.maximumSeverity}" >
+    <h:panelGroup styleClass="detailPane" rendered="#{! empty facesContext.maximumSeverity}">
 
-        <h:messages errorClass="errorMessage" infoClass="infoMessage" layout="table" globalOnly="true" showDetail="false" showSummary="true"/>
+        <h:messages errorClass="errorMessage" infoClass="infoMessage" layout="table" globalOnly="true"
+                    showDetail="false" showSummary="true"/>
 
     </h:panelGroup>
     <ui:insert name="body">

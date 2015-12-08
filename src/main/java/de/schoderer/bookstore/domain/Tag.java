@@ -2,7 +2,6 @@ package de.schoderer.bookstore.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -10,8 +9,8 @@ import java.util.Objects;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name="Tag.findLike",query = "SELECT t FROM Tag t WHERE  t.tag LIKE :name"),
-        @NamedQuery(name="Tag.findByName", query =  "SELECT t FROM Tag t WHERE  t.tag = :name"),
+        @NamedQuery(name = "Tag.findLike", query = "SELECT t FROM Tag t WHERE  t.tag LIKE :name"),
+        @NamedQuery(name = "Tag.findByName", query = "SELECT t FROM Tag t WHERE  t.tag = :name"),
 
 })
 public class Tag implements Serializable {

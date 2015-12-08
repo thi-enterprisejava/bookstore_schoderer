@@ -2,11 +2,8 @@ package de.schoderer.bookstore.db;
 
 import de.schoderer.bookstore.domain.Book;
 import de.schoderer.bookstore.domain.Tag;
-import de.schoderer.bookstore.utils.interceptor.TimeLogging;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.inject.Named;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
