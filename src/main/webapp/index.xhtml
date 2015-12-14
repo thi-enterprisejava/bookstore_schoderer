@@ -19,6 +19,8 @@
                 <h:form class="row center col s12">
                     <div class="input-field col s8 offset-s2">
                         <h:inputText id="searchField" class="white-text" type="text" value="#{searchBean.search}">
+                            <f:validateRequired/>
+                            <f:validateLength minimum="3"/>
                             <f:passThroughAttribute name="placeholder"
                                                     value="#{msg['common.title']}, #{msg['add.tags']}..."/>
                         </h:inputText>
