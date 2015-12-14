@@ -20,14 +20,23 @@
                 <div class="row center detailPane">
                     <div class="input-field col s12">
                         <h:inputText id="bookName" type="text" class="validate black-text"
-                                     value="#{currentBookBean.currentBook.title}"/>
+                                     value="#{currentBookBean.currentBook.title}">
+                            <f:validateRequired/>
+                            <f:validateLength minimum="3"/>
+
+
+                        </h:inputText>
                         <label for="bookName" class="black-text">#{msg['add.booktitle']}</label>
                     </div>
                 </div>
                 <div class="row center detailPane">
                     <div class="input-field col s12">
                         <h:inputText id="authorName" type="text" class="validate black-text"
-                                     value="#{currentBookBean.currentBook.author}"/>
+                                     value="#{currentBookBean.currentBook.author}">
+                            <f:validateRequired/>
+                            <f:validateLength minimum="3"/>
+
+                        </h:inputText>
                         <label for="authorName" class="black-text">#{msg['common.author']}</label>
                     </div>
                 </div>
@@ -35,7 +44,9 @@
                     <div class="row  center">
                         <div class="input-field col s12">
                             <h:inputTextarea id="textarea1" class="materialize-textarea black-text"
-                                             value="#{currentBookBean.currentBook.description}"/>
+                                             value="#{currentBookBean.currentBook.description}">
+                                <f:validateLength minimum="3" maximum="1024"/>
+                            </h:inputTextarea>
                             <label for="textarea1" class="black-text">#{msg['add.description']}</label>
                         </div>
                     </div>
@@ -43,14 +54,23 @@
                         <div class="input-field col s3 ">
                             <h:inputText id="year" type="number" class="validate black-text"
                                          value="#{currentBookBean.currentBook.publishedYear}"
-                                         converter="javax.faces.Integer"/>
+                                         converter="javax.faces.Integer">
+                                <f:validateRequired/>
+                                <f:validateLongRange minimum="1500"
+                                                     maximum="3000"/>
+
+
+                            </h:inputText>
                             <label for="year" class="black-text">#{msg['add.publishedYear']}</label>
                         </div>
                         <div class="input-field col s3 ">
                             <h:inputText id="isbn" type="text" class="validate black-text"
-                                         value="#{currentBookBean.currentBook.isbn}"/>
+                                         value="#{currentBookBean.currentBook.isbn}">
+                                <f:validateRegex pattern="^ISBN\s(?=[-0-9xX ]{13}$)(?:[0-9]+[- ]){3}[0-9]*[xX0-9]$"/>
+                            </h:inputText>
                             <label for="isbn" class=" black-text">#{msg['details.isbn']}</label>
                         </div>
+<<<<<<< HEAD
                         <div class="input-field col s4">
                             <h:inputText immediate="true" id="tags" type="text" class="validate black-text"
                                          value="#{currentBookBean.tag}"/>
@@ -61,12 +81,28 @@
                                            class="waves-effect waves-light btn s1 z-depth-2 orange midIcon"
                                            action="#{currentBookBean.doAddTags()}">#{msg['add.addTags']}</h:commandLink>
                         </div>
+=======
+                        <h:form>
+                            <div class="input-field col s4">
+                                <h:inputText immediate="true" id="tags" type="text" class="validate black-text"
+                                             value="#{currentBookBean.tag}">
+                                    <f:validateLength minimum="3" maximum="20"/>
+                                </h:inputText>
+                                <label for="tags" class=" black-text">#{msg['add.tags']}</label>
+                            </div>
+                            <div class="col s1">
+                                <h:commandLink  id="searchIcon"
+                                               class="waves-effect waves-light btn s1 z-depth-2 orange midIcon"
+                                               action="#{currentBookBean.doAddTag()}">#{msg['add.addTags']}</h:commandLink>
+                            </div>
+                        </h:form>
+>>>>>>> Started Validation
                     </div>
                     <div class="row left">
                         <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tags">
                             <div class="chip">
                                 #{tags.tag}
-                                <h:commandLink immediate="true" action="#{currentBookBean.removeTag(tags.tag)}"
+                                <h:commandLink action="#{currentBookBean.removeTag(tags.tag)}"
                                                class="material-icons black-text">close</h:commandLink>
                             </div>
                         </ui:repeat>

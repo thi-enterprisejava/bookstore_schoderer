@@ -18,7 +18,6 @@
 
 
 <h:body>
-
     <nav class="blue-grey darken-3" role="navigation">
         <h:form>
             <div class="nav-wrapper container">
@@ -36,18 +35,18 @@
             </div>
         </h:form>
     </nav>
-
-    <h:panelGroup styleClass="detailPane" rendered="#{! empty facesContext.maximumSeverity}">
-
-        <h:messages errorClass="errorMessage" infoClass="infoMessage" layout="table" globalOnly="true"
-                    showDetail="false" showSummary="true"/>
-
+    <h:panelGroup styleClass="container row center" rendered="#{! empty facesContext.maximumSeverity}">
+        <div class="detailPane">
+            <h:messages style="color:red;margin:8px;" />
+        </div>
     </h:panelGroup>
+
     <ui:insert name="body">
         Couldn't insert body....
 
 
     </ui:insert>
+
 
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
