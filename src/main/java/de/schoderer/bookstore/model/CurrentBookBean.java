@@ -17,9 +17,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 /**
  * Created by schod on 07.11.2015.
@@ -39,7 +39,7 @@ public class CurrentBookBean implements Serializable {
 
 
     private String tag;
-    private long id = -1;
+    private Long id;
     private Part imageFile;
     private Part bookFile;
 
@@ -52,43 +52,50 @@ public class CurrentBookBean implements Serializable {
     }
 
     public void doSetCurrentBook() {
-        if (id > 0) {
-            currentBook = persistence.fetchBookByID(id);
-        } else {
-            LOG.info("Setting currentBook to new");
+        if (id == null) {
             currentBook = new Book();
+        } else {
+            currentBook = persistence.fetchBookByID(id);
+            id = null;
         }
     }
 
 
-    public void doAddTag() {
-        doAddTag(tag);
+    public void doAddTags() {
+        doAddTags(tag);
         tag = "";
     }
 
-    public void doAddTag(String string) {
+    public void doAddTags(String string) {
         if (string != null && !"".equals(string)) {
-            currentBook.getTags().add(new Tag(tag.toUpperCase()));
+            Stream.of(string.split(",")).forEach(tag -> currentBook.getTags().add(new Tag(tag.trim())));
         }
-        LOG.info("Added Tag: " + tag + " - Current list size: " + currentBook.getTags().size());
+        if(LOG.isInfoEnabled()){
+            LOG.info("Added Tag: " + tag + " - Current list size: " + currentBook.getTags().size());
+        }
     }
 
     public void removeTag(String tag) {
-        LOG.info("Removing Tag:" + tag + " BookTags: " + currentBook.getTags().size());
+       if(LOG.isInfoEnabled()){
+           LOG.info("Removed Tag: "+tag);
+       }
         currentBook.getTags().removeIf(bookTag -> bookTag.getTag().equals(tag));
-        LOG.info("Removed!! - BookTags: " + currentBook.getTags().size());
-
     }
 
+    /**
+     * Saves the book to the db and uploades the files to the server
+     */
     public void doSave() {
-        currentBook.setData(uploadAndSaveFiles());
-        saveTags(currentBook);
-        if (id < 0) {
+
+        if (id == null) {
+            currentBook.setData(uploadAndSaveFiles());
+            saveTags(currentBook);
             persistence.saveBook(currentBook);
         } else {
+            currentBook.setData(uploadAndSaveFiles());
+            saveTags(currentBook);
             persistence.updateBook(currentBook);
         }
-        LOG.info("Saveing book:" + currentBook + " - With Tags: " + currentBook.getTags().size());
         currentBook = new Book();
     }
 
@@ -101,8 +108,7 @@ public class CurrentBookBean implements Serializable {
     private void saveTags(Book currentBook) {
         List<Tag> tagsInDatabase = persistence.fetchAllTags();
         List<Tag> tagsWithID = new ArrayList<>(currentBook.getTags().size());
-        for (Iterator<Tag> tagIterator = currentBook.getTags().iterator(); tagIterator.hasNext(); ) {
-            Tag tag = tagIterator.next();
+        currentBook.getTags().forEach(tag -> {
             Tag databaseTag;
             if (tagsInDatabase.contains(tag)) {
                 databaseTag = tagsInDatabase.get(tagsInDatabase.indexOf(tag));
@@ -110,32 +116,43 @@ public class CurrentBookBean implements Serializable {
                 databaseTag = persistence.saveTag(tag);
             }
             tagsWithID.add(databaseTag);
-        }
+        });
+
         currentBook.setTags(tagsWithID);
     }
 
 
     private DataFileLocation uploadAndSaveFiles() {
+        //TODO mabye onlay upload on update, when change happend
         DataFileLocation location = new DataFileLocation();
-        location.setFileLocation(uploadAndSaveFileToHardDisk(bookFile));
-        location.setImageLocation(uploadAndSaveFileToHardDisk(imageFile));
+        location.setFileLocation(uploadAndSaveFileToHardDisk(bookFile, true));
+        location.setImageLocation(uploadAndSaveFileToHardDisk(imageFile, false));
         return location;
     }
 
 
-    private String uploadAndSaveFileToHardDisk(Part part) {
+    private String uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
         Path filePath = null;
         try {
             String fileName = part.getSubmittedFileName();
-            //CreateRandomName for file
-            filePath = paths.resolve(createFileName(fileName));
+            filePath = getBasePath(isBook).resolve(createFileName(fileName));
             Files.copy(part.getInputStream(), filePath);
-            LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());
+            if (LOG.isInfoEnabled()) {
+                LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());
+            }
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
             return null;
         }
         return filePath.toString();
+    }
+
+    private static Path getBasePath(boolean isBook) {
+        if (isBook) {
+            return paths.resolve("books");
+        } else {
+            return paths.resolve("images");
+        }
     }
 
     /**
@@ -161,15 +178,15 @@ public class CurrentBookBean implements Serializable {
             Files.deleteIfExists(Paths.get(currentBook.getData().getFileLocation()));
             Files.deleteIfExists(Paths.get(currentBook.getData().getImageLocation()));
         } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
+            LOG.error("Couldn't delete Files of Book: " + currentBook.getTitle() + ": " + e.getMessage(), e);
         }
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

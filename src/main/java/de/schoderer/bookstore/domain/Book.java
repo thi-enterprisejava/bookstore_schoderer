@@ -20,13 +20,15 @@ import java.util.Objects;
 public class Book implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
 
     private String title;
     private String author;
+    @Column(length=2000)
     private String description;
     private int publishedYear;
+    @Column(length=20)
     private String isbn;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -38,7 +40,6 @@ public class Book implements Serializable {
 
     public Book() {
         tags = new ArrayList<>();
-        data = new DataFileLocation();
         //Set the year to the actual year
         publishedYear = LocalDate.now().getYear();
     }
