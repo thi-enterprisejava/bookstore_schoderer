@@ -1,0 +1,22 @@
+For serving static content on path:
+
+<buffer-cache name="default"/>
+            <server name="default-server">
+                <http-listener name="default" socket-binding="http" redirect-socket="https"/>
+                <host name="default-host" alias="localhost">
+                    <location name="/" handler="welcome-content"/>
+                    <location name="/img" handler="images"/>
+                    <location name="/book" handler="books"/>
+                    <filter-ref name="server-header"/>
+                    <filter-ref name="x-powered-by-header"/>
+                </host>
+            </server>
+            <servlet-container name="default">
+                <jsp-config/>
+                <websockets/>
+            </servlet-container>
+            <handlers>
+                <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
+                <file name="images" path="C:\Users\michael\files\images" directory-listing="false"/>
+                <file name="books" path="C:\Users\michael\files\books" directory-listing="false"/>
+            </handlers>

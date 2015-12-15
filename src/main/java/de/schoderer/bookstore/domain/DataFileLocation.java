@@ -15,8 +15,11 @@ public class DataFileLocation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    private String imageLocation;
-    private String fileLocation;
+
+    private String imageName;
+    private String fileName;
+    private String fullImagePath;
+    private String fullFilePath;
 
     public DataFileLocation() {
     }
@@ -29,20 +32,36 @@ public class DataFileLocation {
         this.id = id;
     }
 
-    public String getImageLocation() {
-        return imageLocation;
+    public String getImageName() {
+        return imageName;
     }
 
-    public void setImageLocation(String imageLocation) {
-        this.imageLocation = imageLocation;
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
-    public String getFileLocation() {
-        return fileLocation;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setFileLocation(String fileLocation) {
-        this.fileLocation = fileLocation;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getFullImagePath() {
+        return fullImagePath;
+    }
+
+    public void setFullImagePath(String fullImagePath) {
+        this.fullImagePath = fullImagePath;
+    }
+
+    public String getFullFilePath() {
+        return fullFilePath;
+    }
+
+    public void setFullFilePath(String fullFilePath) {
+        this.fullFilePath = fullFilePath;
     }
 
     @Override
@@ -50,21 +69,21 @@ public class DataFileLocation {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DataFileLocation that = (DataFileLocation) o;
-        return Objects.equals(imageLocation, that.imageLocation) &&
-                Objects.equals(fileLocation, that.fileLocation);
+        return Objects.equals(imageName, that.imageName) &&
+                Objects.equals(fileName, that.fileName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(imageLocation, fileLocation);
+        return Objects.hash(imageName, fileName);
     }
 
     @Override
     public String toString() {
         return "DataFileLocation{" +
                 "id=" + id +
-                ", imageLocation='" + imageLocation + '\'' +
-                ", fileLocation='" + fileLocation + '\'' +
+                ", imageName='" + imageName + '\'' +
+                ", fileName='" + fileName + '\'' +
                 '}';
     }
 }

@@ -38,7 +38,9 @@ public class ActivePageBean implements Serializable {
                 addBookPage = ACTIVE_CSS_CLASS;
                 break;
         }
-        LOG.info("Switched page to: " + page.toString());
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Switched page to: " + page.toString());
+        }
         return page.getFileName();
     }
 

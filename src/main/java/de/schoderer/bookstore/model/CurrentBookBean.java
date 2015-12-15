@@ -70,15 +70,15 @@ public class CurrentBookBean implements Serializable {
         if (string != null && !"".equals(string)) {
             Stream.of(string.split(",")).forEach(tag -> currentBook.getTags().add(new Tag(tag.trim())));
         }
-        if(LOG.isInfoEnabled()){
+        if (LOG.isInfoEnabled()) {
             LOG.info("Added Tag: " + tag + " - Current list size: " + currentBook.getTags().size());
         }
     }
 
     public void removeTag(String tag) {
-       if(LOG.isInfoEnabled()){
-           LOG.info("Removed Tag: "+tag);
-       }
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Removed Tag: " + tag);
+        }
         currentBook.getTags().removeIf(bookTag -> bookTag.getTag().equals(tag));
     }
 
@@ -125,13 +125,29 @@ public class CurrentBookBean implements Serializable {
     private DataFileLocation uploadAndSaveFiles() {
         //TODO mabye onlay upload on update, when change happend
         DataFileLocation location = new DataFileLocation();
-        location.setFileLocation(uploadAndSaveFileToHardDisk(bookFile, true));
-        location.setImageLocation(uploadAndSaveFileToHardDisk(imageFile, false));
+        uploadAndSaveBookLocation(location);
+        uploadAndSaveImageLocation(location);
         return location;
     }
 
+    private void uploadAndSaveImageLocation(DataFileLocation location) {
+        Path fullImagePath = uploadAndSaveFileToHardDisk(imageFile, false);
+        if (fullImagePath != null) {
+            location.setImageName(fullImagePath.getFileName().toString());
+            location.setFullImagePath(fullImagePath.toAbsolutePath().toString());
+        }
+    }
 
-    private String uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
+    private void uploadAndSaveBookLocation(DataFileLocation location) {
+        Path fullBookPath = uploadAndSaveFileToHardDisk(bookFile, true);
+        if (fullBookPath != null) {
+            location.setFileName(fullBookPath.getFileName().toString());
+            location.setFullFilePath(fullBookPath.toAbsolutePath().toString());
+        }
+    }
+
+
+    private Path uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
         Path filePath = null;
         try {
             String fileName = part.getSubmittedFileName();
@@ -142,9 +158,8 @@ public class CurrentBookBean implements Serializable {
             }
         } catch (IOException e) {
             LOG.error(e.getMessage(), e);
-            return null;
         }
-        return filePath.toString();
+        return filePath;
     }
 
     private static Path getBasePath(boolean isBook) {
@@ -175,8 +190,8 @@ public class CurrentBookBean implements Serializable {
 
     private void removeFiles() {
         try {
-            Files.deleteIfExists(Paths.get(currentBook.getData().getFileLocation()));
-            Files.deleteIfExists(Paths.get(currentBook.getData().getImageLocation()));
+            Files.deleteIfExists(Paths.get(currentBook.getData().getFullFilePath()));
+            Files.deleteIfExists(Paths.get(currentBook.getData().getFullImagePath()));
         } catch (IOException e) {
             LOG.error("Couldn't delete Files of Book: " + currentBook.getTitle() + ": " + e.getMessage(), e);
         }
