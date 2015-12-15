@@ -30,7 +30,7 @@ public class EntityManager implements BookPersistence {
     @Override
     public List<Book> fetchAllBooksByTitle(String title) {
         TypedQuery<Book> query = em.createNamedQuery("Book.findByName", Book.class);
-        query.setParameter("booktitle", title);
+        query.setParameter("booktitle", "%"+title+"%");
         return query.getResultList();
     }
 

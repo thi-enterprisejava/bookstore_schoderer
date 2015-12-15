@@ -41,7 +41,7 @@ public class ActivePageBean implements Serializable {
         if (LOG.isInfoEnabled()) {
             LOG.info("Switched page to: " + page.toString());
         }
-        return page.getFileName();
+        return page.getFileName()+"?faces-redirect=true";
     }
 
 

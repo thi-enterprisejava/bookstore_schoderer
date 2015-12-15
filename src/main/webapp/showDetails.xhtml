@@ -32,7 +32,7 @@
                     <p class="s2" style="float: left;">
                         <img class="materialboxed s2" width="150"
                              style="margin-left: 15px;margin-bottom: 15px; margin-right: 15px"
-                             src="../img/#{currentBookBean.currentBook.data.imageName}"></img>
+                             src="../img/#{currentBookBean.currentBook.data.imageName}"/>
                     </p>
 
                     <p>
@@ -59,8 +59,9 @@
                 <h:form>
                     <li><h:commandLink action="#{currentBookBean.deleteBook()}" class="btn-floating red"><i class="material-icons">delete</i></h:commandLink>
                     </li>
-                    <li><h:commandLink action="#{activePageBean.switchPage('ADD')}" class="btn-floating green"><i class="material-icons">mode_edit</i>
+                    <li><h:commandLink action="#{activePageBean.switchPage('ADD')}" class="btn-floating green">
                         <f:param name="bookID" value="#{currentBookBean.currentBook.id}"/>
+                        <i class="material-icons">mode_edit</i>
                     </h:commandLink></li>
                     <li><h:outputLink value="../book/#{currentBookBean.currentBook.data.fileName}" styleClass="btn-floating blue"><i class="material-icons">play_for_work</i></h:outputLink></li>
                 </h:form>

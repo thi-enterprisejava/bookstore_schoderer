@@ -124,7 +124,11 @@ public class CurrentBookBean implements Serializable {
 
     private DataFileLocation uploadAndSaveFiles() {
         //TODO mabye onlay upload on update, when change happend
-        DataFileLocation location = new DataFileLocation();
+        if (currentBook.getId() != null) {
+            return currentBook.getData();
+        }
+        DataFileLocation location;
+        location = new DataFileLocation();
         uploadAndSaveBookLocation(location);
         uploadAndSaveImageLocation(location);
         return location;
@@ -149,7 +153,11 @@ public class CurrentBookBean implements Serializable {
 
     private Path uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
         Path filePath = null;
+        if (part == null) {
+            return filePath;
+        }
         try {
+
             String fileName = part.getSubmittedFileName();
             filePath = getBasePath(isBook).resolve(createFileName(fileName));
             Files.copy(part.getInputStream(), filePath);
