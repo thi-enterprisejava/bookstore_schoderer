@@ -35,9 +35,11 @@
             </div>
         </h:form>
     </nav>
-    <h:panelGroup styleClass="container row center" rendered="#{! empty facesContext.maximumSeverity}">
-        <div class="detailPane">
-            <h:messages style="color:red;margin:8px;" />
+    <h:panelGroup styleClass="container" rendered="#{! empty facesContext.maximumSeverity}">
+        <div class="col s12">
+            <div class="row center detailPane">
+                <h:messages style="color:red;margin:8px;" layout="list"/>
+            </div>
         </div>
     </h:panelGroup>
 
@@ -46,7 +48,6 @@
 
 
     </ui:insert>
-
 
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
