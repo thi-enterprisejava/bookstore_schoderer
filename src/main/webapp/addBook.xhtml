@@ -16,7 +16,7 @@
 
     <ui:define name="body">
         <div class="container">
-            <h:form class="col s12" enctype="multipart/form-data">
+            <h:form id="addBookForm" class="col s12" enctype="multipart/form-data">
                 <div id="test" class="row center detailPane">
                     <div class="input-field col s12">
                         <h:inputText id="bookName" type="text" class="black-text"
@@ -68,28 +68,32 @@
                             </h:inputText>
                             <label for="isbn" class=" black-text">#{msg['details.isbn']}</label>
                         </div>
-                        <div class="input-field col s4">
-                            <h:inputText id="tags" type="text" class="black-text"
+                        <h:panelGroup id="addTagGroup" styleClass="input-field col s4">
+                            <h:inputText id="toAddTag" type="text" class="black-text"
                                          value="#{currentBookBean.tag}"/>
-                            <label for="tags" class=" black-text">#{msg['add.tags']}</label>
-                        </div>
-                        <div class="col s1">
+                            <label for="toAddTag" class=" black-text">#{msg['add.tags']}</label>
+                        </h:panelGroup>
+                        <h:panelGroup  styleClass="col s1">
                             <h:commandLink id="searchIcon"
                                            class="waves-effect waves-light btn s1 z-depth-2 orange midIcon"
                                            actionListener="#{currentBookBean.doAddTag}" value="#{msg['add.addTags']}">
-                                <f:ajax execute="tags" render="tagList" resetValues="true"/>
+                                <f:ajax execute="toAddTag" render="tagPanelGroup addTagGroup" resetValues="true"/>
                             </h:commandLink>
-                        </div>
+                        </h:panelGroup>
                     </div>
+                    <h:panelGroup id="tagPanelGroup">
                     <div id="tagList" class="row left">
                         <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tags">
                             <div class="chip">
                                 #{tags.tag}
                                 <h:commandLink action="#{currentBookBean.removeTag(tags.tag)}"
-                                               class="material-icons black-text">close</h:commandLink>
+                                               class="material-icons black-text">close
+                                <f:ajax render="tagPanelGroup"/>
+                                </h:commandLink>
                             </div>
                         </ui:repeat>
                     </div>
+                    </h:panelGroup>
                 </div>
                 <div class="row center detailPane">
                     <div class="row center">
