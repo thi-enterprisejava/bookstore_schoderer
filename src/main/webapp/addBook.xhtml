@@ -17,7 +17,7 @@
     <ui:define name="body">
         <div class="container">
             <h:form class="col s12" enctype="multipart/form-data">
-                <div class="row center detailPane">
+                <div id="test" class="row center detailPane">
                     <div class="input-field col s12">
                         <h:inputText id="bookName" type="text" class="black-text"
                                      value="#{currentBookBean.currentBook.title}">
@@ -76,10 +76,12 @@
                         <div class="col s1">
                             <h:commandLink id="searchIcon"
                                            class="waves-effect waves-light btn s1 z-depth-2 orange midIcon"
-                                           actionListener="#{currentBookBean.doAddTag()}">#{msg['add.addTags']}</h:commandLink>
+                                           actionListener="#{currentBookBean.doAddTag}" value="#{msg['add.addTags']}">
+                                <f:ajax execute="tags" render="tagList" resetValues="true"/>
+                            </h:commandLink>
                         </div>
                     </div>
-                    <div class="row left">
+                    <div id="tagList" class="row left">
                         <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tags">
                             <div class="chip">
                                 #{tags.tag}
@@ -131,5 +133,4 @@
         </div>
     </ui:define>
 </ui:composition>
->>>>>>> Added Validation
 </html>
