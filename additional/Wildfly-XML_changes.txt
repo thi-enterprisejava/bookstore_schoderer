@@ -2,7 +2,7 @@ For serving static content on path:
 
 <buffer-cache name="default"/>
             <server name="default-server">
-                <http-listener name="default" socket-binding="http" redirect-socket="https"/>
+                            <http-listener name="default" socket-binding="http" redirect-socket="https" max-post-size="999999999999999"/>
                 <host name="default-host" alias="localhost">
                     <location name="/" handler="welcome-content"/>
                     <location name="/img" handler="images"/>
@@ -20,3 +20,6 @@ For serving static content on path:
                 <file name="images" path="C:\Users\michael\files\images" directory-listing="false"/>
                 <file name="books" path="C:\Users\michael\files\books" directory-listing="false"/>
             </handlers>
+
+
+

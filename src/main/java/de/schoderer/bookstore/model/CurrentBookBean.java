@@ -68,7 +68,10 @@ public class CurrentBookBean implements Serializable {
 
     public void doAddTags(String string) {
         if (string != null && !"".equals(string)) {
-            Stream.of(string.split(",")).forEach(tag -> currentBook.getTags().add(new Tag(tag.trim())));
+            Stream.of(string.split(","))
+                    .map(String::toUpperCase)
+                    .distinct()
+                    .forEach(tag -> currentBook.getTags().add(new Tag(tag.trim())));
         }
         if (LOG.isInfoEnabled()) {
             LOG.info("Added Tag: " + tag + " - Current list size: " + currentBook.getTags().size());
@@ -86,7 +89,6 @@ public class CurrentBookBean implements Serializable {
      * Saves the book to the db and uploades the files to the server
      */
     public void doSave() {
-
         if (id == null) {
             currentBook.setData(uploadAndSaveFiles());
             saveTags(currentBook);

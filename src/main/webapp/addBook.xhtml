@@ -64,7 +64,6 @@
                         <div class="input-field col s3 ">
                             <h:inputText id="isbn" type="text" class=" black-text"
                                          value="#{currentBookBean.currentBook.isbn}">
-                                <f:validateRegex pattern="^ISBN\s(?=[-0-9xX ]{13}$)(?:[0-9]+[- ]){3}[0-9]*[xX0-9]$"/>
                             </h:inputText>
                             <label for="isbn" class=" black-text">#{msg['details.isbn']}</label>
                         </div>
@@ -76,7 +75,7 @@
                         <h:panelGroup  styleClass="col s1">
                             <h:commandLink id="searchIcon"
                                            class="waves-effect waves-light btn s1 z-depth-2 orange midIcon"
-                                           actionListener="#{currentBookBean.doAddTag}" value="#{msg['add.addTags']}">
+                                           actionListener="#{currentBookBean.doAddTags}" value="#{msg['add.addTags']}">
                                 <f:ajax execute="toAddTag" render="tagPanelGroup addTagGroup" resetValues="true"/>
                             </h:commandLink>
                         </h:panelGroup>
@@ -84,7 +83,7 @@
                     <h:panelGroup id="tagPanelGroup">
                     <div id="tagList" class="row left">
                         <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tags">
-                            <div class="chip">
+                            <div class="chip z-depth-2">
                                 #{tags.tag}
                                 <h:commandLink action="#{currentBookBean.removeTag(tags.tag)}"
                                                class="material-icons black-text">close
