@@ -25,10 +25,10 @@ public class Book implements Serializable {
     @Column(nullable = false, unique = true)
     private String title;
     private String author;
-    @Column(length=2000)
+    @Column(length = 2000)
     private String description;
     private int publishedYear;
-    @Column(length=20)
+    @Column(length = 20)
     private String isbn;
 
     @OneToOne(cascade = CascadeType.ALL)

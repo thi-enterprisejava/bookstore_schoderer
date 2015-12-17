@@ -1,9 +1,9 @@
 package de.schoderer.bookstore.model;
 
 import de.schoderer.bookstore.db.BookPersistence;
-import de.schoderer.bookstore.domain.Book;
-import de.schoderer.bookstore.domain.DataFileLocation;
-import de.schoderer.bookstore.domain.Tag;
+import de.schoderer.bookstore.domain.book.Book;
+import de.schoderer.bookstore.domain.book.DataFileLocation;
+import de.schoderer.bookstore.domain.book.Tag;
 import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.Logger;
 

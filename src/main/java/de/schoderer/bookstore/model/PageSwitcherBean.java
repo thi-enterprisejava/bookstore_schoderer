@@ -29,14 +29,14 @@ public class PageSwitcherBean implements Serializable {
     }
 
     public String switchPage(Pages page) {
-        lastPage=currentPage;
-        currentPage=page;
+        lastPage = currentPage;
+        currentPage = page;
         resetCssClassStrings();
         changeCSS(page);
         if (LOG.isInfoEnabled()) {
             LOG.info("Switched page to: " + page.toString());
         }
-        return page.getFileName()+"?faces-redirect=true";
+        return page.getFileName() + "?faces-redirect=true";
     }
 
     private void changeCSS(Pages page) {

@@ -1,7 +1,7 @@
 package de.schoderer.bookstore.db;
 
-import de.schoderer.bookstore.domain.Book;
-import de.schoderer.bookstore.domain.Tag;
+import de.schoderer.bookstore.domain.book.Book;
+import de.schoderer.bookstore.domain.book.Tag;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
@@ -30,7 +30,7 @@ public class EntityManager implements BookPersistence {
     @Override
     public List<Book> fetchAllBooksByTitle(String title) {
         TypedQuery<Book> query = em.createNamedQuery("Book.findByName", Book.class);
-        query.setParameter("booktitle", "%"+title+"%");
+        query.setParameter("booktitle", "%" + title + "%");
         return query.getResultList();
     }
 
@@ -65,6 +65,7 @@ public class EntityManager implements BookPersistence {
 
     /**
      * Check if the book is in the current transaction context, if not merge it in the current context
+     *
      * @param book
      */
     @Override

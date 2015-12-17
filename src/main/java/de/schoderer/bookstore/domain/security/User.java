@@ -9,7 +9,7 @@ import java.util.Objects;
  * Created by michael on 17.12.2015.
  */
 @Entity
-public class User implements Serializable{
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

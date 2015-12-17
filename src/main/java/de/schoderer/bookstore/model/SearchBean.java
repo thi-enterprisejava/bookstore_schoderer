@@ -1,7 +1,7 @@
 package de.schoderer.bookstore.model;
 
 import de.schoderer.bookstore.db.BookPersistence;
-import de.schoderer.bookstore.domain.Book;
+import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.utils.Pages;
 
 import javax.enterprise.context.SessionScoped;

@@ -57,13 +57,16 @@
             </a>
             <ul>
                 <h:form>
-                    <li><h:commandLink action="#{currentBookBean.deleteBook()}" class="btn-floating red"><i class="material-icons">delete</i></h:commandLink>
+                    <li><h:commandLink action="#{currentBookBean.deleteBook()}" class="btn-floating red"><i
+                            class="material-icons">delete</i></h:commandLink>
                     </li>
                     <li><h:commandLink action="#{activePageBean.switchPage('ADD')}" class="btn-floating green">
                         <f:param name="bookID" value="#{currentBookBean.currentBook.id}"/>
                         <i class="material-icons">mode_edit</i>
                     </h:commandLink></li>
-                    <li><h:outputLink value="../book/#{currentBookBean.currentBook.data.fileName}" styleClass="btn-floating blue"><i class="material-icons">play_for_work</i></h:outputLink></li>
+                    <li><h:outputLink value="../book/#{currentBookBean.currentBook.data.fileName}"
+                                      styleClass="btn-floating blue"><i
+                            class="material-icons">play_for_work</i></h:outputLink></li>
                 </h:form>
             </ul>
         </div>
