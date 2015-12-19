@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.domain;
+package de.schoderer.bookstore.domain.book;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,13 +22,13 @@ public class Book implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
+    @Column(nullable = false, unique = true)
     private String title;
     private String author;
-    @Column(length=2000)
+    @Column(length = 2000)
     private String description;
     private int publishedYear;
-    @Column(length=20)
+    @Column(length = 20)
     private String isbn;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.domain;
+package de.schoderer.bookstore.domain.book;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

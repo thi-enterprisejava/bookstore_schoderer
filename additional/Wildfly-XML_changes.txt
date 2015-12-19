@@ -1,25 +1,43 @@
 For serving static content on path:
 
-<buffer-cache name="default"/>
+
             <server name="default-server">
                             <http-listener name="default" socket-binding="http" redirect-socket="https" max-post-size="999999999999999"/>
-                <host name="default-host" alias="localhost">
-                    <location name="/" handler="welcome-content"/>
-                    <location name="/img" handler="images"/>
-                    <location name="/book" handler="books"/>
-                    <filter-ref name="server-header"/>
-                    <filter-ref name="x-powered-by-header"/>
-                </host>
-            </server>
-            <servlet-container name="default">
-                <jsp-config/>
-                <websockets/>
-            </servlet-container>
-            <handlers>
-                <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
-                <file name="images" path="C:\Users\michael\files\images" directory-listing="false"/>
-                <file name="books" path="C:\Users\michael\files\books" directory-listing="false"/>
-            </handlers>
+                            <host name="default-host" alias="localhost">
+                                <location name="/" handler="welcome-content"/>
+                                <location name="/img" handler="images"/>
+                                <location name="/book" handler="books"/>
+                                <filter-ref name="server-header"/>
+                                <filter-ref name="x-powered-by-header"/>
+                            </host>
+                        </server>
+                        <servlet-container name="default">
+                            <jsp-config/>
+                            <websockets/>
+                        </servlet-container>
+                        <handlers>
+                            <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
+                            <file name="images" path="C:\Users\michael\files\images"/>
+                            <file name="books" path="C:\Users\michael\files\books"/>
+                        </handlers>
+
+
+
+
+                        <security-domain name="bookstoreSecurityDomain" cache-type="default">
+                                            <authentication>
+                                                <login-module code="Database" flag="required">
+                                                    <module-option name="dsJndiName" value="java:/BookStoreDS"/>
+                                                    <module-option name="principalsQuery" value="SELECT u.password from bookstore.User u where u.username=?"/>
+                                                    <module-option name="rolesQuery" value="select role, 'Roles' from bookstore.UserRole where user_id IN(SELECT id from bookstore.User u where u.username=?)"/>
+                                                    <module-option name="hashAlgorithm" value="SHA-256"/>
+                                                    <module-option name="hashEncoding" value="base64"/>
+                                                    <module-option name="hashCharset" value="UTF-8"/>
+                                                    <module-option name="hashUserPassword" value="true"/>
+                                                    <module-option name="hashStorePassword" value="false"/>
+                                                </login-module>
+                                            </authentication>
+                                        </security-domain>
 
 
 

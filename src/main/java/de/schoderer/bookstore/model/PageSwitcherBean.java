@@ -12,13 +12,16 @@ import java.io.Serializable;
  */
 @Named
 @SessionScoped
-public class ActivePageBean implements Serializable {
-    private static final Logger LOG = Logger.getLogger(ActivePageBean.class);
+public class PageSwitcherBean implements Serializable {
+    private static final Logger LOG = Logger.getLogger(PageSwitcherBean.class);
 
     private static final String ACTIVE_CSS_CLASS = "active";
     private String addBookPage = "";
     private String indexPage = "active";
     private String listResultsPage = "";
+
+    private Pages lastPage;
+    private Pages currentPage;
 
 
     public String switchPage(String page) {
@@ -26,7 +29,17 @@ public class ActivePageBean implements Serializable {
     }
 
     public String switchPage(Pages page) {
+        lastPage = currentPage;
+        currentPage = page;
         resetCssClassStrings();
+        changeCSS(page);
+        if (LOG.isInfoEnabled()) {
+            LOG.info("Switched page to: " + page.toString());
+        }
+        return page.getFileName() + "?faces-redirect=true";
+    }
+
+    private void changeCSS(Pages page) {
         switch (page) {
             case INDEX:
                 indexPage = ACTIVE_CSS_CLASS;
@@ -38,10 +51,6 @@ public class ActivePageBean implements Serializable {
                 addBookPage = ACTIVE_CSS_CLASS;
                 break;
         }
-        if (LOG.isInfoEnabled()) {
-            LOG.info("Switched page to: " + page.toString());
-        }
-        return page.getFileName() + "?faces-redirect=true";
     }
 
 

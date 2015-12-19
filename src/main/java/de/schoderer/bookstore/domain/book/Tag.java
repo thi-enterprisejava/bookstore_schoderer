@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.domain;
+package de.schoderer.bookstore.domain.book;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public class Tag implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String tag;
 
     public Tag() {

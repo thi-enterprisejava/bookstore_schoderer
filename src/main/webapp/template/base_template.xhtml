@@ -21,14 +21,22 @@
     <nav class="blue-grey darken-3" role="navigation">
         <h:form>
             <div class="nav-wrapper container">
-                <a id="logo-container" href="index.xhtml" class="brand-logo fancyTitleFont">BookStore</a>
-
+                <a id="logo-container" href="#{activePageBean.switchPage('INDEX')}" class="brand-logo fancyTitleFont">BookStore</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li id="navIndex" class="#{activePageBean.indexPage}"><a
+                    <li  class="#{activePageBean.indexPage}"><a
                             href="#{activePageBean.switchPage('INDEX')}">#{msg['common.search']}</a></li>
-                    <li id="navList" class="#{activePageBean.listResultsPage}"><h:commandLink
+                    <li  class="#{activePageBean.listResultsPage}"><h:commandLink
+                             action="#{searchBean.fetchAllBooks()}">List all</h:commandLink></li>
+                    <li class="#{activePageBean.addBookPage}"><a
+                            href="#{activePageBean.switchPage('ADD')}">#{msg['common.add']}</a></li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li  class="#{activePageBean.indexPage}"><a
+                            href="#{activePageBean.switchPage('INDEX')}">#{msg['common.search']}</a></li>
+                    <li  class="#{activePageBean.listResultsPage}"><h:commandLink
                             action="#{searchBean.fetchAllBooks()}">List all</h:commandLink></li>
-                    <li id="navAdd" class="#{activePageBean.addBookPage}"><a
+                    <li class="#{activePageBean.addBookPage}"><a
                             href="#{activePageBean.switchPage('ADD')}">#{msg['common.add']}</a></li>
                 </ul>
 

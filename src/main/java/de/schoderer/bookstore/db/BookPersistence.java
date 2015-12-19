@@ -1,7 +1,7 @@
 package de.schoderer.bookstore.db;
 
-import de.schoderer.bookstore.domain.Book;
-import de.schoderer.bookstore.domain.Tag;
+import de.schoderer.bookstore.domain.book.Book;
+import de.schoderer.bookstore.domain.book.Tag;
 import de.schoderer.bookstore.utils.interceptor.TimeLogging;
 
 import java.io.Serializable;

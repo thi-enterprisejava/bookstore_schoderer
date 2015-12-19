@@ -72,7 +72,7 @@
                                          value="#{currentBookBean.tag}"/>
                             <label for="toAddTag" class=" black-text">#{msg['add.tags']}</label>
                         </h:panelGroup>
-                        <h:panelGroup  styleClass="col s1">
+                        <h:panelGroup styleClass="col s1">
                             <h:commandLink id="searchIcon"
                                            class="waves-effect waves-light btn s1 z-depth-2 orange midIcon"
                                            actionListener="#{currentBookBean.doAddTags}" value="#{msg['add.addTags']}">
@@ -81,17 +81,17 @@
                         </h:panelGroup>
                     </div>
                     <h:panelGroup id="tagPanelGroup">
-                    <div id="tagList" class="row left">
-                        <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tags">
-                            <div class="chip z-depth-2">
-                                #{tags.tag}
-                                <h:commandLink action="#{currentBookBean.removeTag(tags.tag)}"
-                                               class="material-icons black-text">close
-                                <f:ajax render="tagPanelGroup"/>
-                                </h:commandLink>
-                            </div>
-                        </ui:repeat>
-                    </div>
+                        <div id="tagList" class="row left">
+                            <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tags">
+                                <div class="chip z-depth-2">
+                                    #{tags.tag}
+                                    <h:commandLink action="#{currentBookBean.removeTag(tags.tag)}"
+                                                   class="material-icons black-text">close
+                                        <f:ajax render="tagPanelGroup"/>
+                                    </h:commandLink>
+                                </div>
+                            </ui:repeat>
+                        </div>
                     </h:panelGroup>
                 </div>
                 <div class="row center detailPane">

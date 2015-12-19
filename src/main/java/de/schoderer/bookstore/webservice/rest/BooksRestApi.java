@@ -1,7 +1,7 @@
 package de.schoderer.bookstore.webservice.rest;
 
 import de.schoderer.bookstore.db.BookPersistence;
-import de.schoderer.bookstore.domain.Book;
+import de.schoderer.bookstore.domain.book.Book;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;

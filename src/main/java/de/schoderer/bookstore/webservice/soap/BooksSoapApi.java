@@ -1,9 +1,10 @@
 package de.schoderer.bookstore.webservice.soap;
 
 import de.schoderer.bookstore.db.BookPersistence;
-import de.schoderer.bookstore.domain.Book;
+import de.schoderer.bookstore.domain.book.Book;
 
 import java.util.List;
+
 
 /**
  * Created by schod on 25.10.2015.
