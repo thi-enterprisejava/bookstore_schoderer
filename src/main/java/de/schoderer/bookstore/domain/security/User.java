@@ -2,7 +2,9 @@ package de.schoderer.bookstore.domain.security;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -22,6 +24,9 @@ public class User implements Serializable {
     private String email;
 
     private Date createdDate;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", fetch = FetchType.EAGER)
+    private List<UserRole> userRoles = new ArrayList<>();
 
     public User() {
     }
@@ -64,6 +69,14 @@ public class User implements Serializable {
 
     public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public List<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
     @Override

@@ -3,46 +3,51 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+>
 
 <ui:composition template="template/base_template.xhtml">
     <ui:define name="body">
         <div class="container">
-        <div class="row center">
-        <div class=" col s12 m6">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title black-text fancyTitleFont" style="font-size: 2vw;">#{msg['login.login']}</span>
-                    <form>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="loginName" type="text" class="validate" />
-                                <label for="loginName" class="active">#{msg['login.username']}</label>
+            <div class="row center">
+                <div class=" col s12 m6">
+                    <form method="post" action="j_security_check">
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title black-text fancyTitleFont"
+                                      style="font-size: 2vw;">#{msg['login.login']}</span>
+
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="j_username" name="j_username" type="text" class="validate"/>
+                                        <label for="j_username" class="active">#{msg['login.username']}</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <input id="j_password" name="j_password" type="password" class="validate"/>
+                                        <label for="j_password" class="active">#{msg['login.password']}</label>
+                                    </div>
+                                </div>
+
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input  id="password" type="password" class="validate"/>
-                                <label for="password" class="active">#{msg['login.password']}</label>
+                            <div class="card-action">
+                                <div>
+                                    <input type="submit" class="btn orange" value="#{msg['login.login']}"/>
+                                </div>
+                                <div>
+                                    <br/>
+                                    <h:outputLink value="login.xhtml" styleClass="blue-text"
+                                                  style="font-size: 0.70vw; ">
+                                        #{msg['login.register']}
+                                    </h:outputLink>
+
+                                </div>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="card-action">
-                    <div>
-                    <input type="submit" class="btn orange" value="#{msg['login.login']}"/>
-                    </div>
-                    <div>
-                        <br/>
-                    <h:outputLink value="login.xhtml" styleClass="blue-text" style="font-size: 0.70vw; " >
-                        #{msg['login.register']}
-                    </h:outputLink>
-                </div>
-
-                </div>
             </div>
-        </div>
-        </div>
+
         </div>
     </ui:define>
 </ui:composition>
