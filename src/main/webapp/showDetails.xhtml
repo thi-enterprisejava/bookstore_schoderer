@@ -50,12 +50,14 @@
                 </div>
             </div>
         </div>
-
-        <div class="fixed-action-btn horizontal">
+        <!-- only show if user is authorized -->
+        <h:panelGroup class="fixed-action-btn horizontal"
+                      rendered="#{facesContext.externalContext.isUserInRole('user')}">
             <a class="btn-floating btn-large orange">
                 <i class="large material-icons">list</i>
             </a>
             <ul>
+
                 <h:form>
                     <li><h:commandLink action="#{currentBookBean.deleteBook()}" class="btn-floating red"><i
                             class="material-icons">delete</i></h:commandLink>
@@ -69,7 +71,7 @@
                             class="material-icons">play_for_work</i></h:outputLink></li>
                 </h:form>
             </ul>
-        </div>
+        </h:panelGroup>
     </ui:define>
 </ui:composition>
 </html>
