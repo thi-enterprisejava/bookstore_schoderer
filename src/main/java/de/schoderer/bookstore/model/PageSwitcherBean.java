@@ -20,7 +20,7 @@ public class PageSwitcherBean implements Serializable {
     private String indexPage = "active";
     private String listResultsPage = "";
 
-    private Pages lastPage;
+    private Pages lastPage = Pages.INDEX;
     private Pages currentPage;
 
 
@@ -36,6 +36,14 @@ public class PageSwitcherBean implements Serializable {
         if (LOG.isInfoEnabled()) {
             LOG.info("Switched page to: " + page.toString());
         }
+        return getFileNameWithRedirect(page);
+    }
+
+    public String backwards(){
+        return getFileNameWithRedirect(lastPage);
+    }
+
+    private String getFileNameWithRedirect(Pages page) {
         return page.getFileName() + "?faces-redirect=true";
     }
 
