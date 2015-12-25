@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.model;
+package de.schoderer.bookstore.web.model;
 
 import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.Logger;

@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.db;
+package de.schoderer.bookstore.db.interfaces;
 
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.Tag;

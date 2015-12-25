@@ -1,6 +1,6 @@
-package de.schoderer.bookstore.model;
+package de.schoderer.bookstore.web.model;
 
-import de.schoderer.bookstore.db.BookPersistence;
+import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.domain.book.Tag;

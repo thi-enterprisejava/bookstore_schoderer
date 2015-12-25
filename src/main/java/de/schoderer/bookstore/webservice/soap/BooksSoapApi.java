@@ -1,6 +1,6 @@
 package de.schoderer.bookstore.webservice.soap;
 
-import de.schoderer.bookstore.db.BookPersistence;
+import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
 
 import java.util.List;

@@ -1,11 +1,12 @@
-package de.schoderer.bookstore.db;
+package de.schoderer.bookstore.db.interfaces.impls;
 
+import de.schoderer.bookstore.db.BasicPersistence;
+import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.Tag;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
-import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -16,20 +17,19 @@ import java.util.List;
  */
 @Named
 @Stateless
-public class EntityManager implements BookPersistence {
+public class BookPersistenceImpl extends BasicPersistence implements BookPersistence {
 
-    @PersistenceContext
-    private javax.persistence.EntityManager em;
+
 
     @Override
     public List<Book> fetchAllBooks() {
-        TypedQuery<Book> query = em.createNamedQuery("Book.findAll", Book.class);
+        TypedQuery<Book> query = getEntityManager().createNamedQuery("Book.findAll", Book.class);
         return query.getResultList();
     }
 
     @Override
     public List<Book> fetchAllBooksByTitle(String title) {
-        TypedQuery<Book> query = em.createNamedQuery("Book.findByName", Book.class);
+        TypedQuery<Book> query = getEntityManager().createNamedQuery("Book.findByName", Book.class);
         query.setParameter("booktitle", "%" + title + "%");
         return query.getResultList();
     }
@@ -43,23 +43,23 @@ public class EntityManager implements BookPersistence {
 
     @Override
     public Book fetchBookByID(long id) {
-        return em.find(Book.class, id);
+        return getEntityManager().find(Book.class, id);
     }
 
     @Override
     @Transactional
     public Book saveBook(Book book) {
-        em.persist(book);
+        getEntityManager().persist(book);
         return book;
     }
 
     @Override
     @Transactional
     public Book updateBook(Book book) {
-        if (!em.contains(book)) {
-            book = em.merge(book);
+        if (!getEntityManager().contains(book)) {
+            book = getEntityManager().merge(book);
         }
-        em.merge(book);
+        getEntityManager().merge(book);
         return book;
     }
 
@@ -70,32 +70,33 @@ public class EntityManager implements BookPersistence {
      */
     @Override
     public void removeBook(Book book) {
-        if (!em.contains(book)) {
-            book = em.merge(book);
+        //Check if book is attachted to Entity-Manager, if not attach it
+        if (!getEntityManager().contains(book)) {
+            book = getEntityManager().merge(book);
         }
-        em.remove(book);
+        getEntityManager().remove(book);
     }
 
     @Override
     public Tag saveTag(Tag tag) {
-        em.persist(tag);
+        getEntityManager().persist(tag);
         return tag;
     }
 
     @Override
     public Tag fetchTagByID(long id) {
-        return em.find(Tag.class, id);
+        return getEntityManager().find(Tag.class, id);
     }
 
     @Override
     public Tag fetchTagByName(String name) {
-        TypedQuery<Tag> query = em.createNamedQuery("Tag.findByName", Tag.class);
+        TypedQuery<Tag> query = getEntityManager().createNamedQuery("Tag.findByName", Tag.class);
         return query.getSingleResult();
     }
 
     @Override
     public List<Tag> fetchAllTags() {
-        TypedQuery<Tag> query = em.createNamedQuery("Tag.findAll", Tag.class);
+        TypedQuery<Tag> query = getEntityManager().createNamedQuery("Tag.findAll", Tag.class);
         return query.getResultList();
     }
 }

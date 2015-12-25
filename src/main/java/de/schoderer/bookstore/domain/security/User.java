@@ -11,6 +11,10 @@ import java.util.Objects;
  * Created by michael on 17.12.2015.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "User.findUser", query = "SELECT u FROM User u WHERE u.username = :username"),
+        @NamedQuery(name = "User.userNameExists", query = "SELECT COUNT(u.id) FROM User u WHERE  u.username = :username")
+})
 @Table(name = "User")
 public class User implements Serializable {
     @Id
