@@ -18,26 +18,19 @@
 
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <h:inputText id="username" name="username" />
-                                        <label for="username" class="active">#{msg['login.username']}</label>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="input-field col s12">
-                                        <h:inputText id="email" name="email" />
+                                        <h:inputText id="email" name="email" value="#{userRegistrationBean.email}" />
                                         <label for="email" class="active">#{msg['login.email']}</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <h:inputSecret  id="password" name="password" />
+                                        <h:inputSecret  id="password" name="password" value="#{userRegistrationBean.password}" />
                                         <label for="password" class="active">#{msg['login.password']}</label>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <h:inputSecret id="password_repeat" name="password_repeat" />
+                                        <h:inputSecret id="password_repeat" name="password_repeat" value="#{userRegistrationBean.repeatedRassword}" />
                                         <label for="password_repeat" class="active">#{msg['login.repeat']} </label>
                                     </div>
                                 </div>
@@ -45,7 +38,7 @@
                             </div>
                             <div class="card-action">
                                 <div>
-                                    <h:commandLink class="btn orange" value="#{msg['login.register']}"/>
+                                    <h:commandLink class="btn orange" value="#{msg['login.register']}" action="#{userRegistrationBean.doRegisterUser}"/>
                                 </div>
                             </div>
                         </div>
