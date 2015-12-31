@@ -19,7 +19,7 @@
                                 <div class="row">
                                     <div class="input-field col s12">
                                         <h:inputText id="email" name="email" value="#{userRegistrationBean.email}">
-                                            <f:validateRequired/>
+                                            <f:validator validatorId="emailValidator" />
                                         </h:inputText>
                                         <label for="email" class="active">#{msg['login.email']}</label>
                                     </div>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="card-action">
                                 <div>
-                                    <h:commandLink class="btn orange" value="#{msg['login.register']}"
+                                    <h:commandLink class="btn orange white-text" value="#{msg['login.register']}"
                                                    action="#{userRegistrationBean.doRegisterUser}"/>
                                 </div>
                             </div>
