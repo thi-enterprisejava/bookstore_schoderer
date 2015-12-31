@@ -108,7 +108,7 @@
                                     <h:inputFile id="imageFile" value="#{currentBookBean.imageFile}"
                                                  styleClass="imagesOnlyMax6MB" name="#{msg['add.imageUpload']}">
                                         <f:validateRequired/>
-                                        <f:validator validatorId="pictureUploadValidator"/>
+
                                     </h:inputFile>
                                 </div>
                                 <div class="file-path-wrapper">
@@ -124,6 +124,7 @@
 
                                     <h:inputFile id="bookFile" value="#{currentBookBean.bookFile}" name="#{msg['add.bookUpload']}">
                                         <f:validateRequired/>
+                                        <f:validator validatorId="bookUploadValidator"/>
                                     </h:inputFile>
                                 </div>
                                 <div class="file-path-wrapper">
