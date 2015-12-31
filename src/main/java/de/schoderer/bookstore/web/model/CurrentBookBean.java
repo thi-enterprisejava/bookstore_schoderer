@@ -4,6 +4,7 @@ import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.domain.book.Tag;
+import de.schoderer.bookstore.utils.Configuration;
 import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.Logger;
 
@@ -13,9 +14,7 @@ import javax.inject.Named;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,10 +27,9 @@ import java.util.stream.Stream;
 @ViewScoped
 public class CurrentBookBean implements Serializable {
     private static final Logger LOG = Logger.getLogger(CurrentBookBean.class);
-    //TODO ändern!!
-    private static final Path paths = Paths.get(System.getProperty("user.home"), "files");
     private static final Random random = new Random();
-
+    @Inject
+    private Configuration configuration;
     @Inject
     private PageSwitcherBean pageSwitcher;
     @Inject
@@ -50,11 +48,11 @@ public class CurrentBookBean implements Serializable {
         currentBook = new Book();
     }
 
-    private static Path getBasePath(boolean isBook) {
+    protected  Path getBasePath(boolean isBook) {
         if (isBook) {
-            return paths.resolve("books");
+            return configuration.getBasePath().resolve("books");
         } else {
-            return paths.resolve("images");
+            return configuration.getBasePath().resolve("images");
         }
     }
 
@@ -160,13 +158,13 @@ public class CurrentBookBean implements Serializable {
     protected Path uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
         Path filePath = null;
         if (part == null) {
-            return filePath;
+            return null;
         }
         try {
 
             String fileName = part.getSubmittedFileName();
             filePath = getBasePath(isBook).resolve(createFileName(fileName));
-            Files.copy(part.getInputStream(), filePath);
+            Files.copy(part.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             if (LOG.isInfoEnabled()) {
                 LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());
             }
@@ -243,4 +241,11 @@ public class CurrentBookBean implements Serializable {
         this.bookFile = bookFile;
     }
 
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
 }
