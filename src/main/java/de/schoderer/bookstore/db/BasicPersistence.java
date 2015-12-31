@@ -12,7 +12,7 @@ public class BasicPersistence {
     private javax.persistence.EntityManager em;
 
 
-    protected EntityManager getEntityManager(){
+    protected EntityManager getEntityManager() {
         return em;
     }
 }

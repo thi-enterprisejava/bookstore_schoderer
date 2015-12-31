@@ -13,6 +13,7 @@ public interface UserPersistence {
 
     /**
      * Find the user with the specific username in the database
+     *
      * @param userName
      * @return the user with the username
      */
@@ -21,9 +22,13 @@ public interface UserPersistence {
 
     /**
      * Check if username already exists in the database
+     *
      * @param userName
      * @return true if exists, else false
      */
     @PermitAll
     boolean checkIfUserNameIsFree(String userName);
+
+    @PermitAll
+    User saveUser(User user);
 }

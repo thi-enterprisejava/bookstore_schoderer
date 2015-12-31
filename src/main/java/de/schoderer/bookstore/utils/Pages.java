@@ -9,7 +9,7 @@ public enum Pages {
 
     private String fileName;
 
-    private Pages(String fileName) {
+    Pages(String fileName) {
         this.fileName = fileName;
     }
 

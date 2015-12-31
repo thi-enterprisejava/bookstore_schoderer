@@ -20,7 +20,6 @@ import java.util.List;
 public class BookPersistenceImpl extends BasicPersistence implements BookPersistence {
 
 
-
     @Override
     public List<Book> fetchAllBooks() {
         TypedQuery<Book> query = getEntityManager().createNamedQuery("Book.findAll", Book.class);

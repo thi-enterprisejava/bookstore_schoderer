@@ -26,10 +26,13 @@ public class UserPersistenceImpl extends BasicPersistence implements UserPersist
         TypedQuery<User> query = getEntityManager().createNamedQuery("User.userNameExists", User.class)
                 .setParameter("username", userName)
                 .setMaxResults(1);
-        if(query.getResultList().isEmpty()){
-            return true;
-        }else {
-            return false;
-        }
+        return query.getResultList().isEmpty();
     }
+
+    @Override
+    public User saveUser(User user) {
+        getEntityManager().persist(user);
+        return user;
+    }
+
 }

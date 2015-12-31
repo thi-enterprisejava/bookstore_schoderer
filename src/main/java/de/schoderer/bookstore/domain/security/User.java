@@ -33,6 +33,12 @@ public class User implements Serializable {
     public User() {
     }
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+        createdDate = new Date();
+    }
+
     public Long getId() {
         return id;
     }
@@ -79,7 +85,7 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return  Objects.equals(email, user.email);
+        return Objects.equals(email, user.email);
     }
 
     @Override

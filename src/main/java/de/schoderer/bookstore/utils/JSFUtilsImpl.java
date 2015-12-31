@@ -6,7 +6,7 @@ import javax.faces.context.FacesContext;
 /**
  * Created by michael on 22.12.15.
  */
-public class MessageBuilderImpl implements MessageBuilder{
+public class JSFUtilsImpl implements JSFUtils {
 
 
     @Override
@@ -15,8 +15,7 @@ public class MessageBuilderImpl implements MessageBuilder{
     }
 
 
-
-    public void renderResponse(){
+    public void renderResponse() {
         FacesContext.getCurrentInstance().renderResponse();
     }
 }

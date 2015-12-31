@@ -17,8 +17,9 @@ public class PageSwitcherBean implements Serializable {
 
     private static final String ACTIVE_CSS_CLASS = "active";
     private String addBookPage = "";
-    private String indexPage = "active";
+    private String indexPage = "";
     private String listResultsPage = "";
+    private String loginPage = "";
 
     private Pages lastPage = Pages.INDEX;
     private Pages currentPage;
@@ -39,7 +40,7 @@ public class PageSwitcherBean implements Serializable {
         return getFileNameWithRedirect(page);
     }
 
-    public String backwards(){
+    public String backwards() {
         return getFileNameWithRedirect(lastPage);
     }
 
@@ -58,6 +59,8 @@ public class PageSwitcherBean implements Serializable {
             case ADD:
                 addBookPage = ACTIVE_CSS_CLASS;
                 break;
+            case LOGIN:
+                loginPage = ACTIVE_CSS_CLASS;
         }
     }
 
@@ -66,6 +69,7 @@ public class PageSwitcherBean implements Serializable {
         addBookPage = "";
         indexPage = "";
         listResultsPage = "";
+        loginPage = "";
     }
 
     public String getAddBookPage() {
@@ -90,5 +94,13 @@ public class PageSwitcherBean implements Serializable {
 
     public void setListResultsPage(String listResultsPage) {
         this.listResultsPage = listResultsPage;
+    }
+
+    public String getLoginPage() {
+        return loginPage;
+    }
+
+    public void setLoginPage(String loginPage) {
+        this.loginPage = loginPage;
     }
 }

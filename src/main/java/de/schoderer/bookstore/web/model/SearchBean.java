@@ -17,7 +17,7 @@ import java.util.List;
 @SessionScoped
 public class SearchBean implements Serializable {
     @Inject
-    private ActivePageBean navBean;
+    private PageSwitcherBean navBean;
 
     @Inject
     private BookPersistence persistence;

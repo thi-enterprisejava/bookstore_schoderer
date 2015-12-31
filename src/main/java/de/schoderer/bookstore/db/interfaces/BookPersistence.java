@@ -18,6 +18,7 @@ import java.util.List;
 public interface BookPersistence extends Serializable {
     /**
      * Returns all books in the DB
+     *
      * @return List of books
      */
     @PermitAll
@@ -25,6 +26,7 @@ public interface BookPersistence extends Serializable {
 
     /**
      * Fetch all Books where the title contains the given string
+     *
      * @param title
      * @return List of books containg title
      */
@@ -33,6 +35,7 @@ public interface BookPersistence extends Serializable {
 
     /**
      * Returns all books with a specific Tag
+     *
      * @param tagId
      * @return List of books with the given tag
      */
@@ -41,6 +44,7 @@ public interface BookPersistence extends Serializable {
 
     /**
      * Fetch a book with the given id, if exists
+     *
      * @param id
      * @return the book with the id
      */
@@ -49,6 +53,7 @@ public interface BookPersistence extends Serializable {
 
     /**
      * Save the book to the database
+     *
      * @param book
      * @return saved book with filled id
      */
@@ -57,6 +62,7 @@ public interface BookPersistence extends Serializable {
 
     /**
      * Merge the given book
+     *
      * @param book
      * @return the book
      */
@@ -65,6 +71,7 @@ public interface BookPersistence extends Serializable {
 
     /**
      * Remove the given book from the database
+     *
      * @param book
      */
     @RolesAllowed(value = "user")
@@ -72,6 +79,7 @@ public interface BookPersistence extends Serializable {
 
     /**
      * Save the given tag to the database
+     *
      * @param tag
      * @return saved tag with filled id
      */
@@ -80,6 +88,7 @@ public interface BookPersistence extends Serializable {
 
     /**
      * Fetch a tag with the given id, if exists
+     *
      * @param id
      * @return
      */
@@ -88,6 +97,7 @@ public interface BookPersistence extends Serializable {
 
     /**
      * Find a Tag by the given name
+     *
      * @param name
      * @return the tag with the name
      */
@@ -96,6 +106,7 @@ public interface BookPersistence extends Serializable {
 
     /**
      * Find a list of all existing tags
+     *
      * @return list of existing tags
      */
     @PermitAll

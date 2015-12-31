@@ -32,7 +32,9 @@ public class CurrentBookBean implements Serializable {
     private static final Path paths = Paths.get(System.getProperty("user.home"), "files");
     private static final Random random = new Random();
 
-    private ActivePageBean pageSwitcher;
+    @Inject
+    private PageSwitcherBean pageSwitcher;
+    @Inject
     private BookPersistence persistence;
 
     private Book currentBook;
@@ -45,10 +47,16 @@ public class CurrentBookBean implements Serializable {
 
 
     @Inject
-    public CurrentBookBean(BookPersistence persistence, ActivePageBean pageSwitcher) throws IOException {
-        this.persistence = persistence;
-        this.pageSwitcher = pageSwitcher;
+    public CurrentBookBean() {
         currentBook = new Book();
+    }
+
+    private static Path getBasePath(boolean isBook) {
+        if (isBook) {
+            return paths.resolve("books");
+        } else {
+            return paths.resolve("images");
+        }
     }
 
     public void doSetCurrentBook() {
@@ -59,7 +67,6 @@ public class CurrentBookBean implements Serializable {
             id = null;
         }
     }
-
 
     public void doAddTags() {
         doAddTags(tag);
@@ -123,7 +130,6 @@ public class CurrentBookBean implements Serializable {
         currentBook.setTags(tagsWithID);
     }
 
-
     private DataFileLocation uploadAndSaveFiles() {
         //TODO mabye onlay upload on update, when change happend
         if (currentBook.getId() != null) {
@@ -152,7 +158,6 @@ public class CurrentBookBean implements Serializable {
         }
     }
 
-
     private Path uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
         Path filePath = null;
         if (part == null) {
@@ -170,14 +175,6 @@ public class CurrentBookBean implements Serializable {
             LOG.error(e.getMessage(), e);
         }
         return filePath;
-    }
-
-    private static Path getBasePath(boolean isBook) {
-        if (isBook) {
-            return paths.resolve("books");
-        } else {
-            return paths.resolve("images");
-        }
     }
 
     /**
