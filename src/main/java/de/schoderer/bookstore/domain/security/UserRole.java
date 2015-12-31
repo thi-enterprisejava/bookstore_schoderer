@@ -8,7 +8,7 @@ import java.util.Objects;
  * Created by michael on 19.12.2015.
  */
 @Entity
-public class UserRole implements Serializable{
+public class UserRole implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,6 +19,10 @@ public class UserRole implements Serializable{
     private User user;
 
     public UserRole() {
+    }
+
+    public UserRole(String role) {
+        this.role = role;
     }
 
     public Long getId() {

@@ -1,5 +1,5 @@
-<log4j:configuration debug="true"
-                     xmlns:log4j='http://jakarta.apache.org/log4j/'>
+<log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/'
+                     debug="true">
 
 
     <appender name="fileAppender" class="org.apache.log4j.ConsoleAppender">

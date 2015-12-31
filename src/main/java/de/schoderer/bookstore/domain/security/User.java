@@ -11,17 +11,19 @@ import java.util.Objects;
  * Created by michael on 17.12.2015.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "User.findUser", query = "SELECT u FROM User u WHERE u.email = :username"),
+        @NamedQuery(name = "User.userNameExists", query = "SELECT COUNT(u.id) FROM User u WHERE  u.email = :username")
+})
 @Table(name = "User")
 public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true)
-    private String username;
+    private String email;
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false, unique = true)
-    private String email;
 
     private Date createdDate;
 
@@ -29,6 +31,12 @@ public class User implements Serializable {
     private List<UserRole> userRoles = new ArrayList<>();
 
     public User() {
+    }
+
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+        createdDate = new Date();
     }
 
     public Long getId() {
@@ -39,13 +47,6 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getPassword() {
         return password;
@@ -84,20 +85,18 @@ public class User implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(username, user.username) &&
-                Objects.equals(email, user.email);
+        return Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, email);
+        return Objects.hash(email);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", createdDate=" + createdDate +
                 '}';

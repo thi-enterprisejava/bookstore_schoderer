@@ -1,6 +1,6 @@
-package de.schoderer.bookstore.model;
+package de.schoderer.bookstore.web.model;
 
-import de.schoderer.bookstore.db.BookPersistence;
+import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.utils.Pages;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @SessionScoped
 public class SearchBean implements Serializable {
     @Inject
-    private ActivePageBean navBean;
+    private PageSwitcherBean navBean;
 
     @Inject
     private BookPersistence persistence;
