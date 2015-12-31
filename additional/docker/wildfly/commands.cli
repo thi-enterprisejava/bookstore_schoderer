@@ -1,0 +1,24 @@
+# Run the commands in an embedded server
+embed-server
+
+# Add mariadb module
+module add --name=org.mariadb --resources=/tmp/mariadb-java-client-$MARIADB_VERSION.jar --dependencies=javax.api,javax.transaction.api
+
+# Add mariadb driver
+/subsystem=datasources/jdbc-driver=mariadb:add(driver-name="mariadb",driver-module-name="org.mariadb",driver-class-name=org.mariadb.jdbc.Driver)
+
+# Add datasouce
+data-source add --jndi-name=java:/BookStoreDS --name=BookStoreDS --connection-url=jdbc:mariadb://192.168.99.100:3306/bookstore --driver-name=mariadb --user-name=bookStoreUser --password=SuperSecretPW_13845
+
+# Configure the security domain
+/subsystem=security/security-domain=secureDomain/:add(cache-type=default)
+/subsystem=security/security-domain=secureDomain/authentication=classic:add(login-modules=[{"code"=>"Database", "flag"=>"required" , module-options=>["dsJndiName"=>"java:/BookStoreDS", "principalsQuery"=>"select password from User where email=?", "rolesQuery" => "select role, 'Roles' from UserRole where user_id =(select id from User where email=?)", "hashAlgorithm" => "SHA-256", "hashEncoding" => "base64", "hashCharset" => "UTF-8", "hashUserPassword" => "true", "hashStorePassword" => "false"]}])
+
+#Add file handlers
+/subsystem=undertow/configuration=handler/file=images:add(path="/tmp/bookstore/files/images", directory-listing="false")
+/subsystem=undertow/configuration=handler/file=books:add(path="/tmp/bookstore/files/books", directory-listing="false")
+#Add file locations
+/subsystem=undertow/server=default-server/host=default-host/location="/img":add(handler="images")
+/subsystem=undertow/server=default-server/host=default-host/location="/books":add(handler="books")
+
+stop-embedded-server
