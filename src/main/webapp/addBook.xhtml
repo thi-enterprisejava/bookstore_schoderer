@@ -19,23 +19,23 @@
             <h:form id="addBookForm" class="col s12" enctype="multipart/form-data">
                 <div id="test" class="row center detailPane">
                     <div class="input-field col s12">
+                        <i class="material-icons prefix">class</i>
+
                         <h:inputText id="bookName" type="text" class="black-text"
-                                     value="#{currentBookBean.currentBook.title}">
+                                     value="#{currentBookBean.currentBook.title}" name="#{msg['add.booktitle']}">
                             <f:validateRequired/>
                             <f:validateLength minimum="3"/>
-
-
                         </h:inputText>
                         <label for="bookName" class="black-text">#{msg['add.booktitle']}</label>
                     </div>
                 </div>
                 <div class="row center detailPane">
                     <div class="input-field col s12">
+                        <i class="material-icons prefix">perm_identity</i>
                         <h:inputText id="authorName" type="text" class="black-text"
-                                     value="#{currentBookBean.currentBook.author}">
+                                     value="#{currentBookBean.currentBook.author}"  name="#{msg['common.author']}">
                             <f:validateRequired/>
                             <f:validateLength minimum="3"/>
-
                         </h:inputText>
                         <label for="authorName" class="black-text">#{msg['common.author']}</label>
                     </div>
@@ -43,8 +43,10 @@
                 <div class="row center detailPane">
                     <div class="row  center">
                         <div class="input-field col s12">
+                            <i class="material-icons prefix">description</i>
                             <h:inputTextarea id="textarea1" class="materialize-textarea black-text"
-                                             value="#{currentBookBean.currentBook.description}">
+                                             value="#{currentBookBean.currentBook.description}"  name="#{msg['add.description']}">
+                                <f:validateRequired/>
                                 <f:validateLength minimum="3" maximum="1024"/>
                             </h:inputTextarea>
                             <label for="textarea1" class="black-text">#{msg['add.description']}</label>
@@ -52,8 +54,9 @@
                     </div>
                     <div class="row center">
                         <div class="input-field col s3 ">
+                            <i class="material-icons prefix">query_builder</i>
                             <h:inputText id="year" type="number" class=" black-text"
-                                         value="#{currentBookBean.currentBook.publishedYear}"
+                                         value="#{currentBookBean.currentBook.publishedYear}"  name="#{msg['add.publishedYear']}"
                                          converter="javax.faces.Integer">
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="1500"
@@ -62,13 +65,15 @@
                             <label for="year" class="black-text">#{msg['add.publishedYear']}</label>
                         </div>
                         <div class="input-field col s3 ">
+                            <i class="material-icons prefix">input</i>
                             <h:inputText id="isbn" type="text" class=" black-text"
-                                         value="#{currentBookBean.currentBook.isbn}">
+                                         value="#{currentBookBean.currentBook.isbn}"  name="#{msg['details.isbn']}">
                             </h:inputText>
                             <label for="isbn" class=" black-text">#{msg['details.isbn']}</label>
                         </div>
                         <h:panelGroup id="addTagGroup" styleClass="input-field col s4">
-                            <h:inputText id="toAddTag" type="text" class="black-text"
+                            <i class="material-icons prefix">queue</i>
+                            <h:inputText id="toAddTag" type="text" class="black-text" name="#{msg['add.tags']}"
                                          value="#{currentBookBean.tag}"/>
                             <label for="toAddTag" class=" black-text">#{msg['add.tags']}</label>
                         </h:panelGroup>
@@ -101,7 +106,8 @@
                                 <div class="btn orange">
                                     <span>#{msg['add.image']}</span>
                                     <h:inputFile id="imageFile" value="#{currentBookBean.imageFile}"
-                                                 styleClass="imagesOnlyMax6MB">
+                                                 styleClass="imagesOnlyMax6MB" name="#{msg['add.imageUpload']}">
+                                        <f:validateRequired/>
                                         <f:validator validatorId="pictureUploadValidator"/>
                                     </h:inputFile>
                                 </div>
@@ -115,7 +121,10 @@
                             <div class="file-field input-field">
                                 <div class="btn orange">
                                     <span>#{msg['common.book']}</span>
-                                    <h:inputFile id="bookFile" value="#{currentBookBean.bookFile}"/>
+
+                                    <h:inputFile id="bookFile" value="#{currentBookBean.bookFile}" name="#{msg['add.bookUpload']}">
+                                        <f:validateRequired/>
+                                    </h:inputFile>
                                 </div>
                                 <div class="file-path-wrapper">
                                     <input class="file-path" type="text"/>

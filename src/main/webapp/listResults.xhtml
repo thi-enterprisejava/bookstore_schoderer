@@ -18,18 +18,18 @@
                             <div class="card-content">
                             <span class="card-title activator grey-text text-darken-4" style="line-height: 0.75em;">
                                 #{book.title}
-                                <h:outputLink value="#{activePageBean.switchPage('DETAILS')}">
+                                <h:outputLink value="#{pageSwitcherBean.switchPage('DETAILS')}">
                                     <f:param name="bookID" value="#{book.id}"/>
-                                    <i class="tiny orange-text material-icons">launch</i>
+                                    <i class="tiny orange-text material-icons">pageview</i>
                                 </h:outputLink>
                             </span>
                             </div>
                             <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4" style="line-height: 1.25em;">
                                 #{book.title}
-                                <h:outputLink value="#{activePageBean.switchPage('DETAILS')}">
+                                <h:outputLink value="#{pageSwitcherBean.switchPage('DETAILS')}">
                                     <f:param name="bookID" value="#{book.id}"/>
-                                    <i class="orange-text material-icons">launch</i>
+                                    <i class="orange-text material-icons">pageview</i>
                                 </h:outputLink>
                             </span>
                                 <div class="left">

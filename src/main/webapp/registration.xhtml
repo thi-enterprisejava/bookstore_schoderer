@@ -18,6 +18,7 @@
 
                                 <div class="row">
                                     <div class="input-field col s12">
+                                        <i class="material-icons prefix">email</i>
                                         <h:inputText id="email" name="email" value="#{userRegistrationBean.email}">
                                             <f:validator validatorId="emailValidator"/>
                                         </h:inputText>
@@ -26,23 +27,26 @@
                                 </div>
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <h:inputSecret id="password" name="password"
+                                        <i class="material-icons prefix">vpn_key</i>
+                                        <h:inputSecret id="password" name="Password"
                                                        value="#{userRegistrationBean.password}">
                                             <f:validateRequired/>
+                                            <f:validateLength minimum="5" maximum="20"/>
                                         </h:inputSecret>
                                         <label for="password" class="active">#{msg['login.password']}</label>
                                     </div>
                                 </div>
-                                <div class="row">
+                               <!-- <div class="row">
                                     <div class="input-field col s12">
-                                        <h:inputSecret id="password_repeat" name="password_repeat"
+                                        <h:inputSecret id="password_repeat" name="Password"
                                                        value="#{userRegistrationBean.repeatedRassword}">
                                             <f:validateRequired/>
+                                            <f:validateLength minimum="5" maximum="20"/>
                                         </h:inputSecret>
                                         <label for="password_repeat" class="active">#{msg['login.repeat']} </label>
                                     </div>
                                 </div>
-
+            -->
                             </div>
                             <div class="card-action">
                                 <div>

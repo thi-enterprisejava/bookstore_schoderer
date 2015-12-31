@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
+
+<ui:composition template="base_template.xhtml">
+    <ui:define name="body">
+        <div class="container">
+            <div class="row center">
+                <div class=" col s12 m6">
+                    <form method="post" action="j_security_check">
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title black-text fancyTitleFont"
+                                      style="font-size: 2vw;">#{msg['login.login']}</span>
+
+                                <div class="row">
+                                    <div class="input-field col s12 center">
+                                        <i class="material-icons prefix">email</i>
+                                        <input id="j_username" name="j_username" type="text" class="validate"/>
+                                        <label for="j_username" class="active">#{msg['login.username']}</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <i class="material-icons prefix">vpn_key</i>
+                                        <input id="j_password" name="j_password" type="password" class="validate"/>
+                                        <label for="j_password" class="active">#{msg['login.password']}</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-action">
+                                <div>
+                                    <ui:insert name="additional">
+                                    </ui:insert>
+                                </div>
+                                <div>
+                                    <input type="submit" class="btn orange" value="#{msg['login.login']}"/>
+                                </div>
+                                <div>
+                                    <br/>
+                                    <h:outputLink value="#{pageSwitcherBean.switchPage('REGISTER')}"
+                                                  styleClass="blue-text"
+                                                  style="font-size: 0.80vw; ">
+                                        #{msg['login.registerText']}
+                                    </h:outputLink>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </ui:define>
+</ui:composition>
+
+</html>
