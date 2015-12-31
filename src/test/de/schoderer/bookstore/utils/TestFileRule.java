@@ -3,22 +3,27 @@ package de.schoderer.bookstore.utils;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by michael on 31.12.2015.
  */
 public class TestFileRule extends TemporaryFolder {
-    private File testFile;
+    private AtomicInteger counter = new AtomicInteger();
 
     @Override
     protected void before() throws Throwable {
         super.before();
-        testFile = newFile("TestFile.txt");
-        Files.write(testFile.toPath(), "Hallo Hier ist die TestDatei".getBytes());
     }
 
-    public File getTestFile(){
+    public File getRandomTestFile() throws IOException {
+        File testFile = newFile("TestFile"+counter.getAndIncrement());
+        String content = "Hallo TestFile"+ UUID.randomUUID().toString();
+        Files.write(testFile.toPath(), content.getBytes());
         return testFile;
     }
 

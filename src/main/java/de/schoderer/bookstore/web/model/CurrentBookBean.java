@@ -182,6 +182,9 @@ public class CurrentBookBean implements Serializable {
      */
     private String createFileName(String fileName) {
         int beginIndex = fileName.lastIndexOf(".");
+        if(beginIndex<0){
+            return fileName + "_" + Math.abs(random.nextLong());
+        }
         return fileName.substring(0, beginIndex - 1) + "_" + Math.abs(random.nextLong()) + fileName.substring(beginIndex);
     }
 
