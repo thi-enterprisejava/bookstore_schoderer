@@ -45,7 +45,7 @@ public class CurrentBookBeanUploadTest {
 
 
     @Test
-    public void testIfNullIsReturnedWhenPartIsNull() throws IOException{
+    public void ifNullIsReturnedWhenPartIsNull() throws IOException{
         mockUploadDirecotry();
         Path uploadedFilePath = bean.uploadAndSaveFileToHardDisk(null, true);
         Assert.assertNull(uploadedFilePath);
@@ -57,6 +57,8 @@ public class CurrentBookBeanUploadTest {
         File testFile = testFileRule_.getRandomTestFile();
         Path uploadedFilePath = bean.uploadAndSaveFileToHardDisk(new MockPart(testFile, "text/plain"), true);
         Assert.assertTrue(Files.exists(uploadedFilePath));
+        Assert.assertTrue(FileUtils.contentEquals(testFile, uploadedFilePath.toFile()));
+
     }
     @Test
     public void ifImageCanBeUploadedToHardDrive() throws IOException {

@@ -8,6 +8,7 @@ import de.schoderer.bookstore.utils.Configuration;
 import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.Logger;
 
+import javax.annotation.security.RolesAllowed;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -163,7 +164,7 @@ public class CurrentBookBean implements Serializable {
         try {
 
             String fileName = part.getSubmittedFileName();
-            filePath = getBasePath(isBook).resolve(createFileName(fileName));
+            filePath = getBasePath(isBook).resolve(createUniqueFileName(fileName));
             Files.copy(part.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             if (LOG.isInfoEnabled()) {
                 LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());
@@ -180,7 +181,7 @@ public class CurrentBookBean implements Serializable {
      * @param fileName
      * @return
      */
-    private String createFileName(String fileName) {
+    private String createUniqueFileName(String fileName) {
         int beginIndex = fileName.lastIndexOf(".");
         if(beginIndex<0){
             return fileName + "_" + Math.abs(random.nextLong());
@@ -188,7 +189,7 @@ public class CurrentBookBean implements Serializable {
         return fileName.substring(0, beginIndex - 1) + "_" + Math.abs(random.nextLong()) + fileName.substring(beginIndex);
     }
 
-
+    @RolesAllowed("user")
     public String deleteBook() {
         removeFiles();
         persistence.removeBook(currentBook);
@@ -250,5 +251,21 @@ public class CurrentBookBean implements Serializable {
 
     public void setConfiguration(Configuration configuration) {
         this.configuration = configuration;
+    }
+
+    public BookPersistence getPersistence() {
+        return persistence;
+    }
+
+    public void setPersistence(BookPersistence persistence) {
+        this.persistence = persistence;
+    }
+
+    public PageSwitcherBean getPageSwitcher() {
+        return pageSwitcher;
+    }
+
+    public void setPageSwitcher(PageSwitcherBean pageSwitcher) {
+        this.pageSwitcher = pageSwitcher;
     }
 }

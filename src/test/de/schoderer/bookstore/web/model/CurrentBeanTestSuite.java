@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        CurrentBookBeanUploadTest.class
+        CurrentBookBeanUploadTest.class,
+        CurrentBookBeanDeleteTest.class
 
 
 })
