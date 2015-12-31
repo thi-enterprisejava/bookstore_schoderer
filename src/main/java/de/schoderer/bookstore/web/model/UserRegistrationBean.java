@@ -31,10 +31,9 @@ public class UserRegistrationBean {
 
 
     private String email;
-    private String userName;
     private String password;
     private String repeatedRassword;
-
+    //TODO not working....
     public static String hash256(String data) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(data.getBytes());
@@ -59,14 +58,10 @@ public class UserRegistrationBean {
     }
 
     private boolean checkIfInputIsValid() {
-        if (repeatedRassword == null || !repeatedRassword.equals(password)) {
-            JSFUtils.sendMessage("Passwords did not match");
-            LOGGER.info("Passwords didnt match");
-            return false;
-        }
-        if (userName == null || persistence.checkIfUserNameIsFree(userName)) {
-            JSFUtils.sendMessage("Username already taken");
-            LOGGER.info("Username already taken: " + userName);
+        if (email == null || persistence.checkIfEmailIsAlreadyRegistered(email)) {
+            //TODO maybe offer paswword reset, if not to much work
+            JSFUtils.sendMessage("Email already exists");
+            LOGGER.info("Username already taken: " + email);
             return false;
         }
         return true;
@@ -80,13 +75,6 @@ public class UserRegistrationBean {
         this.email = email;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public String getPassword() {
         return password;

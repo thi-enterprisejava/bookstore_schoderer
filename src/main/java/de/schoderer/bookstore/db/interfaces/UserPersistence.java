@@ -27,7 +27,7 @@ public interface UserPersistence {
      * @return true if exists, else false
      */
     @PermitAll
-    boolean checkIfUserNameIsFree(String userName);
+    boolean checkIfEmailIsAlreadyRegistered(String userName);
 
     @PermitAll
     User saveUser(User user);

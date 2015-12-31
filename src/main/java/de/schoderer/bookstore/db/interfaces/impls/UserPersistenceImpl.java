@@ -22,8 +22,8 @@ public class UserPersistenceImpl extends BasicPersistence implements UserPersist
     }
 
     @Override
-    public boolean checkIfUserNameIsFree(String userName) {
-        TypedQuery<User> query = getEntityManager().createNamedQuery("User.userNameExists", User.class)
+    public boolean checkIfEmailIsAlreadyRegistered(String userName) {
+        TypedQuery<Long> query = getEntityManager().createNamedQuery("User.userNameExists", Long.class)
                 .setParameter("username", userName)
                 .setMaxResults(1);
         return query.getResultList().isEmpty();
