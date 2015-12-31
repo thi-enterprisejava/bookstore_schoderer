@@ -3,8 +3,6 @@ package de.schoderer.bookstore.utils.validator;
 import de.schoderer.bookstore.utils.JSFUtils;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.inject.Inject;
 import java.util.List;
@@ -25,11 +23,11 @@ public class EmailValidator extends BaseValidator {
 
     @Override
     public void validate(Object value, ResourceBundle bundle, List<FacesMessage> messageList) {
-        if(value == null || "".equals(value)){
+        if (value == null || "".equals(value)) {
             FacesMessage e = new FacesMessage(bundle.getString("error.emptyEmail"));
             e.setSeverity(FacesMessage.SEVERITY_ERROR);
             messageList.add(e);
-        }else if(!EMAIL_COMPILED_PATTERN.matcher((String)value).matches()){
+        } else if (!EMAIL_COMPILED_PATTERN.matcher((String) value).matches()) {
             FacesMessage e = new FacesMessage(bundle.getString("error.notValidEmail"));
             e.setSeverity(FacesMessage.SEVERITY_ERROR);
             messageList.add(e);

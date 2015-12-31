@@ -6,10 +6,7 @@ import org.apache.log4j.Logger;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 /**
  * Created by michael on 22.12.15.
@@ -31,7 +28,7 @@ public class JSFUtilsImpl implements JSFUtils {
 
     @Override
     public String getResourceBundleStringInCurrentLocal(String parameterName) {
-       return "";
+        return "";
 
     }
 }

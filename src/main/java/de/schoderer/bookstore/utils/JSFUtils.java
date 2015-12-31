@@ -1,8 +1,5 @@
 package de.schoderer.bookstore.utils;
 
-import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
-
 /**
  * Created by michael on 22.12.15.
  */
@@ -10,6 +7,7 @@ import javax.faces.context.FacesContext;
 public interface JSFUtils {
     /**
      * Adds a message to the FacesContext
+     *
      * @param message
      */
 
@@ -22,6 +20,7 @@ public interface JSFUtils {
 
     /**
      * Gets the localized Translation for a given parameter from the messagebundle
+     *
      * @param parameterName
      * @return localized tranzlation
      */
