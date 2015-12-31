@@ -46,7 +46,6 @@ public class CurrentBookBean implements Serializable {
     private Part bookFile;
 
 
-    @Inject
     public CurrentBookBean() {
         currentBook = new Book();
     }
@@ -130,7 +129,7 @@ public class CurrentBookBean implements Serializable {
         currentBook.setTags(tagsWithID);
     }
 
-    private DataFileLocation uploadAndSaveFiles() {
+    protected DataFileLocation uploadAndSaveFiles() {
         //TODO mabye onlay upload on update, when change happend
         if (currentBook.getId() != null) {
             return currentBook.getData();
@@ -158,7 +157,7 @@ public class CurrentBookBean implements Serializable {
         }
     }
 
-    private Path uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
+    protected Path uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
         Path filePath = null;
         if (part == null) {
             return filePath;
