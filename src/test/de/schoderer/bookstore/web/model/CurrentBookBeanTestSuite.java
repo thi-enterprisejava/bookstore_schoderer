@@ -9,9 +9,10 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         CurrentBookBeanUploadTest.class,
-        CurrentBookBeanDeleteTest.class
+        CurrentBookBeanDeleteTest.class,
+        CurrentBookBeanSaveTests.class
 
 
 })
-public class CurrentBeanTestSuite {
+public class CurrentBookBeanTestSuite {
 }

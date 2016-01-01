@@ -20,7 +20,11 @@ public class TestFileRule extends TemporaryFolder {
     }
 
     public File getRandomTestFile() throws IOException {
-        File testFile = newFile("TestFile"+counter.getAndIncrement());
+        String fileName = "TestFile"+counter.getAndIncrement();
+        if(counter.get()%2==0){
+           fileName = fileName.concat(".txt");
+        }
+        File testFile = newFile(fileName);
         String content = "Hallo TestFile"+ UUID.randomUUID().toString();
         Files.write(testFile.toPath(), content.getBytes());
         return testFile;

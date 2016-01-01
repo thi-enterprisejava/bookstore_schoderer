@@ -87,7 +87,7 @@ public class CurrentBookBean implements Serializable {
         if (LOG.isInfoEnabled()) {
             LOG.info("Removed Tag: " + tag);
         }
-        currentBook.getTags().removeIf(bookTag -> bookTag.getTag().equals(tag));
+        currentBook.getTags().removeIf(bookTag -> bookTag.getTag().equals(tag.toUpperCase().trim()));
     }
 
     /**
@@ -96,11 +96,11 @@ public class CurrentBookBean implements Serializable {
     public void doSave() {
         if (id == null) {
             currentBook.setData(uploadAndSaveFiles());
-            saveTags(currentBook);
+            persistTagsIfNotAlreadyInDatabase(currentBook);
             persistence.saveBook(currentBook);
         } else {
             currentBook.setData(uploadAndSaveFiles());
-            saveTags(currentBook);
+            persistTagsIfNotAlreadyInDatabase(currentBook);
             persistence.updateBook(currentBook);
         }
         currentBook = new Book();
@@ -112,7 +112,7 @@ public class CurrentBookBean implements Serializable {
      *
      * @param currentBook
      */
-    private void saveTags(Book currentBook) {
+    private void persistTagsIfNotAlreadyInDatabase(Book currentBook) {
         List<Tag> tagsInDatabase = persistence.fetchAllTags();
         List<Tag> tagsWithID = new ArrayList<>(currentBook.getTags().size());
         currentBook.getTags().forEach(tag -> {
@@ -128,6 +128,10 @@ public class CurrentBookBean implements Serializable {
         currentBook.setTags(tagsWithID);
     }
 
+    /**
+     * Uploads all files to the hdd and saves the path of the files to an @DataFileLocation-Object
+     * @return DataFileLocation
+     */
     protected DataFileLocation uploadAndSaveFiles() {
         //TODO mabye onlay upload on update, when change happend
         if (currentBook.getId() != null) {
@@ -156,6 +160,12 @@ public class CurrentBookBean implements Serializable {
         }
     }
 
+    /**
+     * Uploades the given part to the HDD, change targetdirectory if the file is a book
+     * @param part
+     * @param isBook
+     * @return path of the uploaded file
+     */
     protected Path uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
         Path filePath = null;
         if (part == null) {
