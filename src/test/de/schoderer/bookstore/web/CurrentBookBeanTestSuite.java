@@ -1,5 +1,8 @@
-package de.schoderer.bookstore.web.model;
+package de.schoderer.bookstore.web;
 
+import de.schoderer.bookstore.web.model.CurrentBookBeanDeleteTest;
+import de.schoderer.bookstore.web.model.CurrentBookBeanSaveTests;
+import de.schoderer.bookstore.web.model.CurrentBookBeanUploadTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

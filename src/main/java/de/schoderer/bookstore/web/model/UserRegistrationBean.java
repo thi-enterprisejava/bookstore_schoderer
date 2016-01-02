@@ -59,7 +59,7 @@ public class UserRegistrationBean {
 
     private boolean checkIfInputIsValid() {
         if (email == null || persistence.checkIfEmailIsAlreadyRegistered(email)) {
-            //TODO maybe offer paswword reset, if not to much work
+            //TODO maybe offer paswword reset, if not to much work Work with resourcebundle!!
             JSFUtils.sendMessage("Email already exists");
             LOGGER.info("Username already taken: " + email);
             return false;

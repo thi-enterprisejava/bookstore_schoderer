@@ -14,26 +14,23 @@ import java.io.Serializable;
 @SessionScoped
 public class PageSwitcherBean implements Serializable {
     private static final Logger LOG = Logger.getLogger(PageSwitcherBean.class);
-
-    private static final String ACTIVE_CSS_CLASS = "active";
-    private String addBookPage = "";
-    private String indexPage = "";
-    private String listResultsPage = "";
-    private String loginPage = "";
-
+    public static final String FACES_REDIRECT = "?faces-redirect=true";
     private Pages lastPage = Pages.INDEX;
     private Pages currentPage;
 
-
-    public String switchPage(String page) {
-        return switchPage(Pages.valueOf(page));
+    public String switchPage(String pageString) {
+        Pages page = Pages.INDEX;
+        try{
+            Pages.valueOf(pageString);
+        }catch (IllegalArgumentException e){
+            LOG.error("Unknown Page: "+page , e);
+        }
+        return switchPage(page);
     }
 
     public String switchPage(Pages page) {
         lastPage = currentPage;
         currentPage = page;
-        resetCssClassStrings();
-        changeCSS(page);
         if (LOG.isInfoEnabled()) {
             LOG.info("Switched page to: " + page.toString());
         }
@@ -41,66 +38,28 @@ public class PageSwitcherBean implements Serializable {
     }
 
     public String backwards() {
-        return getFileNameWithRedirect(lastPage);
+        String redirectToLastPage =  getFileNameWithRedirect(lastPage);
+        switchPage(lastPage);
+        return redirectToLastPage;
     }
 
-    private String getFileNameWithRedirect(Pages page) {
-        return page.getFileName() + "?faces-redirect=true";
+    protected String getFileNameWithRedirect(Pages page) {
+        return page.getFileName().concat(FACES_REDIRECT);
     }
 
-    private void changeCSS(Pages page) {
-        switch (page) {
-            case INDEX:
-                indexPage = ACTIVE_CSS_CLASS;
-                break;
-            case LIST:
-                listResultsPage = ACTIVE_CSS_CLASS;
-                break;
-            case ADD:
-                addBookPage = ACTIVE_CSS_CLASS;
-                break;
-            case LOGIN:
-                loginPage = ACTIVE_CSS_CLASS;
-        }
+    public Pages getLastPage() {
+        return lastPage;
     }
 
-
-    private void resetCssClassStrings() {
-        addBookPage = "";
-        indexPage = "";
-        listResultsPage = "";
-        loginPage = "";
+    public void setLastPage(Pages lastPage) {
+        this.lastPage = lastPage;
     }
 
-    public String getAddBookPage() {
-        return addBookPage;
+    public Pages getCurrentPage() {
+        return currentPage;
     }
 
-    public void setAddBookPage(String addBookPage) {
-        this.addBookPage = addBookPage;
-    }
-
-    public String getIndexPage() {
-        return indexPage;
-    }
-
-    public void setIndexPage(String indexPage) {
-        this.indexPage = indexPage;
-    }
-
-    public String getListResultsPage() {
-        return listResultsPage;
-    }
-
-    public void setListResultsPage(String listResultsPage) {
-        this.listResultsPage = listResultsPage;
-    }
-
-    public String getLoginPage() {
-        return loginPage;
-    }
-
-    public void setLoginPage(String loginPage) {
-        this.loginPage = loginPage;
+    public void setCurrentPage(Pages currentPage) {
+        this.currentPage = currentPage;
     }
 }
