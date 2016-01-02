@@ -17,7 +17,7 @@ public class BookUploadValidator extends BaseValidator {
     public void validate(Object value, ResourceBundle bundle, List<FacesMessage> messageList) {
         Part book = (Part) value;
         //if no image is present, skip the other validations
-        if(book == null){
+        if (book == null) {
             messageList.add(new FacesMessage(bundle.getString("error.noBook")));
             return;
         }

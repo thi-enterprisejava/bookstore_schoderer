@@ -33,7 +33,7 @@
                     <div class="input-field col s12">
                         <i class="material-icons prefix">perm_identity</i>
                         <h:inputText id="authorName" type="text" class="black-text"
-                                     value="#{currentBookBean.currentBook.author}"  name="#{msg['common.author']}">
+                                     value="#{currentBookBean.currentBook.author}" name="#{msg['common.author']}">
                             <f:validateRequired/>
                             <f:validateLength minimum="3"/>
                         </h:inputText>
@@ -45,7 +45,8 @@
                         <div class="input-field col s12">
                             <i class="material-icons prefix">description</i>
                             <h:inputTextarea id="textarea1" class="materialize-textarea black-text"
-                                             value="#{currentBookBean.currentBook.description}"  name="#{msg['add.description']}">
+                                             value="#{currentBookBean.currentBook.description}"
+                                             name="#{msg['add.description']}">
                                 <f:validateRequired/>
                                 <f:validateLength minimum="3" maximum="1024"/>
                             </h:inputTextarea>
@@ -56,7 +57,8 @@
                         <div class="input-field col s3 ">
                             <i class="material-icons prefix">query_builder</i>
                             <h:inputText id="year" type="number" class=" black-text"
-                                         value="#{currentBookBean.currentBook.publishedYear}"  name="#{msg['add.publishedYear']}"
+                                         value="#{currentBookBean.currentBook.publishedYear}"
+                                         name="#{msg['add.publishedYear']}"
                                          converter="javax.faces.Integer">
                                 <f:validateRequired/>
                                 <f:validateLongRange minimum="1500"
@@ -67,7 +69,7 @@
                         <div class="input-field col s3 ">
                             <i class="material-icons prefix">input</i>
                             <h:inputText id="isbn" type="text" class=" black-text"
-                                         value="#{currentBookBean.currentBook.isbn}"  name="#{msg['details.isbn']}">
+                                         value="#{currentBookBean.currentBook.isbn}" name="#{msg['details.isbn']}">
                             </h:inputText>
                             <label for="isbn" class=" black-text">#{msg['details.isbn']}</label>
                         </div>
@@ -122,7 +124,8 @@
                                 <div class="btn orange">
                                     <span>#{msg['common.book']}</span>
 
-                                    <h:inputFile id="bookFile" value="#{currentBookBean.bookFile}" name="#{msg['add.bookUpload']}">
+                                    <h:inputFile id="bookFile" value="#{currentBookBean.bookFile}"
+                                                 name="#{msg['add.bookUpload']}">
                                         <f:validateRequired/>
                                         <f:validator validatorId="bookUploadValidator"/>
                                     </h:inputFile>

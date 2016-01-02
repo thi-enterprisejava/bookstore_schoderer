@@ -33,6 +33,7 @@ public class UserRegistrationBean {
     private String email;
     private String password;
     private String repeatedRassword;
+
     //TODO not working....
     public static String hash256(String data) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");

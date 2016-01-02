@@ -14,11 +14,11 @@ import java.util.Collection;
 public class MockPart implements Part {
     private File testfile;
     private String contentType;
-    public MockPart(File file, String contentType){
+
+    public MockPart(File file, String contentType) {
         this.testfile = file;
         this.contentType = contentType;
     }
-
 
 
     @Override

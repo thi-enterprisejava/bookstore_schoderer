@@ -13,18 +13,13 @@ import java.io.Serializable;
 @Named
 @SessionScoped
 public class PageSwitcherBean implements Serializable {
-    private static final Logger LOG = Logger.getLogger(PageSwitcherBean.class);
     public static final String FACES_REDIRECT = "?faces-redirect=true";
+    private static final Logger LOG = Logger.getLogger(PageSwitcherBean.class);
     private Pages lastPage = Pages.INDEX;
     private Pages currentPage;
 
     public String switchPage(String pageString) {
-        Pages page = Pages.INDEX;
-        try{
-            Pages.valueOf(pageString);
-        }catch (IllegalArgumentException e){
-            LOG.error("Unknown Page: "+page , e);
-        }
+        Pages page = Pages.valueOf(pageString);
         return switchPage(page);
     }
 
@@ -38,7 +33,7 @@ public class PageSwitcherBean implements Serializable {
     }
 
     public String backwards() {
-        String redirectToLastPage =  getFileNameWithRedirect(lastPage);
+        String redirectToLastPage = getFileNameWithRedirect(lastPage);
         switchPage(lastPage);
         return redirectToLastPage;
     }

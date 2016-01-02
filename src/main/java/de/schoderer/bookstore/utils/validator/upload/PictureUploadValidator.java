@@ -20,7 +20,7 @@ public class PictureUploadValidator extends BaseValidator {
     public void validate(Object value, ResourceBundle bundle, List<FacesMessage> messageList) {
         Part image = (Part) value;
         //if no image is present, skip the other validations
-        if(image == null){
+        if (image == null) {
             messageList.add(new FacesMessage(bundle.getString("error.noImage")));
             return;
         }

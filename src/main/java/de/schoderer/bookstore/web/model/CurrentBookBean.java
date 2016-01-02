@@ -15,7 +15,10 @@ import javax.inject.Named;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -49,7 +52,7 @@ public class CurrentBookBean implements Serializable {
         doSetCurrentBook();
     }
 
-    protected  Path getBasePath(boolean isBook) {
+    protected Path getBasePath(boolean isBook) {
         if (isBook) {
             return configuration.getBasePath().resolve("books");
         } else {
@@ -130,6 +133,7 @@ public class CurrentBookBean implements Serializable {
 
     /**
      * Uploads all files to the hdd and saves the path of the files to an @DataFileLocation-Object
+     *
      * @return DataFileLocation
      */
     protected DataFileLocation uploadAndSaveFiles() {
@@ -162,6 +166,7 @@ public class CurrentBookBean implements Serializable {
 
     /**
      * Uploades the given part to the HDD, change targetdirectory if the file is a book
+     *
      * @param part
      * @param isBook
      * @return path of the uploaded file
@@ -193,7 +198,7 @@ public class CurrentBookBean implements Serializable {
      */
     private String createUniqueFileName(String fileName) {
         int beginIndex = fileName.lastIndexOf(".");
-        if(beginIndex<0){
+        if (beginIndex < 0) {
             return fileName + "_" + Math.abs(random.nextLong());
         }
         return fileName.substring(0, beginIndex - 1) + "_" + Math.abs(random.nextLong()) + fileName.substring(beginIndex);

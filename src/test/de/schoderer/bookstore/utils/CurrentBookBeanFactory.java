@@ -15,8 +15,8 @@ import java.util.Arrays;
 /**
  * Created by michael on 31.12.2015.
  */
-public class CurrentBookBeanFactory extends TestFileRule{
-    public CurrentBookBean createCurrentBookMock() throws IOException{
+public class CurrentBookBeanFactory extends TestFileRule {
+    public CurrentBookBean createCurrentBookMock() throws IOException {
         CurrentBookBean currentBookBean = new CurrentBookBean();
         currentBookBean.setPersistence(Mockito.mock(BookPersistence.class));
         currentBookBean.setPageSwitcher(Mockito.mock(PageSwitcherBean.class));
@@ -25,12 +25,10 @@ public class CurrentBookBeanFactory extends TestFileRule{
     }
 
 
-
-
-    public Book getBook() throws IOException{
+    public Book getBook() throws IOException {
         Book book = new Book("Test", "Test", "ABC", 2015, "ADFASFASf");
         book.setData(getDataFileLocation());
-        book.getTags().addAll(Arrays.asList(new Tag("H"),new Tag("A"), new Tag("B")));
+        book.getTags().addAll(Arrays.asList(new Tag("H"), new Tag("A"), new Tag("B")));
         System.err.println(book.getData());
         return book;
     }

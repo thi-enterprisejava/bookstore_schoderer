@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 public class Configuration {
     private Path basePath = Paths.get(System.getProperty("user.home"), "files");
 
-    public Path getBasePath(){
+    public Path getBasePath() {
         return basePath;
     }
 }

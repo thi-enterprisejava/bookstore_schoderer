@@ -9,8 +9,8 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        CurrentBookBeanTestSuite.class,
+        BeanTestSuite.class,
         PageSwitcherBeanTest.class
 })
-public class BeanTests {
+public class AllTests {
 }

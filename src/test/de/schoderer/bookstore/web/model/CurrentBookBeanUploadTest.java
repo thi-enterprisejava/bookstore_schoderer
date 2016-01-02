@@ -4,8 +4,13 @@ import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.utils.Configuration;
 import de.schoderer.bookstore.utils.MockPart;
 import de.schoderer.bookstore.utils.TestFileRule;
+import de.schoderer.bookstore.web.BeanTest;
 import org.apache.commons.io.FileUtils;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
 import java.io.File;
@@ -17,17 +22,19 @@ import java.nio.file.Paths;
 /**
  * Created by michael on 31.12.2015.
  */
+@Category(BeanTest.class)
 public class CurrentBookBeanUploadTest {
-    private  static CurrentBookBean bean;
+    private static CurrentBookBean bean;
     @Rule
     public TestFileRule testFileRule_ = new TestFileRule();
 
     @BeforeClass
-    public static void setUp(){
+    public static void setUp() {
         bean = new CurrentBookBean();
     }
+
     @Test
-    public void ifUploadAndSaveFileReturnsRightDataFileLocation() throws IOException{
+    public void ifUploadAndSaveFileReturnsRightDataFileLocation() throws IOException {
         mockUploadDirecotry();
         File bookFile = testFileRule_.getRandomTestFile();
         bean.setBookFile(new MockPart(bookFile, "text/plain"));
@@ -42,10 +49,8 @@ public class CurrentBookBeanUploadTest {
     }
 
 
-
-
     @Test
-    public void ifNullIsReturnedWhenPartIsNull() throws IOException{
+    public void ifNullIsReturnedWhenPartIsNull() throws IOException {
         mockUploadDirecotry();
         Path uploadedFilePath = bean.uploadAndSaveFileToHardDisk(null, true);
         Assert.assertNull(uploadedFilePath);
@@ -60,6 +65,7 @@ public class CurrentBookBeanUploadTest {
         Assert.assertTrue(FileUtils.contentEquals(testFile, uploadedFilePath.toFile()));
 
     }
+
     @Test
     public void ifImageCanBeUploadedToHardDrive() throws IOException {
         mockUploadDirecotry();
