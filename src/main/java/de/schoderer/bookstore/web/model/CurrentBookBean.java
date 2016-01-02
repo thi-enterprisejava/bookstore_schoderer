@@ -46,7 +46,7 @@ public class CurrentBookBean implements Serializable {
 
 
     public CurrentBookBean() {
-        currentBook = new Book();
+        doSetCurrentBook();
     }
 
     protected  Path getBasePath(boolean isBook) {
