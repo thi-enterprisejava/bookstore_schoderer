@@ -7,14 +7,16 @@ import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by michael on 04.01.2016.
  */
-public class BookFixture  extends TestFileRule {
+public class BookFixture extends TestFileRule {
 
-    public Book createBookMock(){
+    public Book createBookMock() {
         return Mockito.mock(Book.class);
     }
 
@@ -28,7 +30,7 @@ public class BookFixture  extends TestFileRule {
     }
 
 
-    public  Book createBookInstance(){
+    public Book createBookInstance() {
         Book book = createRandomBook();
         DataFileLocation location = Mockito.mock(DataFileLocation.class);
         book.setData(location);
@@ -37,12 +39,12 @@ public class BookFixture  extends TestFileRule {
 
     private Book createRandomBook() {
         Random random = new Random();
-        return createBook("Hallo"+random.nextInt(), "Author"+random.nextInt(), random.nextInt(2015), "tag"+random.nextInt(),"tag"+random.nextInt(),"tag"+random.nextInt());
+        return createBook("Hallo" + random.nextInt(), "Author" + random.nextInt(), random.nextInt(2015), "tag" + random.nextInt(), "tag" + random.nextInt(), "tag" + random.nextInt());
     }
 
-    private  Book createBook(String name, String author, int year, String... tags) {
+    private Book createBook(String name, String author, int year, String... tags) {
         Book book = new Book(name, author, null, year, null);
-        for(String tag : tags){
+        for (String tag : tags) {
             book.getTags().add(new Tag(tag.toUpperCase().trim()));
         }
         return book;

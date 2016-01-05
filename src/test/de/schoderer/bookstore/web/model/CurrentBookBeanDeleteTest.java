@@ -1,6 +1,5 @@
 package de.schoderer.bookstore.web.model;
 
-import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.utils.BookFixture;
@@ -36,6 +35,7 @@ public class CurrentBookBeanDeleteTest {
         currentBookBean.deleteBook();
         Mockito.verify(currentBookBean.getPersistence(), Mockito.times(1)).removeBook(bookInstance);
     }
+
     @Test
     public void ifFilesAreDeleted() throws IOException {
         CurrentBookBean currentBookBean = currentBookBeanFactory.createCurrentBookMock();

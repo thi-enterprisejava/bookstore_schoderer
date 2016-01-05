@@ -101,7 +101,7 @@ public class UserRegistrationBean {
         this.persistence = persistence;
     }
 
-    public de.schoderer.bookstore.utils.JSFUtils getJsfUtils() {
+    public JSFUtils getJsfUtils() {
         return jsfUtils;
     }
 

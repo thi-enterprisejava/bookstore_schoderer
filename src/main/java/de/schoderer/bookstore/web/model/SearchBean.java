@@ -50,4 +50,20 @@ public class SearchBean implements Serializable {
     public void setSearchResults(List<Book> searchResults) {
         this.searchResults = searchResults;
     }
+
+    public PageSwitcherBean getNavBean() {
+        return navBean;
+    }
+
+    public void setNavBean(PageSwitcherBean navBean) {
+        this.navBean = navBean;
+    }
+
+    public BookPersistence getPersistence() {
+        return persistence;
+    }
+
+    public void setPersistence(BookPersistence persistence) {
+        this.persistence = persistence;
+    }
 }

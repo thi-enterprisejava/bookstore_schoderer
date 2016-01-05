@@ -51,6 +51,7 @@ public class CurrentBookBean implements Serializable {
     public CurrentBookBean() {
         doSetCurrentBook();
     }
+
     public CurrentBookBean(Long id) {
         this.id = id;
         doSetCurrentBook();
@@ -217,7 +218,7 @@ public class CurrentBookBean implements Serializable {
 
     private void removeFiles() {
         DataFileLocation dataFileLocation = currentBook.getData();
-        if(dataFileLocation!=null) {
+        if (dataFileLocation != null) {
             try {
                 Files.deleteIfExists(Paths.get(dataFileLocation.getFullFilePath()));
                 Files.deleteIfExists(Paths.get(dataFileLocation.getFullImagePath()));
