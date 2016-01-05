@@ -1,5 +1,8 @@
 package de.schoderer.bookstore.web;
 
+import de.schoderer.bookstore.web.model.CurrentBookBeanDeleteTest;
+import de.schoderer.bookstore.web.model.CurrentBookBeanTagTests;
+import de.schoderer.bookstore.web.model.CurrentBookBeanUploadTest;
 import de.schoderer.bookstore.web.model.PageSwitcherBeanTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -9,7 +12,9 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        BeanTestSuite.class,
+        CurrentBookBeanTagTests.class,
+        CurrentBookBeanDeleteTest.class,
+        CurrentBookBeanUploadTest.class,
         PageSwitcherBeanTest.class
 })
 public class AllTests {

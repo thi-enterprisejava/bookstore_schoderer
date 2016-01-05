@@ -16,7 +16,7 @@ import java.util.stream.Stream;
  * Created by michael on 01.01.2016.
  */
 @Category(BeanTest.class)
-public class CurrentBookBeanSaveTests {
+public class CurrentBookBeanTagTests {
     @Rule
     public CurrentBookBeanFactory beanFactory = new CurrentBookBeanFactory();
 

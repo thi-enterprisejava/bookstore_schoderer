@@ -51,6 +51,10 @@ public class CurrentBookBean implements Serializable {
     public CurrentBookBean() {
         doSetCurrentBook();
     }
+    public CurrentBookBean(Long id) {
+        this.id = id;
+        doSetCurrentBook();
+    }
 
     protected Path getBasePath(boolean isBook) {
         if (isBook) {
@@ -212,11 +216,14 @@ public class CurrentBookBean implements Serializable {
     }
 
     private void removeFiles() {
-        try {
-            Files.deleteIfExists(Paths.get(currentBook.getData().getFullFilePath()));
-            Files.deleteIfExists(Paths.get(currentBook.getData().getFullImagePath()));
-        } catch (IOException e) {
-            LOG.error("Couldn't delete Files of Book: " + currentBook.getTitle() + ": " + e.getMessage(), e);
+        DataFileLocation dataFileLocation = currentBook.getData();
+        if(dataFileLocation!=null) {
+            try {
+                Files.deleteIfExists(Paths.get(dataFileLocation.getFullFilePath()));
+                Files.deleteIfExists(Paths.get(dataFileLocation.getFullImagePath()));
+            } catch (IOException e) {
+                LOG.error("Couldn't delete Files of Book: " + currentBook.getTitle() + ": " + e.getMessage(), e);
+            }
         }
     }
 

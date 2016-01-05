@@ -20,28 +20,6 @@ public class CurrentBookBeanFactory extends TestFileRule {
         CurrentBookBean currentBookBean = new CurrentBookBean();
         currentBookBean.setPersistence(Mockito.mock(BookPersistence.class));
         currentBookBean.setPageSwitcher(Mockito.mock(PageSwitcherBean.class));
-        currentBookBean.setCurrentBook(getBook());
         return currentBookBean;
-    }
-
-
-    public Book getBook() throws IOException {
-        Book book = new Book("Test", "Test", "ABC", 2015, "ADFASFASf");
-        book.setData(getDataFileLocation());
-        book.getTags().addAll(Arrays.asList(new Tag("H"), new Tag("A"), new Tag("B")));
-        System.err.println(book.getData());
-        return book;
-    }
-
-
-    public DataFileLocation getDataFileLocation() throws IOException {
-        DataFileLocation location = new DataFileLocation();
-        File file = getRandomTestFile();
-        location.setFullFilePath(file.getAbsolutePath());
-        location.setFileName(file.getName());
-        file = getRandomTestFile();
-        location.setFullImagePath(file.getAbsolutePath());
-        location.setImageName(file.getName());
-        return location;
     }
 }

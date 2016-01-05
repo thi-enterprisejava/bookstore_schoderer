@@ -13,7 +13,7 @@ import org.junit.experimental.categories.Category;
 public class PageSwitcherBeanTest {
 
     @Test
-    public void testIfLastPageIsSaved() {
+    public void ifLastPageIsSaved() {
         PageSwitcherBean bean = new PageSwitcherBean();
         bean.switchPage(Pages.ADD);
         bean.switchPage(Pages.LOGIN);
@@ -21,7 +21,7 @@ public class PageSwitcherBeanTest {
     }
 
     @Test
-    public void testIfCurrentPageIsSaved() {
+    public void ifCurrentPageIsSaved() {
         PageSwitcherBean bean = new PageSwitcherBean();
         bean.switchPage(Pages.ADD);
         bean.switchPage(Pages.LOGIN);
@@ -29,20 +29,20 @@ public class PageSwitcherBeanTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void testIfExceptionIfPageIsUnknown() {
+    public void ifExceptionIsThrownIfPageIsUnknown() {
         PageSwitcherBean bean = new PageSwitcherBean();
         bean.switchPage("hallo");
     }
 
     @Test
-    public void testIfPageSwitchWithStringWorks() {
+    public void ifPageSwitchWithStringWorks() {
         PageSwitcherBean bean = new PageSwitcherBean();
         bean.switchPage("INDEX");
         Assert.assertEquals(Pages.INDEX, bean.getCurrentPage());
     }
 
     @Test
-    public void testIfBackwardsWorksCorrectly() {
+    public void ifBackwardsWorksCorrectly() {
         PageSwitcherBean bean = new PageSwitcherBean();
         Pages firstPage = Pages.ADD;
         bean.switchPage(firstPage);

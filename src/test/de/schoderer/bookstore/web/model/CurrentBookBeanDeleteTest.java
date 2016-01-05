@@ -1,7 +1,9 @@
 package de.schoderer.bookstore.web.model;
 
 import de.schoderer.bookstore.db.interfaces.BookPersistence;
+import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
+import de.schoderer.bookstore.utils.BookFixture;
 import de.schoderer.bookstore.utils.CurrentBookBeanFactory;
 import de.schoderer.bookstore.web.BeanTest;
 import org.junit.Assert;
@@ -20,17 +22,29 @@ import java.nio.file.Paths;
 @Category(BeanTest.class)
 public class CurrentBookBeanDeleteTest {
     @Rule
-    public CurrentBookBeanFactory dataLocationTestRule = new CurrentBookBeanFactory();
+    public CurrentBookBeanFactory currentBookBeanFactory = new CurrentBookBeanFactory();
+    @Rule
+    public BookFixture bookFixture = new BookFixture();
+
 
     @Test
-    public void ifBookAndFilesAreDeleted() throws IOException {
-        CurrentBookBean currentBookBean = dataLocationTestRule.createCurrentBookMock();
-        BookPersistence persistence = currentBookBean.getPersistence();
+    public void ifBookIsDeleted() throws IOException {
+        CurrentBookBean currentBookBean = currentBookBeanFactory.createCurrentBookMock();
+        Book bookInstance = bookFixture.createBookMock();
+        Mockito.when(bookInstance.getData()).thenReturn(null);
+        currentBookBean.setCurrentBook(bookInstance);
         currentBookBean.deleteBook();
-        Mockito.verify(persistence, Mockito.times(1)).removeBook(currentBookBean.getCurrentBook());
+        Mockito.verify(currentBookBean.getPersistence(), Mockito.times(1)).removeBook(bookInstance);
+    }
+    @Test
+    public void ifFilesAreDeleted() throws IOException {
+        CurrentBookBean currentBookBean = currentBookBeanFactory.createCurrentBookMock();
+        Book bookInstance = bookFixture.createBookMock();
+        Mockito.when(bookInstance.getData()).thenReturn(bookFixture.createDataFileLocation());
+        currentBookBean.setCurrentBook(bookInstance);
+        currentBookBean.deleteBook();
         DataFileLocation data = currentBookBean.getCurrentBook().getData();
         Assert.assertFalse(Files.exists(Paths.get(data.getFullFilePath())));
         Assert.assertFalse(Files.exists(Paths.get(data.getFullImagePath())));
-
     }
 }

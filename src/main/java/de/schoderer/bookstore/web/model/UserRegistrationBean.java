@@ -25,7 +25,7 @@ public class UserRegistrationBean {
     @Inject
     private UserPersistence persistence;
     @Inject
-    private JSFUtils JSFUtils;
+    private JSFUtils jsfUtils;
     @Inject
     private PageSwitcherBean switcherBean;
 
@@ -35,13 +35,13 @@ public class UserRegistrationBean {
     private String repeatedRassword;
 
     //TODO not working....
-    public static String hash256(String data) throws NoSuchAlgorithmException {
+    private static String hash256(String data) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(data.getBytes());
         return bytesToHex(md.digest());
     }
 
-    public static String bytesToHex(byte[] bytes) {
+    private static String bytesToHex(byte[] bytes) {
         StringBuilder result = new StringBuilder();
         for (byte byt : bytes) result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
         return result.toString();
@@ -61,7 +61,7 @@ public class UserRegistrationBean {
     private boolean checkIfInputIsValid() {
         if (email == null || persistence.checkIfEmailIsAlreadyRegistered(email)) {
             //TODO maybe offer paswword reset, if not to much work Work with resourcebundle!!
-            JSFUtils.sendMessage("Email already exists");
+            jsfUtils.sendMessage("Email already exists");
             LOGGER.info("Username already taken: " + email);
             return false;
         }
@@ -91,5 +91,29 @@ public class UserRegistrationBean {
 
     public void setRepeatedRassword(String repeatedRassword) {
         this.repeatedRassword = repeatedRassword;
+    }
+
+    public UserPersistence getPersistence() {
+        return persistence;
+    }
+
+    public void setPersistence(UserPersistence persistence) {
+        this.persistence = persistence;
+    }
+
+    public de.schoderer.bookstore.utils.JSFUtils getJsfUtils() {
+        return jsfUtils;
+    }
+
+    public void setJsfUtils(de.schoderer.bookstore.utils.JSFUtils jsfUtils) {
+        this.jsfUtils = jsfUtils;
+    }
+
+    public PageSwitcherBean getSwitcherBean() {
+        return switcherBean;
+    }
+
+    public void setSwitcherBean(PageSwitcherBean switcherBean) {
+        this.switcherBean = switcherBean;
     }
 }

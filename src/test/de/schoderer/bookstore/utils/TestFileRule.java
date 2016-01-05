@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by michael on 31.12.2015.
  */
 public class TestFileRule extends TemporaryFolder {
-    private AtomicInteger counter = new AtomicInteger();
+    private static AtomicInteger counter = new AtomicInteger();
 
     @Override
     protected void before() throws Throwable {
