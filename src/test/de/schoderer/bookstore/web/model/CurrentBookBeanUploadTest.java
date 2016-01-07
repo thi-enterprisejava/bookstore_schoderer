@@ -1,9 +1,9 @@
 package de.schoderer.bookstore.web.model;
 
 import de.schoderer.bookstore.domain.book.DataFileLocation;
-import de.schoderer.bookstore.utils.Configuration;
 import de.schoderer.bookstore.testUtils.MockPart;
 import de.schoderer.bookstore.testUtils.TestFileRule;
+import de.schoderer.bookstore.utils.Configuration;
 import de.schoderer.bookstore.web.BeanTest;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;

@@ -21,11 +21,11 @@ import java.util.stream.Stream;
  */
 @Category(BeanTest.class)
 public class CurrentBookBeanTagTests {
+    public static List<Tag> tagList = Arrays.asList(new Tag("TEST"), new Tag("TAG"), new Tag("JUNIT"));
     @Rule
     public CurrentBookBeanFactory beanFactory = new CurrentBookBeanFactory();
     @Rule
     public BookFixture bookFixture = new BookFixture();
-
 
     @Test
     public void ifTagsCanBeAddedToABook() throws IOException {
@@ -88,6 +88,7 @@ public class CurrentBookBeanTagTests {
         bean.persistTagsIfNotAlreadyInDatabase(book);
         Mockito.verify(bean.getPersistence(), Mockito.times(1)).saveTag(tag);
     }
+
     @Test
     public void ifTagsAreNotSavedIfAlreadInDatabase() throws IOException {
         CurrentBookBean bean = beanFactory.createCurrentBookMock();
@@ -100,7 +101,5 @@ public class CurrentBookBeanTagTests {
         bean.persistTagsIfNotAlreadyInDatabase(book);
         Mockito.verify(bean.getPersistence(), Mockito.times(0)).saveTag(tag);
     }
-
-    public static List<Tag> tagList = Arrays.asList(new Tag("TEST"), new Tag("TAG"), new Tag("JUNIT"));
 
 }

@@ -6,7 +6,7 @@ import de.schoderer.bookstore.utils.interceptor.TimeLogging;
 import javax.annotation.security.PermitAll;
 
 /**
- * Created by michael on 22.12.15.
+ * Created by Michael Schoderer on 22.12.15.
  */
 @TimeLogging
 public interface UserPersistence {

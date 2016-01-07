@@ -10,7 +10,7 @@ import javax.inject.Named;
 import java.util.ResourceBundle;
 
 /**
- * Created by michael on 22.12.15.
+ * Created by Michael Schoderer on 22.12.15.
  */
 @Named
 @RequestScoped

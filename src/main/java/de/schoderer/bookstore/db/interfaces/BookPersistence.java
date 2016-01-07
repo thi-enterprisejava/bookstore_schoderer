@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by michael on 23.10.15.
+ * Created by Michael Schoderer on 23.10.15.
  * <p>
  * Simple interface, which provides the CRUD-Methods for the persistence
  */

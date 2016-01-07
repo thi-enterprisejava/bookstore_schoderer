@@ -26,8 +26,9 @@ public class CurrentBookBeanSaveTest {
         bean.doSetCurrentBook();
         Assert.assertNull(bean.getCurrentBook().getId());
     }
+
     @Test
-    public void ifBookIsSetWithId(){
+    public void ifBookIsSetWithId() {
         CurrentBookBean bean = new CurrentBookBean(null);
         BookPersistence mockPersistence = Mockito.mock(BookPersistence.class);
         bean.setPersistence(mockPersistence);
@@ -41,7 +42,7 @@ public class CurrentBookBeanSaveTest {
     }
 
     @Test
-    public void ifBookIsUpdated(){
+    public void ifBookIsUpdated() {
         Book newBook = bookFixture.createBookInstance();
         CurrentBookBean bean = new CurrentBookBean(newBook.getId());
         bean.setCurrentBook(newBook);
