@@ -29,13 +29,12 @@ public class UserRegistrationBean {
     private PageSwitcherBean switcherBean;
 
 
-
     private String email;
     private String password;
     private User newUser;
 
     protected String hash256(String data) throws NoSuchAlgorithmException {
-        if(data == null || "".equals(data))
+        if (data == null || "".equals(data))
             return null;
         return Util.createPasswordHash("SHA-256", "BASE64", "UTF-8", null, data);
     }
@@ -53,6 +52,7 @@ public class UserRegistrationBean {
 
     /**
      * Check if email already exists, other test a not neccassary, because other parameters are checked via validators on the serverside
+     *
      * @return true if email not already exists, else false
      */
     protected boolean checkIfEmailAlreadyInDatabase() {

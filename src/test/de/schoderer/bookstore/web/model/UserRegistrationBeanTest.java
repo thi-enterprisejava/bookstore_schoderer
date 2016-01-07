@@ -23,7 +23,7 @@ public class UserRegistrationBeanTest {
     private static UserRegistrationBean bean;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         bean = new UserRegistrationBean();
         bean.setExternalComponents(Mockito.mock(ExternalComponents.class));
         bean.setPersistence(Mockito.mock(UserPersistence.class));
@@ -39,21 +39,23 @@ public class UserRegistrationBeanTest {
     }
 
     @Test
-    public void ifValidationFailedWhenEmailAlreadyRegisitered(){
+    public void ifValidationFailedWhenEmailAlreadyRegisitered() {
         String email = "test@test.de";
         bean.setEmail(email);
         when(bean.getPersistence().checkIfEmailIsAlreadyRegistered(email)).thenReturn(true);
 
-        Assert.assertFalse("Validation should return false for email: "+email, bean.checkIfEmailAlreadyInDatabase());
+        Assert.assertFalse("Validation should return false for email: " + email, bean.checkIfEmailAlreadyInDatabase());
         verify(bean.getExternalComponents(), times(1)).sendMessage(anyString());
     }
+
     @Test
-    public void ifValidationFailedWhenEmailIsNull(){
+    public void ifValidationFailedWhenEmailIsNull() {
         bean.setEmail(null);
 
         Assert.assertFalse("Validation should return false for email is null ", bean.checkIfEmailAlreadyInDatabase());
         verify(bean.getExternalComponents(), times(1)).sendMessage(anyString());
     }
+
     @Test
     public void ifCurrentPageIsReturnedIfInputIsInvalid() throws NoSuchAlgorithmException {
         bean.setEmail(null);
@@ -62,16 +64,17 @@ public class UserRegistrationBeanTest {
 
         String actual = bean.doRegisterUser();
 
-        Assert.assertEquals("CurrentPage should have been returned", currentPage,actual);
+        Assert.assertEquals("CurrentPage should have been returned", currentPage, actual);
     }
+
     @Test
-    public void ifUserIsSavedAndRoleIsAdded() throws NoSuchAlgorithmException{
+    public void ifUserIsSavedAndRoleIsAdded() throws NoSuchAlgorithmException {
         String email = "test@test.de";
         String password = "TopSecret";
         bean.setEmail(email);
         bean.setPassword(password);
 
-       bean.doRegisterUser();
+        bean.doRegisterUser();
 
         verify(bean.getPersistence(), times(1)).saveUser(bean.getNewUser());
         Assert.assertThat(email, is(bean.getNewUser().getEmail()));

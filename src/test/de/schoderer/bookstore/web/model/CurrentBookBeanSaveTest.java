@@ -4,7 +4,10 @@ import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.testUtils.TestFileRule;
 import de.schoderer.bookstore.testUtils.web.model.BookFixture;
-import org.junit.*;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
@@ -15,17 +18,14 @@ import static org.hamcrest.core.Is.is;
  */
 @Category(BeanTest.class)
 public class CurrentBookBeanSaveTest {
+    private static CurrentBookBean bean;
     @Rule
     public TestFileRule testFileRule_ = new TestFileRule();
     @Rule
     public BookFixture bookFixture = new BookFixture();
 
-
-    private static CurrentBookBean bean;
-
-
     @Before
-    public void setUp(){
+    public void setUp() {
         bean = new CurrentBookBean();
     }
 
@@ -63,6 +63,7 @@ public class CurrentBookBeanSaveTest {
 
         Mockito.verify(persistence, Mockito.times(1)).updateBook(bookWithID);
     }
+
     @Test
     public void ifNewBookIsSaved() {
         Book bookWithoutID = bookFixture.createBookInstance();

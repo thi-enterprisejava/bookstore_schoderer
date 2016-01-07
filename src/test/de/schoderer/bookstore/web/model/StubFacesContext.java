@@ -1,7 +1,5 @@
 package de.schoderer.bookstore.web.model;
 
-import org.mockito.Mockito;
-
 import javax.faces.application.Application;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIViewRoot;

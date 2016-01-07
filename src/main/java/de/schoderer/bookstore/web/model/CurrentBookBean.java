@@ -72,6 +72,7 @@ public class CurrentBookBean implements Serializable {
             id = null;
         }
     }
+
     /**
      * Add Tags to the Tag list of the current Book, Checks also if tag is not null or empty
      */
@@ -82,6 +83,7 @@ public class CurrentBookBean implements Serializable {
 
     /**
      * Add Tags to the Tag list of the current Book, Checks also if tag is not null or empty
+     *
      * @param string
      */
     public void doAddTags(String string) {
