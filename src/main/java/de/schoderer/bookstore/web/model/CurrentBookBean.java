@@ -4,9 +4,11 @@ import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.domain.book.Tag;
+import de.schoderer.bookstore.utils.Configuration;
 import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.Logger;
 
+import javax.annotation.security.RolesAllowed;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,6 +18,7 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,10 +31,9 @@ import java.util.stream.Stream;
 @ViewScoped
 public class CurrentBookBean implements Serializable {
     private static final Logger LOG = Logger.getLogger(CurrentBookBean.class);
-    //TODO ändern!!
-    private static final Path paths = Paths.get(System.getProperty("user.home"), "files");
     private static final Random random = new Random();
-
+    @Inject
+    private Configuration configuration;
     @Inject
     private PageSwitcherBean pageSwitcher;
     @Inject
@@ -46,21 +48,24 @@ public class CurrentBookBean implements Serializable {
     private Part bookFile;
 
 
-    @Inject
     public CurrentBookBean() {
-        currentBook = new Book();
+        this(null);
     }
 
-    private static Path getBasePath(boolean isBook) {
+    public CurrentBookBean(Long id) {
+        this.id = id;
+    }
+
+    protected Path getBasePath(boolean isBook) {
         if (isBook) {
-            return paths.resolve("books");
+            return configuration.getBasePath().resolve("books");
         } else {
-            return paths.resolve("images");
+            return configuration.getBasePath().resolve("images");
         }
     }
 
     public void doSetCurrentBook() {
-        if (id == null) {
+        if (id == null || id < 0) {
             currentBook = new Book();
         } else {
             currentBook = persistence.fetchBookByID(id);
@@ -68,11 +73,19 @@ public class CurrentBookBean implements Serializable {
         }
     }
 
+    /**
+     * Add Tags to the Tag list of the current Book, Checks also if tag is not null or empty
+     */
     public void doAddTags() {
         doAddTags(tag);
         tag = "";
     }
 
+    /**
+     * Add Tags to the Tag list of the current Book, Checks also if tag is not null or empty
+     *
+     * @param string
+     */
     public void doAddTags(String string) {
         if (string != null && !"".equals(string)) {
             Stream.of(string.split(","))
@@ -89,20 +102,18 @@ public class CurrentBookBean implements Serializable {
         if (LOG.isInfoEnabled()) {
             LOG.info("Removed Tag: " + tag);
         }
-        currentBook.getTags().removeIf(bookTag -> bookTag.getTag().equals(tag));
+        currentBook.getTags().removeIf(bookTag -> bookTag.getTag().equals(tag.toUpperCase().trim()));
     }
 
     /**
      * Saves the book to the db and uploades the files to the server
      */
     public void doSave() {
+        currentBook.setData(uploadAndSaveFiles());
+        persistTagsIfNotAlreadyInDatabase(currentBook);
         if (id == null) {
-            currentBook.setData(uploadAndSaveFiles());
-            saveTags(currentBook);
             persistence.saveBook(currentBook);
         } else {
-            currentBook.setData(uploadAndSaveFiles());
-            saveTags(currentBook);
             persistence.updateBook(currentBook);
         }
         currentBook = new Book();
@@ -114,7 +125,7 @@ public class CurrentBookBean implements Serializable {
      *
      * @param currentBook
      */
-    private void saveTags(Book currentBook) {
+    protected void persistTagsIfNotAlreadyInDatabase(Book currentBook) {
         List<Tag> tagsInDatabase = persistence.fetchAllTags();
         List<Tag> tagsWithID = new ArrayList<>(currentBook.getTags().size());
         currentBook.getTags().forEach(tag -> {
@@ -130,8 +141,12 @@ public class CurrentBookBean implements Serializable {
         currentBook.setTags(tagsWithID);
     }
 
-    private DataFileLocation uploadAndSaveFiles() {
-        //TODO mabye onlay upload on update, when change happend
+    /**
+     * Uploads all files to the hdd and saves the path of the files to an @DataFileLocation-Object
+     *
+     * @return DataFileLocation
+     */
+    protected DataFileLocation uploadAndSaveFiles() {
         if (currentBook.getId() != null) {
             return currentBook.getData();
         }
@@ -158,16 +173,26 @@ public class CurrentBookBean implements Serializable {
         }
     }
 
-    private Path uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
+    /**
+     * Uploades the given part to the HDD, change targetdirectory if the file is a book
+     *
+     * @param part
+     * @param isBook
+     * @return path of the uploaded file
+     */
+    protected Path uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
         Path filePath = null;
         if (part == null) {
-            return filePath;
+            return null;
         }
         try {
-
             String fileName = part.getSubmittedFileName();
-            filePath = getBasePath(isBook).resolve(createFileName(fileName));
-            Files.copy(part.getInputStream(), filePath);
+            filePath = getBasePath(isBook).resolve(createUniqueFileName(fileName));
+            //Create Directory if not already exists
+            if (!Files.isDirectory(filePath)) {
+                Files.createDirectories(filePath);
+            }
+            Files.copy(part.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             if (LOG.isInfoEnabled()) {
                 LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());
             }
@@ -183,12 +208,15 @@ public class CurrentBookBean implements Serializable {
      * @param fileName
      * @return
      */
-    private String createFileName(String fileName) {
+    private String createUniqueFileName(String fileName) {
         int beginIndex = fileName.lastIndexOf(".");
+        if (beginIndex < 0) {
+            return fileName + "_" + Math.abs(random.nextLong());
+        }
         return fileName.substring(0, beginIndex - 1) + "_" + Math.abs(random.nextLong()) + fileName.substring(beginIndex);
     }
 
-
+    @RolesAllowed("user")
     public String deleteBook() {
         removeFiles();
         persistence.removeBook(currentBook);
@@ -196,11 +224,14 @@ public class CurrentBookBean implements Serializable {
     }
 
     private void removeFiles() {
-        try {
-            Files.deleteIfExists(Paths.get(currentBook.getData().getFullFilePath()));
-            Files.deleteIfExists(Paths.get(currentBook.getData().getFullImagePath()));
-        } catch (IOException e) {
-            LOG.error("Couldn't delete Files of Book: " + currentBook.getTitle() + ": " + e.getMessage(), e);
+        DataFileLocation dataFileLocation = currentBook.getData();
+        if (dataFileLocation != null) {
+            try {
+                Files.deleteIfExists(Paths.get(dataFileLocation.getFullFilePath()));
+                Files.deleteIfExists(Paths.get(dataFileLocation.getFullImagePath()));
+            } catch (IOException e) {
+                LOG.error("Couldn't delete Files of Book: " + currentBook.getTitle() + ": " + e.getMessage(), e);
+            }
         }
     }
 
@@ -244,4 +275,27 @@ public class CurrentBookBean implements Serializable {
         this.bookFile = bookFile;
     }
 
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    public BookPersistence getPersistence() {
+        return persistence;
+    }
+
+    public void setPersistence(BookPersistence persistence) {
+        this.persistence = persistence;
+    }
+
+    public PageSwitcherBean getPageSwitcher() {
+        return pageSwitcher;
+    }
+
+    public void setPageSwitcher(PageSwitcherBean pageSwitcher) {
+        this.pageSwitcher = pageSwitcher;
+    }
 }

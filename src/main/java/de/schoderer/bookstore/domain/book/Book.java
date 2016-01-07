@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * Created by michael on 23.10.15.
+ * Created by Michael Schoderer on 23.10.15.
  */
 @Entity
 @NamedQueries({

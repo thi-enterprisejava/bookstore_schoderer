@@ -15,20 +15,29 @@ import java.util.ResourceBundle;
  * Created by michael on 31.12.2015.
  */
 public abstract class BaseValidator implements Validator, Serializable {
+    private ResourceBundle bundle;
 
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         List<FacesMessage> messages = new ArrayList<>();
-        Locale loc = context.getViewRoot().getLocale();
-        ResourceBundle bundle = ResourceBundle.getBundle(context.getApplication().getMessageBundle(), loc);
-
-        validate(value, bundle, messages);
+        if (bundle == null) {
+            Locale loc = context.getViewRoot().getLocale();
+            bundle = ResourceBundle.getBundle(context.getApplication().getMessageBundle(), loc);
+        }
+        validate(value, messages);
         if (messages.size() > 0) {
             throw new ValidatorException(messages);
         }
     }
 
-    public abstract void validate(Object value, ResourceBundle bundle, List<FacesMessage> messageList);
+    public abstract void validate(Object value, List<FacesMessage> messageList);
 
+    public ResourceBundle getBundle() {
+        return bundle;
+    }
+
+    public void setBundle(ResourceBundle bundle) {
+        this.bundle = bundle;
+    }
 }

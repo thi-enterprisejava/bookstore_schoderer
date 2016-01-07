@@ -25,11 +25,11 @@
                    class="brand-logo fancyTitleFont">BookStore</a>
                 <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
-                    <li class="#{pageSwitcherBean.indexPage}"><a
+                    <li><a
                             href="#{pageSwitcherBean.switchPage('INDEX')}">#{msg['common.search']}</a></li>
-                    <li class="#{pageSwitcherBean.listResultsPage}"><h:commandLink
+                    <li><h:commandLink
                             action="#{searchBean.fetchAllBooks()}">List all</h:commandLink></li>
-                    <li class="#{pageSwitcherBean.addBookPage}"><a
+                    <li><a
                             href="#{pageSwitcherBean.switchPage('ADD')}">#{msg['common.add']}</a></li>
                 </ul>
             </div>

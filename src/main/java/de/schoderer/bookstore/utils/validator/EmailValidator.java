@@ -1,12 +1,11 @@
 package de.schoderer.bookstore.utils.validator;
 
-import de.schoderer.bookstore.utils.JSFUtils;
+import de.schoderer.bookstore.utils.ExternalComponents;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.validator.FacesValidator;
 import javax.inject.Inject;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.regex.Pattern;
 
 /**
@@ -18,17 +17,17 @@ public class EmailValidator extends BaseValidator {
     private final static Pattern EMAIL_COMPILED_PATTERN = Pattern.compile(EMAIL_PATTERN);
 
     @Inject
-    protected JSFUtils utils;
+    protected ExternalComponents utils;
 
 
     @Override
-    public void validate(Object value, ResourceBundle bundle, List<FacesMessage> messageList) {
+    public void validate(Object value, List<FacesMessage> messageList) {
         if (value == null || "".equals(value)) {
-            FacesMessage e = new FacesMessage(bundle.getString("error.emptyEmail"));
+            FacesMessage e = new FacesMessage(getBundle().getString("error.emptyEmail"));
             e.setSeverity(FacesMessage.SEVERITY_ERROR);
             messageList.add(e);
         } else if (!EMAIL_COMPILED_PATTERN.matcher((String) value).matches()) {
-            FacesMessage e = new FacesMessage(bundle.getString("error.notValidEmail"));
+            FacesMessage e = new FacesMessage(getBundle().getString("error.notValidEmail"));
             e.setSeverity(FacesMessage.SEVERITY_ERROR);
             messageList.add(e);
         }
