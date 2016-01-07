@@ -1,8 +1,9 @@
-package de.schoderer.bookstore.testUtils;
+package de.schoderer.bookstore.testUtils.web.model;
 
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.domain.book.Tag;
+import de.schoderer.bookstore.testUtils.TestFileRule;
 import org.mockito.Mockito;
 
 import java.io.File;

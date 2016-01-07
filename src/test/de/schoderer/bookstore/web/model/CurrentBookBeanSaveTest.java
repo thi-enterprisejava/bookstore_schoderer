@@ -2,8 +2,7 @@ package de.schoderer.bookstore.web.model;
 
 import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
-import de.schoderer.bookstore.testUtils.BookFixture;
-import de.schoderer.bookstore.web.BeanTest;
+import de.schoderer.bookstore.testUtils.web.model.BookFixture;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;

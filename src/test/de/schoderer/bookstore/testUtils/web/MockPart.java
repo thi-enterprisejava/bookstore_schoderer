@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.testUtils;
+package de.schoderer.bookstore.testUtils.web;
 
 import javax.servlet.http.Part;
 import java.io.File;

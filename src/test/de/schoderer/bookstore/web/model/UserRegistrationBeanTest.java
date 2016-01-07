@@ -1,6 +1,5 @@
 package de.schoderer.bookstore.web.model;
 
-import de.schoderer.bookstore.web.BeanTest;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 

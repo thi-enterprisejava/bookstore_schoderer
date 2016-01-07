@@ -1,6 +1,7 @@
-package de.schoderer.bookstore.testUtils;
+package de.schoderer.bookstore.testUtils.web.model;
 
 import de.schoderer.bookstore.db.interfaces.BookPersistence;
+import de.schoderer.bookstore.testUtils.TestFileRule;
 import de.schoderer.bookstore.web.model.CurrentBookBean;
 import de.schoderer.bookstore.web.model.PageSwitcherBean;
 import org.mockito.Mockito;

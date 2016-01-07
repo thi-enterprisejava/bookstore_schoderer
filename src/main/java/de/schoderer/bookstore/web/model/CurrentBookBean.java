@@ -100,6 +100,7 @@ public class CurrentBookBean implements Serializable {
     /**
      * Saves the book to the db and uploades the files to the server
      */
+    //TODO test schreiben!!
     public void doSave() {
         if (id == null) {
             currentBook.setData(uploadAndSaveFiles());
@@ -141,7 +142,6 @@ public class CurrentBookBean implements Serializable {
      * @return DataFileLocation
      */
     protected DataFileLocation uploadAndSaveFiles() {
-        //TODO mabye onlay upload on update, when change happend
         if (currentBook.getId() != null) {
             return currentBook.getData();
         }
@@ -183,6 +183,10 @@ public class CurrentBookBean implements Serializable {
         try {
             String fileName = part.getSubmittedFileName();
             filePath = getBasePath(isBook).resolve(createUniqueFileName(fileName));
+            //Create Directory if not already exists
+            if (!Files.isDirectory(filePath)) {
+                Files.createDirectories(filePath);
+            }
             Files.copy(part.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             if (LOG.isInfoEnabled()) {
                 LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());

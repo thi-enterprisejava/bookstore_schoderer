@@ -1,6 +1,8 @@
 package de.schoderer.bookstore;
 
 import de.schoderer.bookstore.utils.validator.EmailValidatorTest;
+import de.schoderer.bookstore.utils.validator.upload.BookUploadValidatorTest;
+import de.schoderer.bookstore.utils.validator.upload.PictureUploadValidatorTest;
 import de.schoderer.bookstore.web.model.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -17,8 +19,11 @@ import org.junit.runners.Suite;
         CurrentBookBeanUploadTest.class,
         PageSwitcherBeanTest.class,
         SearchBeanTest.class,
+
         //ValidatorTests
-        EmailValidatorTest.class
+        EmailValidatorTest.class,
+        BookUploadValidatorTest.class,
+        PictureUploadValidatorTest.class
 })
 public class AllTests {
 }

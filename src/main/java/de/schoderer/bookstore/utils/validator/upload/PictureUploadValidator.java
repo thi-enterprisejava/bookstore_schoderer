@@ -6,7 +6,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.validator.FacesValidator;
 import javax.servlet.http.Part;
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by michael on 15.12.2015.
@@ -17,18 +16,18 @@ public class PictureUploadValidator extends BaseValidator {
 
 
     @Override
-    public void validate(Object value, ResourceBundle bundle, List<FacesMessage> messageList) {
+    public void validate(Object value, List<FacesMessage> messageList) {
         Part image = (Part) value;
         //if no image is present, skip the other validations
         if (image == null) {
-            messageList.add(new FacesMessage(bundle.getString("error.noImage")));
+            messageList.add(new FacesMessage(getBundle().getString("error.noImage")));
             return;
         }
         if (image.getSize() > MAX_PICTURE_SIZE) {
-            messageList.add(new FacesMessage(bundle.getString("error.imageToBig")));
+            messageList.add(new FacesMessage(getBundle().getString("error.imageToBig")));
         }
         if (!image.getContentType().startsWith("image/")) {
-            messageList.add(new FacesMessage(bundle.getString("error.fileIsNotAnImage")));
+            messageList.add(new FacesMessage(getBundle().getString("error.fileIsNotAnImage")));
         }
     }
 }
