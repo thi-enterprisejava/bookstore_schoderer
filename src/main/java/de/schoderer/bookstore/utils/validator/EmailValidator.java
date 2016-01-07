@@ -1,6 +1,6 @@
 package de.schoderer.bookstore.utils.validator;
 
-import de.schoderer.bookstore.utils.JSFUtils;
+import de.schoderer.bookstore.utils.ExternalComponents;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.validator.FacesValidator;
@@ -17,7 +17,7 @@ public class EmailValidator extends BaseValidator {
     private final static Pattern EMAIL_COMPILED_PATTERN = Pattern.compile(EMAIL_PATTERN);
 
     @Inject
-    protected JSFUtils utils;
+    protected ExternalComponents utils;
 
 
     @Override

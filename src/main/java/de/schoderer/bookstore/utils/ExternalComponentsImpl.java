@@ -14,17 +14,12 @@ import java.util.ResourceBundle;
  */
 @Named
 @RequestScoped
-public class JSFUtilsImpl implements JSFUtils {
-    private static final Logger LOG = LogManager.getLogger(JSFUtilsImpl.class);
+public class ExternalComponentsImpl implements ExternalComponents {
+    private static final Logger LOG = LogManager.getLogger(ExternalComponentsImpl.class);
 
     @Override
     public void sendMessage(String message) {
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(message));
-    }
-
-
-    public void renderResponse() {
-        FacesContext.getCurrentInstance().renderResponse();
     }
 
     @Override
@@ -32,5 +27,10 @@ public class JSFUtilsImpl implements JSFUtils {
         FacesContext context = FacesContext.getCurrentInstance();
         return ResourceBundle.getBundle(context.getApplication().getMessageBundle(), context.getViewRoot().getLocale()).getString(parameterName);
 
+    }
+
+    @Override
+    public String getCurrentPage() {
+        return FacesContext.getCurrentInstance().getViewRoot().getViewId();
     }
 }

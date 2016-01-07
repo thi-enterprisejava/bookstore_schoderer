@@ -3,20 +3,19 @@ package de.schoderer.bookstore.web.model;
 import de.schoderer.bookstore.db.interfaces.UserPersistence;
 import de.schoderer.bookstore.domain.security.User;
 import de.schoderer.bookstore.domain.security.UserRole;
-import de.schoderer.bookstore.utils.JSFUtils;
+import de.schoderer.bookstore.utils.ExternalComponents;
 import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.jboss.security.auth.spi.Util;
 
 import javax.enterprise.context.RequestScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * Created by michael on 22.12.15.
+ * Created by Michael Schoderer on 22.12.15.
  */
 @Named
 @RequestScoped
@@ -25,47 +24,52 @@ public class UserRegistrationBean {
     @Inject
     private UserPersistence persistence;
     @Inject
-    private JSFUtils jsfUtils;
+    private ExternalComponents externalComponents;
     @Inject
     private PageSwitcherBean switcherBean;
 
 
+
     private String email;
     private String password;
-    private String repeatedRassword;
+    private User newUser;
 
-    //TODO not working....
-    private static String hash256(String data) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(data.getBytes());
-        return bytesToHex(md.digest());
-    }
-
-    private static String bytesToHex(byte[] bytes) {
-        StringBuilder result = new StringBuilder();
-        for (byte byt : bytes) result.append(Integer.toString((byt & 0xff) + 0x100, 16).substring(1));
-        return result.toString();
+    protected String hash256(String data) throws NoSuchAlgorithmException {
+        if(data == null || "".equals(data))
+            return null;
+        return Util.createPasswordHash("SHA-256", "BASE64", "UTF-8", null, data);
     }
 
     public String doRegisterUser() throws NoSuchAlgorithmException {
-        if (checkIfInputIsValid()) {
-            User newUser = new User(email, hash256(password));
+        if (checkIfEmailAlreadyInDatabase()) {
+            newUser = new User(email, hash256(password));
             newUser.getUserRoles().add(new UserRole("user"));
             persistence.saveUser(newUser);
-            return switcherBean.switchPage(Pages.INDEX);
+            return switcherBean.switchPage(Pages.LOGIN);
         } else {
-            return FacesContext.getCurrentInstance().getViewRoot().getViewId();
+            return externalComponents.getCurrentPage();
         }
     }
 
-    private boolean checkIfInputIsValid() {
+    /**
+     * Check if email already exists, other test a not neccassary, because other parameters are checked via validators on the serverside
+     * @return true if email not already exists, else false
+     */
+    protected boolean checkIfEmailAlreadyInDatabase() {
         if (email == null || persistence.checkIfEmailIsAlreadyRegistered(email)) {
-            //TODO maybe offer paswword reset, if not to much work Work with resourcebundle!!
-            jsfUtils.sendMessage("Email already exists");
-            LOGGER.info("Username already taken: " + email);
+            externalComponents.sendMessage(externalComponents.getResourceBundleStringInCurrentLocal("error.emailAlreadyRegistered"));
+            LOGGER.debug("Username already taken: " + email);
             return false;
         }
         return true;
+    }
+
+    public User getNewUser() {
+        return newUser;
+    }
+
+    public void setNewUser(User newUser) {
+        this.newUser = newUser;
     }
 
     public String getEmail() {
@@ -85,13 +89,6 @@ public class UserRegistrationBean {
         this.password = password;
     }
 
-    public String getRepeatedRassword() {
-        return repeatedRassword;
-    }
-
-    public void setRepeatedRassword(String repeatedRassword) {
-        this.repeatedRassword = repeatedRassword;
-    }
 
     public UserPersistence getPersistence() {
         return persistence;
@@ -101,12 +98,12 @@ public class UserRegistrationBean {
         this.persistence = persistence;
     }
 
-    public JSFUtils getJsfUtils() {
-        return jsfUtils;
+    public ExternalComponents getExternalComponents() {
+        return externalComponents;
     }
 
-    public void setJsfUtils(de.schoderer.bookstore.utils.JSFUtils jsfUtils) {
-        this.jsfUtils = jsfUtils;
+    public void setExternalComponents(ExternalComponents externalComponents) {
+        this.externalComponents = externalComponents;
     }
 
     public PageSwitcherBean getSwitcherBean() {
