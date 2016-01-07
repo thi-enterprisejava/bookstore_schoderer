@@ -19,6 +19,7 @@ import org.junit.runners.Suite;
         CurrentBookBeanUploadTest.class,
         PageSwitcherBeanTest.class,
         SearchBeanTest.class,
+        UserRegistrationBeanTest.class,
 
         //ValidatorTests
         EmailValidatorTest.class,

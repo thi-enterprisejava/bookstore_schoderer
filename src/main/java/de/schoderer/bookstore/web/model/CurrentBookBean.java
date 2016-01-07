@@ -72,12 +72,18 @@ public class CurrentBookBean implements Serializable {
             id = null;
         }
     }
-
+    /**
+     * Add Tags to the Tag list of the current Book, Checks also if tag is not null or empty
+     */
     public void doAddTags() {
         doAddTags(tag);
         tag = "";
     }
 
+    /**
+     * Add Tags to the Tag list of the current Book, Checks also if tag is not null or empty
+     * @param string
+     */
     public void doAddTags(String string) {
         if (string != null && !"".equals(string)) {
             Stream.of(string.split(","))
@@ -100,15 +106,12 @@ public class CurrentBookBean implements Serializable {
     /**
      * Saves the book to the db and uploades the files to the server
      */
-    //TODO test schreiben!!
     public void doSave() {
+        currentBook.setData(uploadAndSaveFiles());
+        persistTagsIfNotAlreadyInDatabase(currentBook);
         if (id == null) {
-            currentBook.setData(uploadAndSaveFiles());
-            persistTagsIfNotAlreadyInDatabase(currentBook);
             persistence.saveBook(currentBook);
         } else {
-            currentBook.setData(uploadAndSaveFiles());
-            persistTagsIfNotAlreadyInDatabase(currentBook);
             persistence.updateBook(currentBook);
         }
         currentBook = new Book();

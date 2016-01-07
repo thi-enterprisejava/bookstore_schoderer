@@ -1,5 +1,6 @@
-package de.schoderer.bookstore;
+package de.schoderer.bookstore.web.model;
 
+import de.schoderer.bookstore.AllTests;
 import de.schoderer.bookstore.web.model.BeanTest;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
