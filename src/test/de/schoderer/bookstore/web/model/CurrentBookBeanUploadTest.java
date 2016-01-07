@@ -2,8 +2,8 @@ package de.schoderer.bookstore.web.model;
 
 import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.utils.Configuration;
-import de.schoderer.bookstore.utils.MockPart;
-import de.schoderer.bookstore.utils.TestFileRule;
+import de.schoderer.bookstore.testUtils.MockPart;
+import de.schoderer.bookstore.testUtils.TestFileRule;
 import de.schoderer.bookstore.web.BeanTest;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
@@ -35,7 +35,10 @@ public class CurrentBookBeanUploadTest {
 
     @Test
     public void ifUploadAndSaveFileReturnsRightDataFileLocation() throws IOException {
-        mockUploadDirecotry();
+        bean.doSetCurrentBook();
+        Configuration configuration = Mockito.mock(Configuration.class);
+        bean.setConfiguration(configuration);
+        Mockito.when(configuration.getBasePath()).thenReturn(testFileRule_.getRoot().toPath());
         File bookFile = testFileRule_.getRandomTestFile();
         bean.setBookFile(new MockPart(bookFile, "text/plain"));
         File imageFile = testFileRule_.getRandomTestFile();

@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.utils;
+package de.schoderer.bookstore.testUtils;
 
 import org.junit.rules.TemporaryFolder;
 

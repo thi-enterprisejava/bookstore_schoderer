@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.utils;
+package de.schoderer.bookstore.testUtils;
 
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
@@ -43,7 +43,9 @@ public class BookFixture extends TestFileRule {
     }
 
     private Book createBook(String name, String author, int year, String... tags) {
+
         Book book = new Book(name, author, null, year, null);
+        book.setId(Math.abs(new Random().nextLong()));
         for (String tag : tags) {
             book.getTags().add(new Tag(tag.toUpperCase().trim()));
         }

@@ -2,8 +2,8 @@ package de.schoderer.bookstore.web.model;
 
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
-import de.schoderer.bookstore.utils.BookFixture;
-import de.schoderer.bookstore.utils.CurrentBookBeanFactory;
+import de.schoderer.bookstore.testUtils.BookFixture;
+import de.schoderer.bookstore.testUtils.CurrentBookBeanFactory;
 import de.schoderer.bookstore.web.BeanTest;
 import org.junit.Assert;
 import org.junit.Rule;

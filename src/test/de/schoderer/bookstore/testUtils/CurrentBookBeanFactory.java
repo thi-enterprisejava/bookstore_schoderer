@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.utils;
+package de.schoderer.bookstore.testUtils;
 
 import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.web.model.CurrentBookBean;

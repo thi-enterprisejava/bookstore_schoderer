@@ -49,12 +49,11 @@ public class CurrentBookBean implements Serializable {
 
 
     public CurrentBookBean() {
-        doSetCurrentBook();
+        this(null);
     }
 
     public CurrentBookBean(Long id) {
         this.id = id;
-        doSetCurrentBook();
     }
 
     protected Path getBasePath(boolean isBook) {
@@ -66,7 +65,7 @@ public class CurrentBookBean implements Serializable {
     }
 
     public void doSetCurrentBook() {
-        if (id == null) {
+        if (id == null || id < 0) {
             currentBook = new Book();
         } else {
             currentBook = persistence.fetchBookByID(id);
@@ -120,7 +119,7 @@ public class CurrentBookBean implements Serializable {
      *
      * @param currentBook
      */
-    private void persistTagsIfNotAlreadyInDatabase(Book currentBook) {
+    protected void persistTagsIfNotAlreadyInDatabase(Book currentBook) {
         List<Tag> tagsInDatabase = persistence.fetchAllTags();
         List<Tag> tagsWithID = new ArrayList<>(currentBook.getTags().size());
         currentBook.getTags().forEach(tag -> {
@@ -182,7 +181,6 @@ public class CurrentBookBean implements Serializable {
             return null;
         }
         try {
-
             String fileName = part.getSubmittedFileName();
             filePath = getBasePath(isBook).resolve(createUniqueFileName(fileName));
             Files.copy(part.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);

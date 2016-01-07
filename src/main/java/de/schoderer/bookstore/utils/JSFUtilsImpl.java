@@ -7,6 +7,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import java.util.ResourceBundle;
 
 /**
  * Created by michael on 22.12.15.
@@ -28,7 +29,8 @@ public class JSFUtilsImpl implements JSFUtils {
 
     @Override
     public String getResourceBundleStringInCurrentLocal(String parameterName) {
-        return "";
+        FacesContext context = FacesContext.getCurrentInstance();
+        return ResourceBundle.getBundle(context.getApplication().getMessageBundle(), context.getViewRoot().getLocale()).getString(parameterName);
 
     }
 }

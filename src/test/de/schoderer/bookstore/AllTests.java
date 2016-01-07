@@ -1,5 +1,6 @@
-package de.schoderer.bookstore.web;
+package de.schoderer.bookstore;
 
+import de.schoderer.bookstore.utils.validator.EmailValidatorTest;
 import de.schoderer.bookstore.web.model.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -9,12 +10,15 @@ import org.junit.runners.Suite;
  */
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+        //BeanTests
         CurrentBookBeanSaveTest.class,
         CurrentBookBeanTagTests.class,
         CurrentBookBeanDeleteTest.class,
         CurrentBookBeanUploadTest.class,
         PageSwitcherBeanTest.class,
-        SearchBeanTest.class
+        SearchBeanTest.class,
+        //ValidatorTests
+        EmailValidatorTest.class
 })
 public class AllTests {
 }
