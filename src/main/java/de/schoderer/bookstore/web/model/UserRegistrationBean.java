@@ -7,12 +7,13 @@ import de.schoderer.bookstore.utils.ExternalComponents;
 import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-import org.jboss.security.auth.spi.Util;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 /**
  * Created by Michael Schoderer on 22.12.15.
@@ -36,7 +37,8 @@ public class UserRegistrationBean {
     protected String hash256(String data) throws NoSuchAlgorithmException {
         if (data == null || "".equals(data))
             return null;
-        return Util.createPasswordHash("SHA-256", "BASE64", "UTF-8", null, data);
+        return Base64.getEncoder().encodeToString(
+                MessageDigest.getInstance("SHA-256").digest(data.getBytes()));
     }
 
     public String doRegisterUser() throws NoSuchAlgorithmException {
