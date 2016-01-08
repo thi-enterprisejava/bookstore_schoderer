@@ -2,6 +2,7 @@ package de.schoderer.bookstore.utils;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -10,7 +11,7 @@ import java.nio.file.Paths;
  */
 @ApplicationScoped
 @Named
-public class Configuration {
+public class Configuration implements Serializable{
     private Path basePath = Paths.get(System.getProperty("user.home"), "files");
 
     public Path getBasePath() {

@@ -91,7 +91,7 @@ public class CurrentBookBean implements Serializable {
             Stream.of(string.split(","))
                     .map(String::toUpperCase)
                     .distinct()
-                    .forEach(tag -> currentBook.getTags().add(new Tag(tag.trim())));
+                    .forEach(tagInList -> currentBook.getTags().add(new Tag(tagInList.trim())));
         }
         if (LOG.isInfoEnabled()) {
             LOG.info("Added Tag: " + tag + " - Current list size: " + currentBook.getTags().size());
@@ -128,12 +128,12 @@ public class CurrentBookBean implements Serializable {
     protected void persistTagsIfNotAlreadyInDatabase(Book currentBook) {
         List<Tag> tagsInDatabase = persistence.fetchAllTags();
         List<Tag> tagsWithID = new ArrayList<>(currentBook.getTags().size());
-        currentBook.getTags().forEach(tag -> {
+        currentBook.getTags().forEach(tagInList -> {
             Tag databaseTag;
-            if (tagsInDatabase.contains(tag)) {
-                databaseTag = tagsInDatabase.get(tagsInDatabase.indexOf(tag));
+            if (tagsInDatabase.contains(tagInList)) {
+                databaseTag = tagsInDatabase.get(tagsInDatabase.indexOf(tagInList));
             } else {
-                databaseTag = persistence.saveTag(tag);
+                databaseTag = persistence.saveTag(tagInList);
             }
             tagsWithID.add(databaseTag);
         });
