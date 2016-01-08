@@ -34,9 +34,9 @@
                             </span>
                                 <div class="left">
                                     #{msg['add.tags']}:<br/>
-                                    <ui:repeat value="#{book.tags}" var="tag">
+                                    <ui:repeat value="#{book.tags}" var="tagName">
                                         <div class="chip">
-                                            #{tag.tag}
+                                            #{tagName.tagName}
                                         </div>
                                     </ui:repeat>
                                 </div>

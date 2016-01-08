@@ -102,7 +102,7 @@ public class CurrentBookBean implements Serializable {
         if (LOG.isInfoEnabled()) {
             LOG.info("Removed Tag: " + tag);
         }
-        currentBook.getTags().removeIf(bookTag -> bookTag.getTag().equals(tag.toUpperCase().trim()));
+        currentBook.getTags().removeIf(bookTag -> bookTag.getTagName().equals(tag.toUpperCase().trim()));
     }
 
     /**

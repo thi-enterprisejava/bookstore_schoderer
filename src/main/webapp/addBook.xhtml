@@ -76,7 +76,7 @@
                         <h:panelGroup id="addTagGroup" styleClass="input-field col s4">
                             <i class="material-icons prefix">queue</i>
                             <h:inputText id="toAddTag" type="text" class="black-text" name="#{msg['add.tags']}"
-                                         value="#{currentBookBean.tag}"/>
+                                         value="#{currentBookBean.tagName}"/>
                             <label for="toAddTag" class=" black-text">#{msg['add.tags']}</label>
                         </h:panelGroup>
                         <h:panelGroup styleClass="col s1">
@@ -91,8 +91,8 @@
                         <div id="tagList" class="row left">
                             <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tags">
                                 <div class="chip z-depth-2">
-                                    #{tags.tag}
-                                    <h:commandLink action="#{currentBookBean.removeTag(tags.tag)}"
+                                    #{tags.tagName}
+                                    <h:commandLink action="#{currentBookBean.removeTag(tags.tagName)}"
                                                    class="material-icons black-text">close
                                         <f:ajax render="tagPanelGroup"/>
                                     </h:commandLink>

@@ -41,9 +41,9 @@
                 </div>
                 <div style="margin-left: 5px">
                     <div class="row s12">
-                        <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tag">
+                        <ui:repeat value="#{currentBookBean.currentBook.tags}" var="tagName">
                             <div class="chip z-depth-1">
-                                #{tag.tag}
+                                #{tagName.tagName}
                             </div>
                         </ui:repeat>
                     </div>

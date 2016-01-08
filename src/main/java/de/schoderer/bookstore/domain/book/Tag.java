@@ -9,8 +9,8 @@ import java.util.Objects;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Tag.findLike", query = "SELECT t FROM Tag t WHERE  t.tag LIKE :name"),
-        @NamedQuery(name = "Tag.findByName", query = "SELECT t FROM Tag t WHERE  t.tag = :name"),
+        @NamedQuery(name = "Tag.findLike", query = "SELECT t FROM Tag t WHERE  t.tagName LIKE :name"),
+        @NamedQuery(name = "Tag.findByName", query = "SELECT t FROM Tag t WHERE  t.tagName = :name"),
         @NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t")
 
 })
@@ -20,13 +20,13 @@ public class Tag implements Serializable {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String tag;
+    private String tagName;
 
     public Tag() {
     }
 
-    public Tag(String tag) {
-        this.tag = tag;
+    public Tag(String tagName) {
+        this.tagName = tagName;
     }
 
     public Long getId() {
@@ -37,12 +37,12 @@ public class Tag implements Serializable {
         this.id = id;
     }
 
-    public String getTag() {
-        return tag;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     @Override
@@ -50,19 +50,19 @@ public class Tag implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tag tag1 = (Tag) o;
-        return Objects.equals(tag, tag1.tag);
+        return Objects.equals(tagName, tag1.tagName);
     }
 
 
     @Override
     public int hashCode() {
-        return Objects.hash(tag);
+        return Objects.hash(tagName);
     }
 
     @Override
     public String toString() {
         return "Tag{" +
-                "tag='" + tag + '\'' +
+                "tagName='" + tagName + '\'' +
                 '}';
     }
 }
