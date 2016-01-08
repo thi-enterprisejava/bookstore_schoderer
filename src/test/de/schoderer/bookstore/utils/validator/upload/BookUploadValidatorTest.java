@@ -18,7 +18,6 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Michael Schoderer on 07.01.2016.
  */
-@Category(ValidatorTest.class)
 public class BookUploadValidatorTest {
     private static FacesContext mockedContext;
     private static ResourceBundle bundle;
@@ -28,8 +27,7 @@ public class BookUploadValidatorTest {
     @Before
     public void setUp() {
         mockedContext = mock(FacesContext.class);
-        // bundle = mock(ResourceBundle.class);
-        // Is not mockable so, override used Methodes...
+        //Create a stub for testing
         bundle = new StubRessourceBundle();
     }
 

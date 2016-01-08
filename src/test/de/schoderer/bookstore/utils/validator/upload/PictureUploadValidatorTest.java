@@ -28,8 +28,7 @@ public class PictureUploadValidatorTest {
     @Before
     public void setUp() {
         mockedContext = mock(FacesContext.class);
-        // bundle = mock(ResourceBundle.class);
-        // Is not mockable so, override used Methodes...
+        //Create a stub for testing
         bundle = new StubRessourceBundle();
     }
 
