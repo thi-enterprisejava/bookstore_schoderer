@@ -26,7 +26,7 @@ public abstract class BaseValidator implements Validator, Serializable {
             bundle = ResourceBundle.getBundle(context.getApplication().getMessageBundle(), loc);
         }
         validate(value, messages);
-        if (messages.size() > 0) {
+        if (!messages.isEmpty()) {
             throw new ValidatorException(messages);
         }
     }

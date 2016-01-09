@@ -34,15 +34,6 @@ public interface BookPersistence extends Serializable {
     List<Book> fetchAllBooksByTitle(String title);
 
     /**
-     * Returns all books with a specific Tag
-     *
-     * @param tagId
-     * @return List of books with the given tag
-     */
-    @PermitAll
-    List<Book> fetchAllBooksWithTagID(long tagId);
-
-    /**
      * Fetch a book with the given id, if exists
      *
      * @param id

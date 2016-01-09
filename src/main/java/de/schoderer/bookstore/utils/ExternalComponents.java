@@ -1,10 +1,12 @@
 package de.schoderer.bookstore.utils;
 
+import java.io.Serializable;
+
 /**
  * Created by michael on 22.12.15.
  */
 
-public interface ExternalComponents {
+public interface ExternalComponents extends Serializable{
     /**
      * Adds a message to the FacesContext
      *

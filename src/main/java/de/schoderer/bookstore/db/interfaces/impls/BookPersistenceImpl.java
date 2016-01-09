@@ -34,14 +34,6 @@ public class BookPersistenceImpl extends BasicPersistence implements BookPersist
     }
 
     @Override
-    public List<Book> fetchAllBooksWithTagID(long tagId) {
-        //TODO implementieren
-        //TypedQuery<Book> query = em.createNamedQuery("Book.findBooksWithTagId", Book.class);
-        //query.setParameter("tagid", tagId);
-        return new ArrayList<>();
-    }
-
-    @Override
     public Book fetchBookByID(long id) {
         return getEntityManager().find(Book.class, id);
     }
@@ -56,12 +48,8 @@ public class BookPersistenceImpl extends BasicPersistence implements BookPersist
     @Override
     @Transactional
     public Book updateBook(Book book) {
-        //Check if book is in entity-contex, if not add it
-        if (!getEntityManager().contains(book)) {
-            book = getEntityManager().merge(book);
-        }
-        getEntityManager().merge(book);
-        return book;
+        Book mergedBook = getEntityManager().merge(book);
+        return mergedBook;
     }
 
     /**

@@ -18,6 +18,7 @@ import static org.mockito.Mockito.when;
 /**
  * Created by Michael Schoderer on 07.01.2016.
  */
+@Category(ValidatorTest.class)
 public class BookUploadValidatorTest {
     private static FacesContext mockedContext;
     private static ResourceBundle bundle;

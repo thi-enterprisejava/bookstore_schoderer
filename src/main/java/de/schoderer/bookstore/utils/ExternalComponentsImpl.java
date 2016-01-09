@@ -15,7 +15,6 @@ import java.util.ResourceBundle;
 @Named
 @RequestScoped
 public class ExternalComponentsImpl implements ExternalComponents {
-    private static final Logger LOG = LogManager.getLogger(ExternalComponentsImpl.class);
 
     @Override
     public void sendMessage(String message) {
