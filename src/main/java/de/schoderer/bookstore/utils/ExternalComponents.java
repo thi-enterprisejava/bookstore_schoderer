@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by michael on 22.12.15.
  */
 
-public interface ExternalComponents extends Serializable{
+public interface ExternalComponents extends Serializable {
     /**
      * Adds a message to the FacesContext
      *

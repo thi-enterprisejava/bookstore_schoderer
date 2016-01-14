@@ -9,7 +9,6 @@ import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

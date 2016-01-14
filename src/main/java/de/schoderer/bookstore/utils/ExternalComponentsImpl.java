@@ -1,8 +1,5 @@
 package de.schoderer.bookstore.utils;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
-
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;

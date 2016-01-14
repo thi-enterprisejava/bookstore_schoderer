@@ -11,7 +11,7 @@ import java.nio.file.Paths;
  */
 @ApplicationScoped
 @Named
-public class Configuration implements Serializable{
+public class Configuration implements Serializable {
     private transient Path basePath = Paths.get(System.getProperty("user.home"), "files");
 
     public Path getBasePath() {
