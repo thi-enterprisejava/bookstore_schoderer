@@ -1,5 +1,6 @@
 package de.schoderer.bookstore.utils;
 
+import javax.faces.application.FacesMessage;
 import java.io.Serializable;
 
 /**
@@ -13,7 +14,7 @@ public interface ExternalComponents extends Serializable {
      * @param message
      */
 
-    void sendMessage(String message);
+    FacesMessage sendFacesMessage(String message);
 
     /**
      * Gets the localized Translation for a given parameter from the messagebundle
@@ -24,4 +25,6 @@ public interface ExternalComponents extends Serializable {
     String getResourceBundleStringInCurrentLocal(String parameterName);
 
     String getCurrentPage();
+
+    void invalidateSession();
 }

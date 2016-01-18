@@ -13,7 +13,7 @@ import java.util.List;
 @FacesValidator("bookUploadValidator")
 public class BookUploadValidator extends BaseValidator {
     @Override
-    public void validate(Object value, List<FacesMessage> messageList) {
+    public void validation(Object value, List<FacesMessage> messageList) {
         Part book = (Part) value;
         //if no image is present, skip the other validations
         if (book == null) {

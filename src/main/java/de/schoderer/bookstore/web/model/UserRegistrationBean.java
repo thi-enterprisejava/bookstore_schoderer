@@ -7,20 +7,20 @@ import de.schoderer.bookstore.utils.ExternalComponents;
 import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.jboss.security.auth.spi.Util;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.security.MessageDigest;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 
 /**
  * Created by Michael Schoderer on 22.12.15.
  */
 @Named
 @RequestScoped
-public class UserRegistrationBean {
+public class UserRegistrationBean implements Serializable {
     private static final Logger LOGGER = LogManager.getLogger(UserRegistrationBean.class);
     @Inject
     private UserPersistence persistence;
@@ -37,33 +37,20 @@ public class UserRegistrationBean {
     protected String hash256(String data) throws NoSuchAlgorithmException {
         if (data == null || "".equals(data))
             return null;
-        return Base64.getEncoder().encodeToString(
-                MessageDigest.getInstance("SHA-256").digest(data.getBytes()));
+        return Util.createPasswordHash("SHA-256", "BASE64", "UTF-8", null, data);
+
     }
 
     public String doRegisterUser() throws NoSuchAlgorithmException {
-        if (checkIfEmailAlreadyInDatabase()) {
-            newUser = new User(email, hash256(password));
-            newUser.getUserRoles().add(new UserRole("user"));
-            persistence.saveUser(newUser);
-            return switcherBean.switchPage(Pages.LOGIN);
-        } else {
-            return externalComponents.getCurrentPage();
-        }
+        newUser = new User(email, hash256(password));
+        newUser.getUserRoles().add(new UserRole("user"));
+        persistence.saveUser(newUser);
+        return switcherBean.switchPage(Pages.LOGIN);
     }
 
-    /**
-     * Check if email already exists, other test a not neccassary, because other parameters are checked via validators on the serverside
-     *
-     * @return true if email not already exists, else false
-     */
-    protected boolean checkIfEmailAlreadyInDatabase() {
-        if (email == null || persistence.checkIfEmailIsAlreadyRegistered(email)) {
-            externalComponents.sendMessage(externalComponents.getResourceBundleStringInCurrentLocal("error.emailAlreadyRegistered"));
-            LOGGER.debug("Username already taken: " + email);
-            return false;
-        }
-        return true;
+    public String logout() {
+        externalComponents.invalidateSession();
+        return switcherBean.switchPage(Pages.INDEX);
     }
 
     public User getNewUser() {

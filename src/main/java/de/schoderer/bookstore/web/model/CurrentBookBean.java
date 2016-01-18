@@ -42,7 +42,7 @@ public class CurrentBookBean implements Serializable {
     private Book currentBook;
 
 
-    private String tag;
+    private String tagName;
     private Long id;
     private Part imageFile;
     private Part bookFile;
@@ -65,6 +65,7 @@ public class CurrentBookBean implements Serializable {
     }
 
     public void doSetCurrentBook() {
+        System.out.println(id);
         if (id == null || id < 0) {
             currentBook = new Book();
         } else {
@@ -74,15 +75,15 @@ public class CurrentBookBean implements Serializable {
     }
 
     /**
-     * Add Tags to the Tag list of the current Book, Checks also if tag is not null or empty
+     * Add Tags to the Tag list of the current Book, Checks also if tagName is not null or empty
      */
     public void doAddTags() {
-        doAddTags(tag);
-        tag = "";
+        doAddTags(tagName);
+        tagName = "";
     }
 
     /**
-     * Add Tags to the Tag list of the current Book, Checks also if tag is not null or empty
+     * Add Tags to the Tag list of the current Book, Checks also if tagName is not null or empty
      *
      * @param string
      */
@@ -94,7 +95,7 @@ public class CurrentBookBean implements Serializable {
                     .forEach(tagInList -> currentBook.getTags().add(new Tag(tagInList.trim())));
         }
         if (LOG.isInfoEnabled()) {
-            LOG.info("Added Tag: " + tag + " - Current list size: " + currentBook.getTags().size());
+            LOG.info("Added Tag: " + tagName + " - Current list size: " + currentBook.getTags().size());
         }
     }
 
@@ -111,7 +112,7 @@ public class CurrentBookBean implements Serializable {
     public void doSave() {
         currentBook.setData(uploadAndSaveFiles());
         persistTagsIfNotAlreadyInDatabase(currentBook);
-        if (id == null) {
+        if (currentBook.getId() == null) {
             persistence.saveBook(currentBook);
         } else {
             persistence.updateBook(currentBook);
@@ -147,9 +148,6 @@ public class CurrentBookBean implements Serializable {
      * @return DataFileLocation
      */
     protected DataFileLocation uploadAndSaveFiles() {
-        if (currentBook.getId() != null) {
-            return currentBook.getData();
-        }
         DataFileLocation location;
         location = new DataFileLocation();
         uploadAndSaveBookLocation(location);
@@ -251,12 +249,12 @@ public class CurrentBookBean implements Serializable {
         this.currentBook = currentBook;
     }
 
-    public String getTag() {
-        return tag;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public Part getImageFile() {

@@ -23,10 +23,11 @@ public class UserPersistenceImpl extends BasicPersistence implements UserPersist
 
     @Override
     public boolean checkIfEmailIsAlreadyRegistered(String userName) {
-        TypedQuery<Long> query = getEntityManager().createNamedQuery("User.userNameExists", Long.class)
-                .setParameter("username", userName)
-                .setMaxResults(1);
-        return query.getResultList().isEmpty();
+        TypedQuery<User> query = getEntityManager().createNamedQuery("User.findUser", User.class);
+        query.setParameter("username", userName);
+        query.setMaxResults(1);
+        //Return false if user exists -> list is NOT empty...
+        return !query.getResultList().isEmpty();
     }
 
     @Override

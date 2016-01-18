@@ -12,8 +12,7 @@ import java.util.Objects;
  */
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "User.findUser", query = "SELECT u FROM User u WHERE u.email = :username"),
-        @NamedQuery(name = "User.userNameExists", query = "SELECT COUNT(u.id) FROM User u WHERE  u.email = :username")
+        @NamedQuery(name = "User.findUser", query = "SELECT u FROM User u WHERE u.email = :username")
 })
 @Table(name = "User")
 public class User implements Serializable {

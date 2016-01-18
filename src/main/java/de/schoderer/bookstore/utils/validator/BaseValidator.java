@@ -16,22 +16,22 @@ import java.util.ResourceBundle;
  */
 public abstract class BaseValidator implements Validator, Serializable {
     private ResourceBundle bundle;
+    private UIComponent component;
 
-
-    @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         List<FacesMessage> messages = new ArrayList<>();
         if (bundle == null) {
             Locale loc = context.getViewRoot().getLocale();
             bundle = ResourceBundle.getBundle(context.getApplication().getMessageBundle(), loc);
         }
-        validate(value, messages);
+        this.component = component;
+        validation(value, messages);
         if (!messages.isEmpty()) {
             throw new ValidatorException(messages);
         }
     }
 
-    public abstract void validate(Object value, List<FacesMessage> messageList);
+    public abstract void validation(Object value, List<FacesMessage> messageList);
 
     public ResourceBundle getBundle() {
         return bundle;
@@ -39,5 +39,9 @@ public abstract class BaseValidator implements Validator, Serializable {
 
     public void setBundle(ResourceBundle bundle) {
         this.bundle = bundle;
+    }
+
+    public UIComponent getComponent() {
+        return component;
     }
 }

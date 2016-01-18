@@ -28,9 +28,13 @@
                     <li><a
                             href="#{pageSwitcherBean.switchPage('INDEX')}">#{msg['common.search']}</a></li>
                     <li><h:commandLink
-                            action="#{searchBean.fetchAllBooks()}">List all</h:commandLink></li>
+                            action="#{searchBean.fetchAllBooks()}">#{msg['common.all']}</h:commandLink></li>
                     <li><a
                             href="#{pageSwitcherBean.switchPage('ADD')}">#{msg['common.add']}</a></li>
+                    <h:panelGroup rendered="#{not empty request.remoteUser}">
+                        <li><h:commandLink
+                                action="#{userRegistrationBean.logout()}">#{msg['login.logout']}</h:commandLink></li>
+                    </h:panelGroup>
                 </ul>
             </div>
         </h:form>

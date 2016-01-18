@@ -43,7 +43,7 @@ public class CurrentBookBeanTagTests {
         CurrentBookBean currentBookBean = beanFactory.createCurrentBookMock();
         currentBookBean.doSetCurrentBook();
         String tags = "Test, ABC, Book";
-        currentBookBean.setTag(tags);
+        currentBookBean.setTagName(tags);
         currentBookBean.doAddTags();
         List<Tag> tagList = currentBookBean.getCurrentBook().getTags();
         for (String tag : tags.split(",")) {

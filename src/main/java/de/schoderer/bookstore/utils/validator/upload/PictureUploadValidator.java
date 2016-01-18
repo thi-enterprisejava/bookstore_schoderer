@@ -16,7 +16,7 @@ public class PictureUploadValidator extends BaseValidator {
 
 
     @Override
-    public void validate(Object value, List<FacesMessage> messageList) {
+    public void validation(Object value, List<FacesMessage> messageList) {
         Part image = (Part) value;
         //if no image is present, skip the other validations
         if (image == null) {

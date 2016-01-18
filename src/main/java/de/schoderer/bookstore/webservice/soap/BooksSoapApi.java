@@ -7,9 +7,8 @@ import java.util.List;
 
 
 /**
- * Created by schod on 25.10.2015.
+ * Created by Michael Schoderer on 25.10.2015.
  */
-//TODO specific path for the webserivce??
 public class BooksSoapApi {
     private BookPersistence persistence;
 

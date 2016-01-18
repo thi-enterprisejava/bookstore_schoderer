@@ -11,8 +11,8 @@ import org.mockito.Mockito;
 import java.security.NoSuchAlgorithmException;
 
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 /**
  * Created by michael on 05.01.2016.
@@ -39,35 +39,6 @@ public class UserRegistrationBeanTest {
     }
 
     @Test
-    public void ifValidationFailedWhenEmailAlreadyRegisitered() {
-        String email = "test@test.de";
-        bean.setEmail(email);
-        when(bean.getPersistence().checkIfEmailIsAlreadyRegistered(email)).thenReturn(true);
-
-        Assert.assertFalse("Validation should return false for email: " + email, bean.checkIfEmailAlreadyInDatabase());
-        verify(bean.getExternalComponents(), times(1)).sendMessage(anyString());
-    }
-
-    @Test
-    public void ifValidationFailedWhenEmailIsNull() {
-        bean.setEmail(null);
-
-        Assert.assertFalse("Validation should return false for email is null ", bean.checkIfEmailAlreadyInDatabase());
-        verify(bean.getExternalComponents(), times(1)).sendMessage(anyString());
-    }
-
-    @Test
-    public void ifCurrentPageIsReturnedIfInputIsInvalid() throws NoSuchAlgorithmException {
-        bean.setEmail(null);
-        String currentPage = "index.html";
-        when(bean.getExternalComponents().getCurrentPage()).thenReturn(currentPage);
-
-        String actual = bean.doRegisterUser();
-
-        Assert.assertEquals("CurrentPage should have been returned", currentPage, actual);
-    }
-
-    @Test
     public void ifUserIsSavedAndRoleIsAdded() throws NoSuchAlgorithmException {
         String email = "test@test.de";
         String password = "TopSecret";
@@ -78,6 +49,14 @@ public class UserRegistrationBeanTest {
 
         verify(bean.getPersistence(), times(1)).saveUser(bean.getNewUser());
         Assert.assertThat(email, is(bean.getNewUser().getEmail()));
+    }
+
+    @Test
+    public void ifLogoutWorks() {
+
+        String logut = bean.logout();
+
+        verify(bean.getExternalComponents(), times(1)).invalidateSession();
     }
 
 }
