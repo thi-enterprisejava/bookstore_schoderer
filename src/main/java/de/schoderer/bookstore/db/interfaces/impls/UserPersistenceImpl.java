@@ -15,13 +15,6 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class UserPersistenceImpl extends BasicPersistence implements UserPersistence {
     @Override
-    public User findUserByName(String userName) {
-        TypedQuery<User> query = getEntityManager().createNamedQuery("User.findUser", User.class);
-        query.setParameter("username", userName);
-        return query.getSingleResult();
-    }
-
-    @Override
     public boolean checkIfEmailIsAlreadyRegistered(String userName) {
         TypedQuery<User> query = getEntityManager().createNamedQuery("User.findUser", User.class);
         query.setParameter("username", userName);

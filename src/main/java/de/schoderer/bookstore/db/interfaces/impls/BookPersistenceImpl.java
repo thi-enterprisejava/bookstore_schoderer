@@ -7,6 +7,7 @@ import de.schoderer.bookstore.domain.book.Tag;
 
 import javax.ejb.Stateless;
 import javax.inject.Named;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
@@ -16,39 +17,39 @@ import java.util.List;
  */
 @Named
 @Stateless
-public class BookPersistenceImpl extends BasicPersistence implements BookPersistence {
-
+public class BookPersistenceImpl  implements BookPersistence {
+    @PersistenceContext(name = "primary")
+    private javax.persistence.EntityManager em;
 
     @Override
     public List<Book> fetchAllBooks() {
-        TypedQuery<Book> query = getEntityManager().createNamedQuery("Book.findAll", Book.class);
+        TypedQuery<Book> query = em.createNamedQuery("Book.findAll", Book.class);
         return query.getResultList();
     }
 
     @Override
     public List<Book> fetchAllBooksByTitle(String title) {
-        TypedQuery<Book> query = getEntityManager().createNamedQuery("Book.findByName", Book.class);
+        TypedQuery<Book> query = em.createNamedQuery("Book.findByName", Book.class);
         query.setParameter("booktitle", "%" + title + "%");
         return query.getResultList();
     }
 
     @Override
     public Book fetchBookByID(long id) {
-        return getEntityManager().find(Book.class, id);
+        return em.find(Book.class, id);
     }
 
     @Override
     @Transactional
     public Book saveBook(Book book) {
-        getEntityManager().persist(book);
+        em.persist(book);
         return book;
     }
 
     @Override
     @Transactional
     public Book updateBook(Book book) {
-        Book mergedBook = getEntityManager().merge(book);
-        return mergedBook;
+        return em.merge(book);
     }
 
     /**
@@ -59,32 +60,32 @@ public class BookPersistenceImpl extends BasicPersistence implements BookPersist
     @Override
     public void removeBook(Book book) {
         //Check if book is attachted to Entity-Manager, if not attach it
-        if (!getEntityManager().contains(book)) {
-            book = getEntityManager().merge(book);
+        if (!em.contains(book)) {
+            book = em.merge(book);
         }
-        getEntityManager().remove(book);
+        em.remove(book);
     }
 
     @Override
     public Tag saveTag(Tag tag) {
-        getEntityManager().persist(tag);
+        em.persist(tag);
         return tag;
     }
 
     @Override
     public Tag fetchTagByID(long id) {
-        return getEntityManager().find(Tag.class, id);
+        return em.find(Tag.class, id);
     }
 
     @Override
     public Tag fetchTagByName(String name) {
-        TypedQuery<Tag> query = getEntityManager().createNamedQuery("Tag.findByName", Tag.class);
+        TypedQuery<Tag> query = em.createNamedQuery("Tag.findByName", Tag.class);
         return query.getSingleResult();
     }
 
     @Override
     public List<Tag> fetchAllTags() {
-        TypedQuery<Tag> query = getEntityManager().createNamedQuery("Tag.findAll", Tag.class);
+        TypedQuery<Tag> query = em.createNamedQuery("Tag.findAll", Tag.class);
         return query.getResultList();
     }
 }

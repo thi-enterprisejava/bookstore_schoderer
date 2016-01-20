@@ -11,16 +11,6 @@ import java.io.Serializable;
  */
 @TimeLogging
 public interface UserPersistence extends Serializable {
-
-    /**
-     * Find the user with the specific username in the database
-     *
-     * @param userName
-     * @return the user with the username
-     */
-    @PermitAll
-    User findUserByName(String userName);
-
     /**
      * Check if username already exists in the database
      *

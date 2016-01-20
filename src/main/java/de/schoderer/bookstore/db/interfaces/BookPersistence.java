@@ -12,7 +12,6 @@ import java.util.List;
  * <p>
  * Simple interface, which provides the CRUD-Methods for the persistence
  */
-@TimeLogging
 public interface BookPersistence extends Serializable {
     /**
      * Returns all books in the DB

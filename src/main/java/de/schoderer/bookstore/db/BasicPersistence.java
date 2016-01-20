@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
  */
 public class BasicPersistence {
 
-    @PersistenceContext
+    @PersistenceContext(name = "primary")
     private javax.persistence.EntityManager em;
 
 
