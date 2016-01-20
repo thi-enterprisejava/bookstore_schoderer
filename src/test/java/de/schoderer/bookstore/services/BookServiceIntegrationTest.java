@@ -14,6 +14,7 @@ import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -59,7 +60,7 @@ public class BookServiceIntegrationTest {
         System.out.println(archive.toString(Formatters.VERBOSE));
         return archive;
     }
-
+    @Ignore
     @Test
     public void thatBookCanBeSavedAsAuthenticatedUser() throws Exception {
         authenticatedUser.execute(() -> {
@@ -75,7 +76,7 @@ public class BookServiceIntegrationTest {
             return null;
         });
     }
-
+    @Ignore
     @Test
     public void thatBookCanNotBeSavedAsUnauthorizedUser() throws Exception {
         Book book = bookFixture.createBookInstance();
@@ -84,7 +85,7 @@ public class BookServiceIntegrationTest {
 
         bookService.saveBook(book);
     }
-
+    @Ignore
     @Test
     public void thatBookCanBeUpdatedAsAuthorizedUser() throws Exception {
         authenticatedUser.execute(() -> {
@@ -102,7 +103,7 @@ public class BookServiceIntegrationTest {
             return null;
         });
     }
-
+    @Ignore
     @Test
     public void thatBookCanNotBeUpdatedAsUnAuthorizedUser() throws Exception {
         Book book = bookFixture.createBookInstance();
@@ -111,7 +112,7 @@ public class BookServiceIntegrationTest {
 
         bookService.updateBook(book);
     }
-
+    @Ignore
     @Test
     public void thatBookCanBeDeletedAsAuthorizedUser() throws Exception {
         Book book = bookFixture.createBookInstance();
@@ -128,7 +129,7 @@ public class BookServiceIntegrationTest {
             return null;
         });
     }
-
+    @Ignore
     @Test
     public void thatBookCanNotBeDeletedAsUnAuthorizedUser() throws Exception {
         Book book = bookFixture.createBookInstance();

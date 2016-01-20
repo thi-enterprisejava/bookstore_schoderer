@@ -5,10 +5,7 @@ import de.schoderer.bookstore.services.Configuration;
 import de.schoderer.bookstore.testUtils.TestFileRule;
 import de.schoderer.bookstore.testUtils.web.MockPart;
 import org.apache.commons.io.FileUtils;
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.experimental.categories.Category;
 import org.mockito.Mockito;
 
@@ -30,7 +27,7 @@ public class CurrentBookBeanUploadTest {
     public static void setUp() {
         bean = new CurrentBookBean();
     }
-    //TODO
+    @Ignore
     @Test
     public void ifUploadAndSaveFileReturnsRightDataFileLocation() throws IOException {
         bean.doSetCurrentBook();

@@ -63,7 +63,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>bookStoreWAR</finalName>
+        <finalName>bookStore</finalName>
         <plugins>
             <!-- You need the maven dependency plugin to download locally a zip with the server, unless you provide your own, it will download under the /target directory -->
             <plugin>

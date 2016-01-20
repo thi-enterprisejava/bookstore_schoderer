@@ -40,7 +40,9 @@ public class UserRegistrationBean implements Serializable {
 
     public String doRegisterUser() throws NoSuchAlgorithmException {
         newUser = new User(email, hash256(password));
-        newUser.getUserRoles().add(new UserRole("user"));
+        UserRole userRole = new UserRole("user");
+        userRole.setUser(newUser);
+        newUser.getUserRoles().add(userRole);
         service.saveUser(newUser);
         return switcherBean.switchPage(Pages.LOGIN);
     }

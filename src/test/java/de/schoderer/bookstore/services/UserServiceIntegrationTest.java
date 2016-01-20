@@ -17,6 +17,7 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -59,7 +60,7 @@ public class UserServiceIntegrationTest {
         System.out.println(archive.toString(Formatters.VERBOSE));
         return archive;
     }
-
+    @Ignore
     @Test
     public void thatUserCanBeSavedWithNoRights() throws Exception{
         User user = new User("test@test.de", "strongPW");
@@ -67,7 +68,7 @@ public class UserServiceIntegrationTest {
 
         userService.saveUser(user);
     }
-
+    @Ignore
     @Test
     public void thatUserEmailCanBeCheckedWithNoRights() throws Exception{
 
