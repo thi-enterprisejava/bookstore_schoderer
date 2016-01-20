@@ -149,7 +149,6 @@ public class BookService implements Serializable {
         Path filePath;
         if (isBook) {
             filePath = configuration.getBasePath().resolve("books");
-            System.err.println("PATH: "+filePath);
         } else {
             filePath = configuration.getBasePath().resolve("images");
         }
