@@ -1,7 +1,7 @@
 package de.schoderer.bookstore.web.model;
 
-import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
+import de.schoderer.bookstore.services.BookService;
 import de.schoderer.bookstore.utils.Pages;
 
 import javax.enterprise.context.SessionScoped;
@@ -20,18 +20,18 @@ public class SearchBean implements Serializable {
     private PageSwitcherBean navBean;
 
     @Inject
-    private BookPersistence persistence;
+    private BookService bookService;
 
     private String search;
     private List<Book> searchResults;
 
     public String fetchAllBooks() {
-        searchResults = persistence.fetchAllBooks();
+        searchResults = bookService.fetchAllBooks();
         return navBean.switchPage(Pages.LIST);
     }
 
     public String doSearch() {
-        searchResults = persistence.fetchAllBooksByTitle(search);
+        searchResults = bookService.fetchAllBooksByTitle(search);
         return navBean.switchPage(Pages.LIST);
     }
 
@@ -59,11 +59,11 @@ public class SearchBean implements Serializable {
         this.navBean = navBean;
     }
 
-    public BookPersistence getPersistence() {
-        return persistence;
+    public BookService getBookService() {
+        return bookService;
     }
 
-    public void setPersistence(BookPersistence persistence) {
-        this.persistence = persistence;
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
     }
 }

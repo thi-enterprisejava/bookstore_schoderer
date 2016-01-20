@@ -4,22 +4,13 @@ import de.schoderer.bookstore.domain.security.User;
 import de.schoderer.bookstore.utils.interceptor.TimeLogging;
 
 import javax.annotation.security.PermitAll;
+import java.io.Serializable;
 
 /**
  * Created by Michael Schoderer on 22.12.15.
  */
 @TimeLogging
-public interface UserPersistence {
-
-    /**
-     * Find the user with the specific username in the database
-     *
-     * @param userName
-     * @return the user with the username
-     */
-    @PermitAll
-    User findUserByName(String userName);
-
+public interface UserPersistence extends Serializable {
     /**
      * Check if username already exists in the database
      *

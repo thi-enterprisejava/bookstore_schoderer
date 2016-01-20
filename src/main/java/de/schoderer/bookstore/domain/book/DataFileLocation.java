@@ -11,7 +11,7 @@ import java.util.Objects;
  * Created by schod on 19.11.2015.
  */
 @Entity
-public class DataFileLocation implements Serializable{
+public class DataFileLocation implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

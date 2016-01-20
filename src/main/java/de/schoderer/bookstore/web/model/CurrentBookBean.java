@@ -1,27 +1,19 @@
 package de.schoderer.bookstore.web.model;
 
-import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.domain.book.Tag;
-import de.schoderer.bookstore.utils.Configuration;
+import de.schoderer.bookstore.services.BookService;
+import de.schoderer.bookstore.services.Configuration;
 import de.schoderer.bookstore.utils.Pages;
 import org.apache.log4j.Logger;
 
-import javax.annotation.security.RolesAllowed;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
-import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.stream.Stream;
 
 /**
@@ -31,18 +23,17 @@ import java.util.stream.Stream;
 @ViewScoped
 public class CurrentBookBean implements Serializable {
     private static final Logger LOG = Logger.getLogger(CurrentBookBean.class);
-    private static final Random random = new Random();
+    @Inject
+    private BookService bookService;
     @Inject
     private Configuration configuration;
     @Inject
     private PageSwitcherBean pageSwitcher;
-    @Inject
-    private BookPersistence persistence;
 
     private Book currentBook;
 
 
-    private String tag;
+    private String tagName;
     private Long id;
     private Part imageFile;
     private Part bookFile;
@@ -56,33 +47,25 @@ public class CurrentBookBean implements Serializable {
         this.id = id;
     }
 
-    protected Path getBasePath(boolean isBook) {
-        if (isBook) {
-            return configuration.getBasePath().resolve("books");
-        } else {
-            return configuration.getBasePath().resolve("images");
-        }
-    }
-
     public void doSetCurrentBook() {
         if (id == null || id < 0) {
             currentBook = new Book();
         } else {
-            currentBook = persistence.fetchBookByID(id);
+            currentBook = bookService.fetchBookByID(id);
             id = null;
         }
     }
 
     /**
-     * Add Tags to the Tag list of the current Book, Checks also if tag is not null or empty
+     * Add Tags to the Tag list of the current Book, Checks also if tagName is not null or empty
      */
     public void doAddTags() {
-        doAddTags(tag);
-        tag = "";
+        doAddTags(tagName);
+        tagName = "";
     }
 
     /**
-     * Add Tags to the Tag list of the current Book, Checks also if tag is not null or empty
+     * Add Tags to the Tag list of the current Book, Checks also if tagName is not null or empty
      *
      * @param string
      */
@@ -94,7 +77,7 @@ public class CurrentBookBean implements Serializable {
                     .forEach(tagInList -> currentBook.getTags().add(new Tag(tagInList.trim())));
         }
         if (LOG.isInfoEnabled()) {
-            LOG.info("Added Tag: " + tag + " - Current list size: " + currentBook.getTags().size());
+            LOG.info("Added Tag: " + tagName + " - Current list size: " + currentBook.getTags().size());
         }
     }
 
@@ -110,36 +93,14 @@ public class CurrentBookBean implements Serializable {
      */
     public void doSave() {
         currentBook.setData(uploadAndSaveFiles());
-        persistTagsIfNotAlreadyInDatabase(currentBook);
-        if (id == null) {
-            persistence.saveBook(currentBook);
+        if (currentBook.getId() == null) {
+            bookService.saveBook(currentBook);
         } else {
-            persistence.updateBook(currentBook);
+            bookService.updateBook(currentBook);
         }
         currentBook = new Book();
     }
 
-    /**
-     * Exchanges the Tags of the Book with the Tags in the Database (if exists)
-     * Made to make sure a Tag is unique in the Database
-     *
-     * @param currentBook
-     */
-    protected void persistTagsIfNotAlreadyInDatabase(Book currentBook) {
-        List<Tag> tagsInDatabase = persistence.fetchAllTags();
-        List<Tag> tagsWithID = new ArrayList<>(currentBook.getTags().size());
-        currentBook.getTags().forEach(tagInList -> {
-            Tag databaseTag;
-            if (tagsInDatabase.contains(tagInList)) {
-                databaseTag = tagsInDatabase.get(tagsInDatabase.indexOf(tagInList));
-            } else {
-                databaseTag = persistence.saveTag(tagInList);
-            }
-            tagsWithID.add(databaseTag);
-        });
-
-        currentBook.setTags(tagsWithID);
-    }
 
     /**
      * Uploads all files to the hdd and saves the path of the files to an @DataFileLocation-Object
@@ -147,9 +108,6 @@ public class CurrentBookBean implements Serializable {
      * @return DataFileLocation
      */
     protected DataFileLocation uploadAndSaveFiles() {
-        if (currentBook.getId() != null) {
-            return currentBook.getData();
-        }
         DataFileLocation location;
         location = new DataFileLocation();
         uploadAndSaveBookLocation(location);
@@ -158,7 +116,7 @@ public class CurrentBookBean implements Serializable {
     }
 
     private void uploadAndSaveImageLocation(DataFileLocation location) {
-        Path fullImagePath = uploadAndSaveFileToHardDisk(imageFile, false);
+        Path fullImagePath = bookService.uploadFile(imageFile, false);
         if (fullImagePath != null) {
             location.setImageName(fullImagePath.getFileName().toString());
             location.setFullImagePath(fullImagePath.toAbsolutePath().toString());
@@ -166,74 +124,18 @@ public class CurrentBookBean implements Serializable {
     }
 
     private void uploadAndSaveBookLocation(DataFileLocation location) {
-        Path fullBookPath = uploadAndSaveFileToHardDisk(bookFile, true);
+        Path fullBookPath = bookService.uploadFile(bookFile, true);
         if (fullBookPath != null) {
             location.setFileName(fullBookPath.getFileName().toString());
             location.setFullFilePath(fullBookPath.toAbsolutePath().toString());
         }
     }
 
-    /**
-     * Uploades the given part to the HDD, change targetdirectory if the file is a book
-     *
-     * @param part
-     * @param isBook
-     * @return path of the uploaded file
-     */
-    protected Path uploadAndSaveFileToHardDisk(Part part, boolean isBook) {
-        Path filePath = null;
-        if (part == null) {
-            return null;
-        }
-        try {
-            String fileName = part.getSubmittedFileName();
-            filePath = getBasePath(isBook).resolve(createUniqueFileName(fileName));
-            //Create Directory if not already exists
-            if (!Files.isDirectory(filePath)) {
-                Files.createDirectories(filePath);
-            }
-            Files.copy(part.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-            if (LOG.isInfoEnabled()) {
-                LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());
-            }
-        } catch (IOException e) {
-            LOG.error(e.getMessage(), e);
-        }
-        return filePath;
-    }
-
-    /**
-     * Create a Random Filename for the file on the server (protection from accidentilly overrride)
-     *
-     * @param fileName
-     * @return
-     */
-    private String createUniqueFileName(String fileName) {
-        int beginIndex = fileName.lastIndexOf(".");
-        if (beginIndex < 0) {
-            return fileName + "_" + Math.abs(random.nextLong());
-        }
-        return fileName.substring(0, beginIndex - 1) + "_" + Math.abs(random.nextLong()) + fileName.substring(beginIndex);
-    }
-
-    @RolesAllowed("user")
     public String deleteBook() {
-        removeFiles();
-        persistence.removeBook(currentBook);
+        bookService.removeBook(currentBook);
         return pageSwitcher.switchPage(Pages.INDEX);
     }
 
-    private void removeFiles() {
-        DataFileLocation dataFileLocation = currentBook.getData();
-        if (dataFileLocation != null) {
-            try {
-                Files.deleteIfExists(Paths.get(dataFileLocation.getFullFilePath()));
-                Files.deleteIfExists(Paths.get(dataFileLocation.getFullImagePath()));
-            } catch (IOException e) {
-                LOG.error("Couldn't delete Files of Book: " + currentBook.getTitle() + ": " + e.getMessage(), e);
-            }
-        }
-    }
 
     public Long getId() {
         return id;
@@ -251,12 +153,12 @@ public class CurrentBookBean implements Serializable {
         this.currentBook = currentBook;
     }
 
-    public String getTag() {
-        return tag;
+    public String getTagName() {
+        return tagName;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public Part getImageFile() {
@@ -283,12 +185,12 @@ public class CurrentBookBean implements Serializable {
         this.configuration = configuration;
     }
 
-    public BookPersistence getPersistence() {
-        return persistence;
+    public BookService getBookService() {
+        return bookService;
     }
 
-    public void setPersistence(BookPersistence persistence) {
-        this.persistence = persistence;
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
     }
 
     public PageSwitcherBean getPageSwitcher() {

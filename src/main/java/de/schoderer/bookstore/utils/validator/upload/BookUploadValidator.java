@@ -12,14 +12,21 @@ import java.util.List;
  */
 @FacesValidator("bookUploadValidator")
 public class BookUploadValidator extends BaseValidator {
+
+    /**
+     * Checks if the uploaded book is not empty, else produces an error message.
+     * No check for given format here, because basically a book can be a txt, pdf, mobi, jpeg...
+     *
+     * @param value
+     * @param messageList
+     */
     @Override
-    public void validate(Object value, List<FacesMessage> messageList) {
+    public void validation(Object value, List<FacesMessage> messageList) {
         Part book = (Part) value;
         //if no image is present, skip the other validations
         if (book == null) {
             messageList.add(new FacesMessage(getBundle().getString("error.noBook")));
             return;
         }
-        //TODO check if additional validators are needed.. maybe size also a basic class for image and book would be better
     }
 }

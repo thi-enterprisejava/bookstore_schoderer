@@ -4,8 +4,6 @@ import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.Tag;
 import de.schoderer.bookstore.utils.interceptor.TimeLogging;
 
-import javax.annotation.security.PermitAll;
-import javax.annotation.security.RolesAllowed;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,14 +12,12 @@ import java.util.List;
  * <p>
  * Simple interface, which provides the CRUD-Methods for the persistence
  */
-@TimeLogging
 public interface BookPersistence extends Serializable {
     /**
      * Returns all books in the DB
      *
      * @return List of books
      */
-    @PermitAll
     List<Book> fetchAllBooks();
 
     /**
@@ -30,17 +26,7 @@ public interface BookPersistence extends Serializable {
      * @param title
      * @return List of books containg title
      */
-    @PermitAll
     List<Book> fetchAllBooksByTitle(String title);
-
-    /**
-     * Returns all books with a specific Tag
-     *
-     * @param tagId
-     * @return List of books with the given tag
-     */
-    @PermitAll
-    List<Book> fetchAllBooksWithTagID(long tagId);
 
     /**
      * Fetch a book with the given id, if exists
@@ -48,7 +34,6 @@ public interface BookPersistence extends Serializable {
      * @param id
      * @return the book with the id
      */
-    @PermitAll
     Book fetchBookByID(long id);
 
     /**
@@ -57,7 +42,6 @@ public interface BookPersistence extends Serializable {
      * @param book
      * @return saved book with filled id
      */
-    @RolesAllowed(value = "user")
     Book saveBook(Book book);
 
     /**
@@ -66,7 +50,6 @@ public interface BookPersistence extends Serializable {
      * @param book
      * @return the book
      */
-    @RolesAllowed(value = "user")
     Book updateBook(Book book);
 
     /**
@@ -74,7 +57,6 @@ public interface BookPersistence extends Serializable {
      *
      * @param book
      */
-    @RolesAllowed(value = "user")
     void removeBook(Book book);
 
     /**
@@ -83,7 +65,6 @@ public interface BookPersistence extends Serializable {
      * @param tag
      * @return saved tag with filled id
      */
-    @RolesAllowed(value = "user")
     Tag saveTag(Tag tag);
 
     /**
@@ -92,7 +73,6 @@ public interface BookPersistence extends Serializable {
      * @param id
      * @return
      */
-    @PermitAll
     Tag fetchTagByID(long id);
 
     /**
@@ -101,7 +81,6 @@ public interface BookPersistence extends Serializable {
      * @param name
      * @return the tag with the name
      */
-    @PermitAll
     Tag fetchTagByName(String name);
 
     /**
@@ -109,6 +88,5 @@ public interface BookPersistence extends Serializable {
      *
      * @return list of existing tags
      */
-    @PermitAll
     List<Tag> fetchAllTags();
 }

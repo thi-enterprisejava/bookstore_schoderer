@@ -15,18 +15,12 @@ import javax.persistence.TypedQuery;
 @Stateless
 public class UserPersistenceImpl extends BasicPersistence implements UserPersistence {
     @Override
-    public User findUserByName(String userName) {
+    public boolean checkIfEmailIsAlreadyRegistered(String userName) {
         TypedQuery<User> query = getEntityManager().createNamedQuery("User.findUser", User.class);
         query.setParameter("username", userName);
-        return query.getSingleResult();
-    }
-
-    @Override
-    public boolean checkIfEmailIsAlreadyRegistered(String userName) {
-        TypedQuery<Long> query = getEntityManager().createNamedQuery("User.userNameExists", Long.class)
-                .setParameter("username", userName)
-                .setMaxResults(1);
-        return query.getResultList().isEmpty();
+        query.setMaxResults(1);
+        //Return false if user exists -> list is NOT empty...
+        return !query.getResultList().isEmpty();
     }
 
     @Override

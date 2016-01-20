@@ -14,9 +14,15 @@ import java.util.List;
 public class PictureUploadValidator extends BaseValidator {
     private static final int MAX_PICTURE_SIZE = 6 * 1024 * 1024;
 
-
+    /**
+     * Checks if the uploaded image is null or bigger than MAX_PICTURE_SIZE
+     * Also checks if the contenttype represents an image
+     *
+     * @param value       to validate
+     * @param messageList
+     */
     @Override
-    public void validate(Object value, List<FacesMessage> messageList) {
+    public void validation(Object value, List<FacesMessage> messageList) {
         Part image = (Part) value;
         //if no image is present, skip the other validations
         if (image == null) {
