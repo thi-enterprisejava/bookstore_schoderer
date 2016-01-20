@@ -1,6 +1,6 @@
 package de.schoderer.bookstore.web.model;
 
-import de.schoderer.bookstore.db.interfaces.UserPersistence;
+import de.schoderer.bookstore.services.UserService;
 import de.schoderer.bookstore.utils.ExternalComponents;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,7 +26,7 @@ public class UserRegistrationBeanTest {
     public void setUp() {
         bean = new UserRegistrationBean();
         bean.setExternalComponents(Mockito.mock(ExternalComponents.class));
-        bean.setPersistence(Mockito.mock(UserPersistence.class));
+        bean.setService(Mockito.mock(UserService.class));
         bean.setSwitcherBean(Mockito.mock(PageSwitcherBean.class));
     }
 
@@ -47,7 +47,7 @@ public class UserRegistrationBeanTest {
 
         bean.doRegisterUser();
 
-        verify(bean.getPersistence(), times(1)).saveUser(bean.getNewUser());
+        verify(bean.getService(), times(1)).saveUser(bean.getNewUser());
         Assert.assertThat(email, is(bean.getNewUser().getEmail()));
     }
 

@@ -32,7 +32,7 @@ public class CurrentBookBeanDeleteTest {
         Mockito.when(bookInstance.getData()).thenReturn(null);
         currentBookBean.setCurrentBook(bookInstance);
         currentBookBean.deleteBook();
-        Mockito.verify(currentBookBean.getPersistence(), Mockito.times(1)).removeBook(bookInstance);
+        Mockito.verify(currentBookBean.getBookService(), Mockito.times(1)).removeBook(bookInstance);
     }
 
     @Test

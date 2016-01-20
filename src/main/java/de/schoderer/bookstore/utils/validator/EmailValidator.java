@@ -1,6 +1,6 @@
 package de.schoderer.bookstore.utils.validator;
 
-import de.schoderer.bookstore.db.interfaces.UserPersistence;
+import de.schoderer.bookstore.services.UserService;
 import de.schoderer.bookstore.utils.ExternalComponents;
 
 import javax.enterprise.context.RequestScoped;
@@ -23,7 +23,7 @@ public class EmailValidator extends BaseValidator {
     @Inject
     protected ExternalComponents utils;
     @Inject
-    protected UserPersistence persistence;
+    protected UserService service;
 
 
     @Override
@@ -36,7 +36,7 @@ public class EmailValidator extends BaseValidator {
             FacesMessage e = new FacesMessage(utils.getResourceBundleStringInCurrentLocal("error.notValidEmail"));
             e.setSeverity(FacesMessage.SEVERITY_ERROR);
             messageList.add(e);
-        } else if (persistence.checkIfEmailIsAlreadyRegistered(String.valueOf(value))) {
+        } else if (service.checkIfEmailIsAlreadyRegistered(String.valueOf(value))) {
             FacesMessage e = new FacesMessage(utils.getResourceBundleStringInCurrentLocal("error.emailAlreadyRegistered"));
             e.setSeverity(FacesMessage.SEVERITY_ERROR);
             messageList.add(e);

@@ -1,5 +1,6 @@
 package de.schoderer.bookstore;
 
+import de.schoderer.bookstore.services.BookServiceTest;
 import de.schoderer.bookstore.utils.validator.EmailValidatorTest;
 import de.schoderer.bookstore.utils.validator.upload.BookUploadValidatorTest;
 import de.schoderer.bookstore.utils.validator.upload.PictureUploadValidatorTest;
@@ -24,7 +25,10 @@ import org.junit.runners.Suite;
         //ValidatorTests
         EmailValidatorTest.class,
         BookUploadValidatorTest.class,
-        PictureUploadValidatorTest.class
+        PictureUploadValidatorTest.class,
+
+        //ServiceTests
+        BookServiceTest.class
 })
 public class AllTests {
 }

@@ -1,12 +1,10 @@
 package de.schoderer.bookstore.web.model;
 
-import de.schoderer.bookstore.db.interfaces.UserPersistence;
 import de.schoderer.bookstore.domain.security.User;
 import de.schoderer.bookstore.domain.security.UserRole;
+import de.schoderer.bookstore.services.UserService;
 import de.schoderer.bookstore.utils.ExternalComponents;
 import de.schoderer.bookstore.utils.Pages;
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.jboss.security.auth.spi.Util;
 
 import javax.enterprise.context.RequestScoped;
@@ -21,9 +19,8 @@ import java.security.NoSuchAlgorithmException;
 @Named
 @RequestScoped
 public class UserRegistrationBean implements Serializable {
-    private static final Logger LOGGER = LogManager.getLogger(UserRegistrationBean.class);
     @Inject
-    private UserPersistence persistence;
+    private UserService service;
     @Inject
     private ExternalComponents externalComponents;
     @Inject
@@ -44,7 +41,7 @@ public class UserRegistrationBean implements Serializable {
     public String doRegisterUser() throws NoSuchAlgorithmException {
         newUser = new User(email, hash256(password));
         newUser.getUserRoles().add(new UserRole("user"));
-        persistence.saveUser(newUser);
+        service.saveUser(newUser);
         return switcherBean.switchPage(Pages.LOGIN);
     }
 
@@ -78,15 +75,6 @@ public class UserRegistrationBean implements Serializable {
         this.password = password;
     }
 
-
-    public UserPersistence getPersistence() {
-        return persistence;
-    }
-
-    public void setPersistence(UserPersistence persistence) {
-        this.persistence = persistence;
-    }
-
     public ExternalComponents getExternalComponents() {
         return externalComponents;
     }
@@ -101,5 +89,13 @@ public class UserRegistrationBean implements Serializable {
 
     public void setSwitcherBean(PageSwitcherBean switcherBean) {
         this.switcherBean = switcherBean;
+    }
+
+    public UserService getService() {
+        return service;
+    }
+
+    public void setService(UserService service) {
+        this.service = service;
     }
 }

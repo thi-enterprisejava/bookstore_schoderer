@@ -1,7 +1,7 @@
 package de.schoderer.bookstore.web.model;
 
-import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
+import de.schoderer.bookstore.services.BookService;
 import de.schoderer.bookstore.testUtils.TestFileRule;
 import de.schoderer.bookstore.testUtils.web.model.BookFixture;
 import org.junit.Assert;
@@ -41,9 +41,10 @@ public class CurrentBookBeanSaveTest {
     @Test
     public void ifBookIsSetWithId() {
         bean.setId(null);
-        BookPersistence mockPersistence = setMockPersistence();
+        BookService service = Mockito.mock(BookService.class);
         Book book = bookFixture.createBookInstance();
-        Mockito.when(mockPersistence.fetchBookByID(book.getId())).thenReturn(book);
+        Mockito.when(service.fetchBookByID(book.getId())).thenReturn(book);
+        bean.setBookService(service);
         bean.setId(book.getId());
 
         bean.doSetCurrentBook();
@@ -55,31 +56,29 @@ public class CurrentBookBeanSaveTest {
     @Test
     public void ifBookIsUpdated() {
         Book bookWithID = bookFixture.createBookInstance();
-        BookPersistence persistence = setMockPersistence();
+        BookService service = Mockito.mock(BookService.class);
+        bean.setBookService(service);
         bean.setId(bookWithID.getId());
         bean.setCurrentBook(bookWithID);
 
         bean.doSave();
 
-        Mockito.verify(persistence, Mockito.times(1)).updateBook(bookWithID);
+        Mockito.verify(service, Mockito.times(1)).updateBook(bookWithID);
     }
 
     @Test
     public void ifNewBookIsSaved() {
         Book bookWithoutID = bookFixture.createBookInstance();
-        BookPersistence persistence = setMockPersistence();
+        BookService service = Mockito.mock(BookService.class);
+        bean.setBookService(service);
         bookWithoutID.setId(null);
         bean.setId(bookWithoutID.getId());
         bean.setCurrentBook(bookWithoutID);
 
         bean.doSave();
 
-        Mockito.verify(persistence, Mockito.times(1)).saveBook(bookWithoutID);
+        Mockito.verify(service, Mockito.times(1)).saveBook(bookWithoutID);
     }
 
-    private BookPersistence setMockPersistence() {
-        BookPersistence mockPersistence = Mockito.mock(BookPersistence.class);
-        bean.setPersistence(mockPersistence);
-        return mockPersistence;
-    }
+
 }

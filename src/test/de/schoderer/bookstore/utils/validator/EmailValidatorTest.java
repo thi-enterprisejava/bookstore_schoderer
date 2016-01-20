@@ -1,6 +1,6 @@
 package de.schoderer.bookstore.utils.validator;
 
-import de.schoderer.bookstore.db.interfaces.UserPersistence;
+import de.schoderer.bookstore.services.UserService;
 import de.schoderer.bookstore.testUtils.validator.StubRessourceBundle;
 import de.schoderer.bookstore.utils.ExternalComponents;
 import org.junit.Assert;
@@ -38,7 +38,7 @@ public class EmailValidatorTest {
     public void setUp() {
         validator = new EmailValidator();
         validator.setBundle(new StubRessourceBundle());
-        validator.persistence = mock(UserPersistence.class);
+        validator.service = mock(UserService.class);
         mockedContext = mock(FacesContext.class);
         validator.utils = mock(ExternalComponents.class);
         when(validator.utils.getResourceBundleStringInCurrentLocal(anyString())).thenReturn("test");
@@ -70,7 +70,7 @@ public class EmailValidatorTest {
 
     @Test
     public void ifExceptionIsThrownIfEmailIsAlreadyRegistered() {
-        when(validator.persistence.checkIfEmailIsAlreadyRegistered("test@test.de")).thenReturn(true);
+        when(validator.service.checkIfEmailIsAlreadyRegistered("test@test.de")).thenReturn(true);
 
         exception.expect(javax.faces.validator.ValidatorException.class);
 

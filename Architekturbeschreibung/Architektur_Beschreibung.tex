@@ -1,0 +1,22 @@
+\documentclass[12pt,a4paper]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[left=0.50cm, right=0.50cm, top=0.50cm, bottom=0.50cm]{geometry}
+\author{Michael Schoderer}
+\title{Architektur-Beschreibung: Bookstore}
+\begin{document}
+	\chapter{Bookstore}
+	\section{Beschreibung}
+	Die Java-EE Anwendung 'Bookstore' wurde für die Vorlesung Implementierung von Informationssystemen an der Technischen Hochschule Ingolstadt entwickelt und ermöglicht das Speichern und Verwalten von Dokumenten (PDF, MOBI, TXT, ...).
+	\section{Architektur der Anwendung}
+	\subsection{Übersicht}
+	Bei der Konzeption und Entwicklung wurde die Anwendung in die im folgenden aufgelisteten Schichten unterteilt:
+	\begin{itemize}
+		\item \textbf{GUI} Die Oberfläche wurde mithilfe von JavaServer Faces (JSF) umgesetzt. Bei der Gestaltung der Oberfläche wurden Templates eingesetzt, damit ein einheitliches Bild der einzelnen Webseiten gewährleistet werden kann
+		\item \textbf{Geschäftslogik} Die Geschäftslogik wurde unabhängig von der graphischen Oberfläche entwickelt, um eine Trennung nach dem MVC-Model zu erreichen
+		\item \textbf{Datenbank} Die Datenbankschicht wurde durch mehrere Interfaces gekapselt und stellt die benötigten Funktionen bereit, um die Domain-Objekte zu in die jeweilige Datenbank zu persistieren		
+		\end{itemize}
+\end{document}

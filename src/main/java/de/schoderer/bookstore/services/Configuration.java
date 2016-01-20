@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.utils;
+package de.schoderer.bookstore.services;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
@@ -16,5 +16,14 @@ public class Configuration implements Serializable {
 
     public Path getBasePath() {
         return basePath;
+    }
+
+
+    public Path getImagePath() {
+        return getBasePath().resolve("images");
+    }
+
+    public Path getBookPath() {
+        return getBasePath().resolve("books");
     }
 }

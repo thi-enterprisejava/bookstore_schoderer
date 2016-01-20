@@ -18,6 +18,7 @@ public abstract class BaseValidator implements Validator, Serializable {
     private ResourceBundle bundle;
     private UIComponent component;
 
+    @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         List<FacesMessage> messages = new ArrayList<>();
         if (bundle == null) {

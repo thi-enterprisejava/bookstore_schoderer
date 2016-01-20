@@ -4,12 +4,13 @@ import de.schoderer.bookstore.domain.security.User;
 import de.schoderer.bookstore.utils.interceptor.TimeLogging;
 
 import javax.annotation.security.PermitAll;
+import java.io.Serializable;
 
 /**
  * Created by Michael Schoderer on 22.12.15.
  */
 @TimeLogging
-public interface UserPersistence {
+public interface UserPersistence extends Serializable {
 
     /**
      * Find the user with the specific username in the database

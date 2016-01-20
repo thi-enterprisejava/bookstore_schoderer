@@ -20,6 +20,5 @@ public class BookUploadValidator extends BaseValidator {
             messageList.add(new FacesMessage(getBundle().getString("error.noBook")));
             return;
         }
-        //TODO check if additional validators are needed.. maybe size also a basic class for image and book would be better
     }
 }
