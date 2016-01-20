@@ -1,7 +1,7 @@
 package de.schoderer.bookstore.web.model;
 
-import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
+import de.schoderer.bookstore.services.BookService;
 import de.schoderer.bookstore.testUtils.web.model.BookFixture;
 import org.junit.Assert;
 import org.junit.Rule;
@@ -27,7 +27,7 @@ public class SearchBeanTest {
     public void ifFetchAllResultsWorks() throws IOException {
         List<Book> randomBookList = fixture.createBookList(5);
         SearchBean bean = createSearchBeanWithMockedDependencies();
-        Mockito.when(bean.getPersistence().fetchAllBooks()).thenReturn(randomBookList);
+        Mockito.when(bean.getBookService().fetchAllBooks()).thenReturn(randomBookList);
         bean.fetchAllBooks();
         Assert.assertThat(bean.getSearchResults(), is(randomBookList));
     }
@@ -37,7 +37,7 @@ public class SearchBeanTest {
         String searchString = "Hallo";
         List<Book> randomBookList = fixture.createBookList(5);
         SearchBean bean = createSearchBeanWithMockedDependencies();
-        Mockito.when(bean.getPersistence().fetchAllBooksByTitle(searchString)).
+        Mockito.when(bean.getBookService().fetchAllBooksByTitle(searchString)).
                 thenReturn(randomBookList.stream().filter(book ->
                         book.getTitle().toUpperCase().contains(searchString.toUpperCase()))
                         .collect(Collectors.toList())
@@ -50,8 +50,8 @@ public class SearchBeanTest {
 
     private SearchBean createSearchBeanWithMockedDependencies() {
         SearchBean bean = new SearchBean();
-        BookPersistence persistence = Mockito.mock(BookPersistence.class);
-        bean.setPersistence(persistence);
+        BookService persistence = Mockito.mock(BookService.class);
+        bean.setBookService(persistence);
         bean.setNavBean(Mockito.mock(PageSwitcherBean.class));
         return bean;
     }

@@ -1,7 +1,7 @@
 package de.schoderer.bookstore.webservice.rest;
 
-import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
+import de.schoderer.bookstore.services.BookService;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -14,13 +14,13 @@ import java.util.List;
 @Path("books")
 public class BooksRestApi {
     @Inject
-    private BookPersistence persistence;
+    private BookService service;
 
 
     @GET
     @Produces("application/json")
     public List<Book> getAllBooks() {
-        return persistence.fetchAllBooks();
+        return service.fetchAllBooks();
     }
 
 
@@ -28,27 +28,27 @@ public class BooksRestApi {
     @Produces("application/json")
     @Path("title/{title}")
     public List<Book> getBooksByTitle(@PathParam("title") String title) {
-        return persistence.fetchAllBooksByTitle(title);
+        return service.fetchAllBooksByTitle(title);
     }
 
     @POST
     @Consumes("application/json")
     public Response updateBook(Book book) {
-        persistence.updateBook(book);
+        service.updateBook(book);
         return Response.accepted().build();
     }
 
     @PUT
     @Consumes("application/json")
     public Response saveBook(Book book) {
-        persistence.saveBook(book);
+        service.saveBook(book);
         return Response.accepted().build();
     }
 
     @DELETE
     @Consumes("application/json")
     public Response deleteBook(Book book) {
-        persistence.removeBook(book);
+        service.removeBook(book);
         return Response.accepted().build();
     }
 

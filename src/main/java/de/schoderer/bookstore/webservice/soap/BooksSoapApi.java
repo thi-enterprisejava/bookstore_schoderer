@@ -1,8 +1,9 @@
 package de.schoderer.bookstore.webservice.soap;
 
-import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
+import de.schoderer.bookstore.services.BookService;
 
+import javax.inject.Inject;
 import java.util.List;
 
 
@@ -10,27 +11,28 @@ import java.util.List;
  * Created by Michael Schoderer on 25.10.2015.
  */
 public class BooksSoapApi {
-    private BookPersistence persistence;
+    @Inject
+    private BookService bookService;
 
 
     public List<Book> getAllBooks() {
-        return persistence.fetchAllBooks();
+        return bookService.fetchAllBooks();
     }
 
 
     public List<Book> getBooksByTitle(String title) {
-        return persistence.fetchAllBooksByTitle(title);
+        return bookService.fetchAllBooksByTitle(title);
     }
 
     public void updateBook(Book book) {
-        persistence.updateBook(book);
+        bookService.updateBook(book);
     }
 
     public void saveBook(Book book) {
-        persistence.saveBook(book);
+        bookService.saveBook(book);
     }
 
     public void deleteBook(Book book) {
-        persistence.removeBook(book);
+        bookService.removeBook(book);
     }
 }

@@ -35,7 +35,33 @@ public class BookService implements Serializable {
     @Inject
     private Configuration configuration;
 
+    /**
+     * Fetches all books form the persistens
+     *
+     * @return List of all Books
+     */
+    @PermitAll
+    public List<Book> fetchAllBooks() {
+        return persistence.fetchAllBooks();
+    }
 
+    /**
+     * Fetches all books from the persistens, when the title of the book contains the given string
+     *
+     * @param title
+     * @return List of all books which contain title
+     */
+    @PermitAll
+    public List<Book> fetchAllBooksByTitle(String title) {
+        return persistence.fetchAllBooksByTitle(title);
+    }
+
+    /**
+     * Fetches the book with the given id form the persistence, if id under null throws @IllegalArgumentException
+     *
+     * @param id
+     * @return Book with the given id
+     */
     @PermitAll
     public Book fetchBookByID(long id) {
         if (id > 1) {
@@ -44,12 +70,22 @@ public class BookService implements Serializable {
         throw new IllegalArgumentException("Book-id must be greater than 0");
     }
 
+    /**
+     * Saves a new book to the persistence
+     *
+     * @param book
+     */
     @RolesAllowed("user")
     public void saveBook(Book book) {
         persistTagsIfNotAlreadyInDatabase(book);
         persistence.saveBook(book);
     }
 
+    /**
+     * Updates an already in the database existing book
+     *
+     * @param book
+     */
     @RolesAllowed("user")
     public void updateBook(Book book) {
         persistTagsIfNotAlreadyInDatabase(book);
@@ -92,12 +128,12 @@ public class BookService implements Serializable {
             return null;
         }
         try {
-            String fileName = createUniqueFileName(part.getSubmittedFileName());
             filePath = getFilePathForFileType(isBook);
             //Create Directory if not already exists
             if (!Files.isDirectory(filePath)) {
                 Files.createDirectories(filePath);
             }
+            String fileName = createUniqueFileName(part.getSubmittedFileName());
             Files.copy(part.getInputStream(), filePath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
             if (LOG.isInfoEnabled()) {
                 LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());
@@ -133,6 +169,11 @@ public class BookService implements Serializable {
         return fileName.substring(0, beginIndex - 1) + "_" + Math.abs(random.nextLong()) + fileName.substring(beginIndex);
     }
 
+    /**
+     * Deletes the given book form the persistence
+     *
+     * @param book
+     */
     @RolesAllowed("user")
     public void removeBook(Book book) {
         removeFiles(book);

@@ -32,6 +32,12 @@ public abstract class BaseValidator implements Validator, Serializable {
         }
     }
 
+    /**
+     * Simplyfied method for validation, when a message is added to the list, the main mehtode throws an Validation Error
+     *
+     * @param value
+     * @param messageList
+     */
     public abstract void validation(Object value, List<FacesMessage> messageList);
 
     public ResourceBundle getBundle() {

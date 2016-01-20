@@ -25,7 +25,13 @@ public class EmailValidator extends BaseValidator {
     @Inject
     protected UserService service;
 
-
+    /**
+     * Validates if an email address is not null or empty and matches the email pattern
+     * Also checks if the email is already registered
+     *
+     * @param value       to validate
+     * @param messageList
+     */
     @Override
     public void validation(Object value, List<FacesMessage> messageList) {
         if (value == null || "".equals(value)) {

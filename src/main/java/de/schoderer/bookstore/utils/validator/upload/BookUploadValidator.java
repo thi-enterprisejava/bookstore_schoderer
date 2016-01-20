@@ -12,6 +12,14 @@ import java.util.List;
  */
 @FacesValidator("bookUploadValidator")
 public class BookUploadValidator extends BaseValidator {
+
+    /**
+     * Checks if the uploaded book is not empty, else produces an error message.
+     * No check for given format here, because basically a book can be a txt, pdf, mobi, jpeg...
+     *
+     * @param value
+     * @param messageList
+     */
     @Override
     public void validation(Object value, List<FacesMessage> messageList) {
         Part book = (Part) value;

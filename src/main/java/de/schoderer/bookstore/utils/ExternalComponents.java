@@ -13,7 +13,6 @@ public interface ExternalComponents extends Serializable {
      *
      * @param message
      */
-
     FacesMessage sendFacesMessage(String message);
 
     /**
@@ -24,7 +23,15 @@ public interface ExternalComponents extends Serializable {
      */
     String getResourceBundleStringInCurrentLocal(String parameterName);
 
+    /**
+     * Get the filename of the current JSF-Page
+     *
+     * @return filename
+     */
     String getCurrentPage();
 
+    /**
+     * Invalidates the Current Seesion (logout)
+     */
     void invalidateSession();
 }
