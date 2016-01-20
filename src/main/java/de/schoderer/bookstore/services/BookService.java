@@ -128,13 +128,14 @@ public class BookService implements Serializable {
             return null;
         }
         try {
+            String uniqueFileName = createUniqueFileName(part.getSubmittedFileName());
             filePath = getFilePathForFileType(isBook);
+            filePath = filePath.resolve(uniqueFileName);
             //Create Directory if not already exists
             if (!Files.isDirectory(filePath)) {
                 Files.createDirectories(filePath);
             }
-            String fileName = createUniqueFileName(part.getSubmittedFileName());
-            Files.copy(part.getInputStream(), filePath.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(part.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             if (LOG.isInfoEnabled()) {
                 LOG.info("Successly saved File: " + filePath.toAbsolutePath().toString());
             }
@@ -147,9 +148,10 @@ public class BookService implements Serializable {
     private Path getFilePathForFileType(boolean isBook) {
         Path filePath;
         if (isBook) {
-            filePath = configuration.getBookPath();
+            filePath = configuration.getBasePath().resolve("books");
+            System.err.println("PATH: "+filePath);
         } else {
-            filePath = configuration.getImagePath();
+            filePath = configuration.getBasePath().resolve("images");
         }
         return filePath;
     }

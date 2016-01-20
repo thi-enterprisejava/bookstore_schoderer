@@ -29,6 +29,7 @@ import org.junit.runners.Suite;
 
         //ServiceTests
         BookServiceTest.class
+
 })
 public class AllTests {
 }

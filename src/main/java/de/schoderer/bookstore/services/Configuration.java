@@ -17,22 +17,4 @@ public class Configuration implements Serializable {
     public Path getBasePath() {
         return basePath;
     }
-
-    /**
-     * Get the directory where all images are saved
-     *
-     * @return
-     */
-    public Path getImagePath() {
-        return getBasePath().resolve("images");
-    }
-
-    /**
-     * Get the directory where all books are saved
-     *
-     * @return
-     */
-    public Path getBookPath() {
-        return getBasePath().resolve("books");
-    }
 }

@@ -42,7 +42,7 @@ public class UserServiceIntegrationTest {
     @EJB
     private AuthenticatedUser authenticatedUser;
 
-    @Deployment(testable = true)
+    @Deployment(testable = false)
     public static WebArchive createWebDeployment(){
 
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
@@ -62,17 +62,15 @@ public class UserServiceIntegrationTest {
 
     @Test
     public void thatUserCanBeSavedWithNoRights() throws Exception{
-        User user = createUser();
+        User user = new User("test@test.de", "strongPW");
+        user.getUserRoles().add(new UserRole("user"));
 
         userService.saveUser(user);
     }
 
+    @Test
+    public void thatUserEmailCanBeCheckedWithNoRights() throws Exception{
 
-
-
-    private User createUser(){
-        User user = new User("test@test.de", "strongPW");
-        user.getUserRoles().add(new UserRole("user"));
-        return user;
+        userService.checkIfEmailIsAlreadyRegistered("test@test.de");
     }
 }

@@ -35,15 +35,5 @@ public class CurrentBookBeanDeleteTest {
         Mockito.verify(currentBookBean.getBookService(), Mockito.times(1)).removeBook(bookInstance);
     }
 
-    @Test
-    public void ifFilesAreDeleted() throws IOException {
-        CurrentBookBean currentBookBean = currentBookBeanFactory.createCurrentBookMock();
-        Book bookInstance = bookFixture.createBookMock();
-        Mockito.when(bookInstance.getData()).thenReturn(bookFixture.createDataFileLocation());
-        currentBookBean.setCurrentBook(bookInstance);
-        currentBookBean.deleteBook();
-        DataFileLocation data = currentBookBean.getCurrentBook().getData();
-        Assert.assertFalse(Files.exists(Paths.get(data.getFullFilePath())));
-        Assert.assertFalse(Files.exists(Paths.get(data.getFullImagePath())));
-    }
+
 }

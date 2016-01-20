@@ -2,10 +2,12 @@ package de.schoderer.bookstore.services;
 
 import de.schoderer.bookstore.db.interfaces.BookPersistence;
 import de.schoderer.bookstore.domain.book.Book;
+import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.domain.book.Tag;
 import de.schoderer.bookstore.testUtils.TestFileRule;
 import de.schoderer.bookstore.testUtils.web.MockPart;
 import de.schoderer.bookstore.testUtils.web.model.BookFixture;
+import de.schoderer.bookstore.web.model.CurrentBookBean;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -18,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -121,5 +124,17 @@ public class BookServiceTest {
         Assert.assertNotNull(path);
         Assert.assertTrue("Book-file should exist", Files.exists(path));
         Assert.assertTrue(FileUtils.contentEquals(bookFile, path.toFile()));
+    }
+
+    @Test
+    public void ifFilesAreDeleted() throws IOException {
+        Book bookInstance = bookFixture.createBookMock();
+        Mockito.when(bookInstance.getData()).thenReturn(bookFixture.createDataFileLocation());
+        DataFileLocation data = bookInstance.getData();
+
+        service.removeBook(bookInstance);
+
+        Assert.assertFalse("Files werent deleted",Files.exists(Paths.get(data.getFullFilePath())));
+        Assert.assertFalse("Files werent deleted",Files.exists(Paths.get(data.getFullImagePath())));
     }
 }

@@ -30,7 +30,7 @@ public class CurrentBookBeanUploadTest {
     public static void setUp() {
         bean = new CurrentBookBean();
     }
-
+    //TODO
     @Test
     public void ifUploadAndSaveFileReturnsRightDataFileLocation() throws IOException {
         bean.doSetCurrentBook();
