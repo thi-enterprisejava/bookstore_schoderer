@@ -63,7 +63,20 @@
 				\includegraphics[width=0.8\textwidth]{Images/database.png}
 				\label{fig2}
 			\end{center}
-		
+		\begin{description}
+			\item[Book] \hfill \\
+				In der Tabelle Book  werden die Informationen zu einem Buch gespeichert
+				\item[DataFileLocation] \hfill \\
+				In der Tabelle DataFileLocation  wird der Speicherort der Dateien auf dem Filesystem festgehalten sowie der Name der Dateien. Die Tabelle DataFileLocation steht in einer 1-zu-1-Beziehung zur Tabelle Book
+				\item[Tag]\hfill \\
+				In dieser Tabelle werden die Tags zu den Büchern gespeichert. Zwischen der Tabelle Tags und der Tabelle Book besteht eine n-zu-m-Beziehung, weshalb die Tags zu den Büchern über die Tabelle Book_Tag verwaltet werden
+				\item[Book_Tag]\hfill \\
+				Diese Tabelle ist eine Mapping-Tabelle zwischen Book und Tag
+				\item[User]\hfill \\
+				In dieser Tabelle werden die Daten der registierten Benutzer der Anwendung gespeichert
+				\item[UserRole]\hfill \\
+				Die UserRole-Tabelle ordnet jedem Benutzer in der User-Tabelle eine oder mehrere Rollen zu
+		\end{description}
 			
 		
 		
