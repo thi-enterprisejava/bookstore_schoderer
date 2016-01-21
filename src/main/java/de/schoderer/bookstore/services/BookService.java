@@ -64,10 +64,7 @@ public class BookService implements Serializable {
      */
     @PermitAll
     public Book fetchBookByID(long id) {
-        if (id > 1) {
             return persistence.fetchBookByID(id);
-        }
-        throw new IllegalArgumentException("Book-id must be greater than 0");
     }
 
     /**
