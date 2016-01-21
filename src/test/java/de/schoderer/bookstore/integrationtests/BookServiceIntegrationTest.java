@@ -1,4 +1,4 @@
-package de.schoderer.bookstore.services;
+package de.schoderer.bookstore.integrationtests;
 
 import de.schoderer.bookstore.db.BasicPersistence;
 import de.schoderer.bookstore.db.interfaces.BookPersistence;
@@ -6,6 +6,8 @@ import de.schoderer.bookstore.db.interfaces.impls.BookPersistenceImpl;
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.domain.book.Tag;
+import de.schoderer.bookstore.services.BookService;
+import de.schoderer.bookstore.services.Configuration;
 import de.schoderer.bookstore.testUtils.AuthenticatedUser;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;

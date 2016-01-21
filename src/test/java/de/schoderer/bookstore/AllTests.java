@@ -1,8 +1,11 @@
 package de.schoderer.bookstore;
 
-import de.schoderer.bookstore.services.BookServiceIntegrationTest;
+import de.schoderer.bookstore.integrationtests.BookServiceIntegrationTest;
+import de.schoderer.bookstore.integrationtests.UserServiceIntegrationTest;
 import de.schoderer.bookstore.services.BookServiceTest;
-import de.schoderer.bookstore.services.UserServiceIntegrationTest;
+import de.schoderer.bookstore.services.UserServiceTest;
+import de.schoderer.bookstore.utils.validator.EmailValidatorCorrectEmailsTest;
+import de.schoderer.bookstore.utils.validator.EmailValidatorIncorrectEmailsTest;
 import de.schoderer.bookstore.utils.validator.EmailValidatorTest;
 import de.schoderer.bookstore.utils.validator.upload.BookUploadValidatorTest;
 import de.schoderer.bookstore.utils.validator.upload.PictureUploadValidatorTest;
@@ -26,11 +29,14 @@ import org.junit.runners.Suite;
 
         //ValidatorTests
         EmailValidatorTest.class,
+        EmailValidatorCorrectEmailsTest.class,
+        EmailValidatorIncorrectEmailsTest.class,
         BookUploadValidatorTest.class,
         PictureUploadValidatorTest.class,
 
         //ServiceTests
         BookServiceTest.class,
+        UserServiceTest.class,
 
 
         //IntegrationTests (longrunning...)

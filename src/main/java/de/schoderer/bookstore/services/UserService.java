@@ -5,13 +5,11 @@ import de.schoderer.bookstore.domain.security.User;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.io.Serializable;
 
 /**
  * Created by Michael Schoderer on 20.01.2016.
  */
-@Named
 @Stateless
 public class UserService implements Serializable {
     @Inject
@@ -35,5 +33,13 @@ public class UserService implements Serializable {
      */
     public boolean checkIfEmailIsAlreadyRegistered(String email) {
         return persistence.checkIfEmailIsAlreadyRegistered(email);
+    }
+
+    public UserPersistence getPersistence() {
+        return persistence;
+    }
+
+    public void setPersistence(UserPersistence persistence) {
+        this.persistence = persistence;
     }
 }

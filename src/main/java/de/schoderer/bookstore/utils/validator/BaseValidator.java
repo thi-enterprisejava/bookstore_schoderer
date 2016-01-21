@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
  */
 public abstract class BaseValidator implements Validator, Serializable {
     private ResourceBundle bundle;
-    private UIComponent component;
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
@@ -25,7 +24,6 @@ public abstract class BaseValidator implements Validator, Serializable {
             Locale loc = context.getViewRoot().getLocale();
             bundle = ResourceBundle.getBundle(context.getApplication().getMessageBundle(), loc);
         }
-        this.component = component;
         validation(value, messages);
         if (!messages.isEmpty()) {
             throw new ValidatorException(messages);
@@ -48,7 +46,4 @@ public abstract class BaseValidator implements Validator, Serializable {
         this.bundle = bundle;
     }
 
-    public UIComponent getComponent() {
-        return component;
-    }
 }

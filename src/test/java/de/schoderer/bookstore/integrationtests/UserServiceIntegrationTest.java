@@ -1,10 +1,11 @@
-package de.schoderer.bookstore.services;
+package de.schoderer.bookstore.integrationtests;
 
 import de.schoderer.bookstore.db.BasicPersistence;
 import de.schoderer.bookstore.db.interfaces.UserPersistence;
 import de.schoderer.bookstore.db.interfaces.impls.UserPersistenceImpl;
 import de.schoderer.bookstore.domain.security.User;
 import de.schoderer.bookstore.domain.security.UserRole;
+import de.schoderer.bookstore.services.UserService;
 import de.schoderer.bookstore.testUtils.AuthenticatedUser;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;

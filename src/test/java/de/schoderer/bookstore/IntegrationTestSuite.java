@@ -1,6 +1,6 @@
 package de.schoderer.bookstore;
 
-import de.schoderer.bookstore.services.IntegrationTest;
+import de.schoderer.bookstore.integrationtests.IntegrationTest;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
