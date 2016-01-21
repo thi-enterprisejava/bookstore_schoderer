@@ -27,6 +27,7 @@ public class CurrentBookBeanUploadTest {
     public static void setUp() {
         bean = new CurrentBookBean();
     }
+
     @Ignore
     @Test
     public void ifUploadAndSaveFileReturnsRightDataFileLocation() throws IOException {

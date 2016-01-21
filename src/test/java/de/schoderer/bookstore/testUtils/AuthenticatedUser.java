@@ -13,11 +13,11 @@ import java.util.concurrent.Callable;
 @PermitAll
 public class AuthenticatedUser {
 
-    public void execute(Callable statement) throws Exception{
+    public void execute(Callable statement) throws Exception {
         statement.call();
     }
 
-    public void run(Runnable runnable) throws Exception{
+    public void run(Runnable runnable) throws Exception {
         runnable.run();
     }
 

@@ -7,7 +7,6 @@ import de.schoderer.bookstore.domain.book.Tag;
 import de.schoderer.bookstore.testUtils.TestFileRule;
 import de.schoderer.bookstore.testUtils.web.MockPart;
 import de.schoderer.bookstore.testUtils.web.model.BookFixture;
-import de.schoderer.bookstore.web.model.CurrentBookBean;
 import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
@@ -134,7 +133,7 @@ public class BookServiceTest {
 
         service.removeBook(bookInstance);
 
-        Assert.assertFalse("Files werent deleted",Files.exists(Paths.get(data.getFullFilePath())));
-        Assert.assertFalse("Files werent deleted",Files.exists(Paths.get(data.getFullImagePath())));
+        Assert.assertFalse("Files werent deleted", Files.exists(Paths.get(data.getFullFilePath())));
+        Assert.assertFalse("Files werent deleted", Files.exists(Paths.get(data.getFullImagePath())));
     }
 }

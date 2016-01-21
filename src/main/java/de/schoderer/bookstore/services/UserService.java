@@ -3,12 +3,16 @@ package de.schoderer.bookstore.services;
 import de.schoderer.bookstore.db.interfaces.UserPersistence;
 import de.schoderer.bookstore.domain.security.User;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.Serializable;
 
 /**
  * Created by Michael Schoderer on 20.01.2016.
  */
+@Named
+@Stateless
 public class UserService implements Serializable {
     @Inject
     private UserPersistence persistence;

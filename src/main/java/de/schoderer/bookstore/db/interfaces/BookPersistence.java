@@ -2,7 +2,6 @@ package de.schoderer.bookstore.db.interfaces;
 
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.Tag;
-import de.schoderer.bookstore.utils.interceptor.TimeLogging;
 
 import java.io.Serializable;
 import java.util.List;

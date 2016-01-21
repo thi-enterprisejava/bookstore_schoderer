@@ -5,13 +5,11 @@ import de.schoderer.bookstore.db.interfaces.UserPersistence;
 import de.schoderer.bookstore.domain.security.User;
 
 import javax.ejb.Stateless;
-import javax.inject.Named;
 import javax.persistence.TypedQuery;
 
 /**
  * Created by michael on 22.12.15.
  */
-@Named
 @Stateless
 public class UserPersistenceImpl extends BasicPersistence implements UserPersistence {
     @Override

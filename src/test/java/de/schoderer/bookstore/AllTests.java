@@ -1,6 +1,8 @@
 package de.schoderer.bookstore;
 
+import de.schoderer.bookstore.services.BookServiceIntegrationTest;
 import de.schoderer.bookstore.services.BookServiceTest;
+import de.schoderer.bookstore.services.UserServiceIntegrationTest;
 import de.schoderer.bookstore.utils.validator.EmailValidatorTest;
 import de.schoderer.bookstore.utils.validator.upload.BookUploadValidatorTest;
 import de.schoderer.bookstore.utils.validator.upload.PictureUploadValidatorTest;
@@ -28,8 +30,12 @@ import org.junit.runners.Suite;
         PictureUploadValidatorTest.class,
 
         //ServiceTests
-        BookServiceTest.class
+        BookServiceTest.class,
 
+
+        //IntegrationTests (longrunning...)
+        UserServiceIntegrationTest.class,
+        BookServiceIntegrationTest.class
 })
 public class AllTests {
 }

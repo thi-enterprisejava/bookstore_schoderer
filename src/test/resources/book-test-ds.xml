@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<datasources xmlns="http://www.jboss.org/ironjacamar/schema"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://www.ironjacamar.org/doc/schema http://www.ironjacamar.org/doc/schema/datasources_1_1.xsd">
+<datasources
+        xmlns="http://www.jboss.org/ironjacamar/schema"
+>
     <!-- The datasource is bound into JNDI at this location. We reference this in META-INF/persistence.xml -->
     <datasource jndi-name="java:/BookStoreTestDS"
                 enabled="true"

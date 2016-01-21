@@ -7,14 +7,12 @@ import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.domain.book.Tag;
 import de.schoderer.bookstore.testUtils.AuthenticatedUser;
-import de.schoderer.bookstore.testUtils.web.model.BookFixture;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.formatter.Formatters;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -24,6 +22,7 @@ import org.junit.runner.RunWith;
 import javax.ejb.EJB;
 import javax.ejb.EJBAccessException;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Michael Schoderer on 20.01.2016.
@@ -33,8 +32,6 @@ import java.util.List;
 public class BookServiceIntegrationTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
-    @Rule
-    public BookFixture bookFixture = new BookFixture();
 
     @EJB
     private BookService bookService;
@@ -46,6 +43,7 @@ public class BookServiceIntegrationTest {
     public static WebArchive createWebDeployment() {
 
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
+                .addClass(IntegrationTest.class)
                 .addClass(BookService.class)
                 .addClass(BasicPersistence.class)
                 .addClass(BookPersistenceImpl.class)
@@ -56,40 +54,37 @@ public class BookServiceIntegrationTest {
                 .addClass(DataFileLocation.class)
                 .addClass(AuthenticatedUser.class)
                 .addAsResource("integration_persistence.xml", "META-INF/persistence.xml")
-                .addAsWebInfResource("ds.xml");
+                .addAsWebInfResource("book-test-ds.xml");
         System.out.println(archive.toString(Formatters.VERBOSE));
         return archive;
     }
-    @Ignore
+
     @Test
     public void thatBookCanBeSavedAsAuthenticatedUser() throws Exception {
-        authenticatedUser.execute(() -> {
-            Book book = bookFixture.createBookInstance();
+        authenticatedUser.run(() -> {
+            Book book = createABook();
 
             bookService.saveBook(book);
 
             List<Book> bookList = bookService.fetchAllBooksByTitle(book.getTitle());
             Assert.assertFalse(bookList.isEmpty());
             Assert.assertNotNull(bookList.get(0).getId());
-
-
-            return null;
         });
     }
-    @Ignore
+
     @Test
     public void thatBookCanNotBeSavedAsUnauthorizedUser() throws Exception {
-        Book book = bookFixture.createBookInstance();
+        Book book = createABook();
 
         exception.expect(EJBAccessException.class);
 
         bookService.saveBook(book);
     }
-    @Ignore
+
     @Test
     public void thatBookCanBeUpdatedAsAuthorizedUser() throws Exception {
-        authenticatedUser.execute(() -> {
-            Book book = bookFixture.createBookInstance();
+        authenticatedUser.run(() -> {
+            Book book = createABook();
             bookService.saveBook(book);
             Long id = book.getId();
             book.setTitle("HalooNeuesBuch");
@@ -100,43 +95,38 @@ public class BookServiceIntegrationTest {
             Assert.assertFalse(bookList.isEmpty());
             Assert.assertEquals(id, bookList.get(0).getId());
 
-            return null;
         });
     }
-    @Ignore
+
     @Test
     public void thatBookCanNotBeUpdatedAsUnAuthorizedUser() throws Exception {
-        Book book = bookFixture.createBookInstance();
+        Book book = createABook();
 
         exception.expect(EJBAccessException.class);
 
         bookService.updateBook(book);
     }
-    @Ignore
+
     @Test
     public void thatBookCanBeDeletedAsAuthorizedUser() throws Exception {
-        Book book = bookFixture.createBookInstance();
+        Book book = createABook();
         book.setData(null);
-        authenticatedUser.execute(() -> {
+        authenticatedUser.run(() -> {
             bookService.saveBook(book);
 
             bookService.removeBook(book);
 
-
-        List<Book> list = bookService.fetchAllBooksByTitle(book.getTitle());
-
-        Assert.assertTrue(list.isEmpty());
-            return null;
+            List<Book> list = bookService.fetchAllBooksByTitle(book.getTitle());
+            Assert.assertTrue(list.isEmpty());
         });
     }
-    @Ignore
+
     @Test
     public void thatBookCanNotBeDeletedAsUnAuthorizedUser() throws Exception {
-        Book book = bookFixture.createBookInstance();
+        Book book = createABook();
         book.setData(null);
-        authenticatedUser.execute(() -> {
+        authenticatedUser.run(() -> {
             bookService.saveBook(book);
-            return null;
         });
 
         exception.expect(EJBAccessException.class);
@@ -144,5 +134,9 @@ public class BookServiceIntegrationTest {
         bookService.removeBook(book);
     }
 
-
+    private Book createABook() {
+        Random random = new Random();
+        Book book = new Book("Test" + random.nextInt(), "TestAuthor" + random.nextInt(), "", 2015, "");
+        return book;
+    }
 }

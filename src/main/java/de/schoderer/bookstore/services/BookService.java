@@ -64,7 +64,7 @@ public class BookService implements Serializable {
      */
     @PermitAll
     public Book fetchBookByID(long id) {
-            return persistence.fetchBookByID(id);
+        return persistence.fetchBookByID(id);
     }
 
     /**
@@ -164,7 +164,7 @@ public class BookService implements Serializable {
         if (beginIndex < 0) {
             return fileName + "_" + Math.abs(random.nextLong());
         }
-        return fileName.substring(0, beginIndex - 1) + "_" + Math.abs(random.nextLong()) + fileName.substring(beginIndex);
+        return fileName.substring(0, beginIndex) + "_" + Math.abs(random.nextLong()) + fileName.substring(beginIndex);
     }
 
     /**
