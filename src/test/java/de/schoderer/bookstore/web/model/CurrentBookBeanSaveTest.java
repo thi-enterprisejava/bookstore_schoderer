@@ -43,7 +43,7 @@ public class CurrentBookBeanSaveTest {
         bean.setId(null);
         BookService service = Mockito.mock(BookService.class);
         Book book = bookFixture.createBookInstance();
-        Mockito.when(service.fetchBookByID(book.getId())).thenReturn(book);
+        Mockito.when(service.fetchBookById(book.getId())).thenReturn(book);
         bean.setBookService(service);
         bean.setId(book.getId());
 

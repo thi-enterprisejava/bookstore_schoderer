@@ -3,6 +3,7 @@ package de.schoderer.bookstore.webservice.rest;
 import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.services.BookService;
 
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
@@ -11,11 +12,12 @@ import java.util.List;
 /**
  * Created by michael on 22.10.15.
  */
+
+@Stateless
 @Path("books")
 public class BooksRestApi {
     @Inject
     private BookService service;
-
 
     @GET
     @Produces("application/json")

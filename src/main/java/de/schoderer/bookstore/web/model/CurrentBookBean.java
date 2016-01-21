@@ -51,7 +51,7 @@ public class CurrentBookBean implements Serializable {
         if (id == null || id < 0) {
             currentBook = new Book();
         } else {
-            currentBook = bookService.fetchBookByID(id);
+            currentBook = bookService.fetchBookById(id);
             id = null;
         }
     }

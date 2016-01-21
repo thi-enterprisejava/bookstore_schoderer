@@ -23,6 +23,8 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Mockito.times;
+
 /**
  * Created by Michael Schoderer on 20.01.2016.
  */
@@ -85,9 +87,6 @@ public class BookServiceTest {
         Mockito.when(configuration.getBasePath()).thenReturn(path);
     }
 
-    /**************************
-     * Tags test
-     */
 
     @Test
     public void ifTagsAreSavedIfNotAlreadInDatabase() throws IOException {
@@ -97,7 +96,7 @@ public class BookServiceTest {
         Tag tag = new Tag("BOOK");
         book.getTags().add(tag);
         service.persistTagsIfNotAlreadyInDatabase(book);
-        Mockito.verify(service.getPersistence(), Mockito.times(1)).saveTag(tag);
+        Mockito.verify(service.getPersistence(), times(1)).saveTag(tag);
     }
 
     @Test
@@ -108,7 +107,7 @@ public class BookServiceTest {
         Tag tag = new Tag("TEST");
         book.getTags().add(tag);
         service.persistTagsIfNotAlreadyInDatabase(book);
-        Mockito.verify(service.getPersistence(), Mockito.times(0)).saveTag(tag);
+        Mockito.verify(service.getPersistence(), times(0)).saveTag(tag);
     }
 
     @Test
@@ -135,5 +134,51 @@ public class BookServiceTest {
 
         Assert.assertFalse("Files werent deleted", Files.exists(Paths.get(data.getFullFilePath())));
         Assert.assertFalse("Files werent deleted", Files.exists(Paths.get(data.getFullImagePath())));
+    }
+
+    @Test
+    public void ifFetchAllFromPersistenceIsCalled() {
+
+        service.fetchAllBooks();
+
+        Mockito.verify(service.getPersistence(), times(1)).fetchAllBooks();
+    }
+
+    @Test
+    public void ifFetchWithTitleFromPersistenceIsCalled() {
+        String testTitle = "TestTitle";
+
+        service.fetchAllBooksByTitle(testTitle);
+
+        Mockito.verify(service.getPersistence(), times(1)).fetchAllBooksByTitle(testTitle);
+    }
+
+    @Test
+    public void ifFetchWithIdFromPersistenceIsCalled() {
+        long id = 345L;
+
+        service.fetchBookById(id);
+
+        Mockito.verify(service.getPersistence(), times(1)).fetchBookByID(id);
+    }
+
+    @Test
+    public void ifBookIsSaved() throws IOException {
+        Book bookInstance = bookFixture.createBookMock();
+        Mockito.when(bookInstance.getData()).thenReturn(bookFixture.createDataFileLocation());
+
+        service.saveBook(bookInstance);
+
+        Mockito.verify(service.getPersistence(), times(1)).saveBook(bookInstance);
+    }
+
+    @Test
+    public void ifBookIsUpdated() throws IOException {
+        Book bookInstance = bookFixture.createBookMock();
+        Mockito.when(bookInstance.getData()).thenReturn(bookFixture.createDataFileLocation());
+
+        service.updateBook(bookInstance);
+
+        Mockito.verify(service.getPersistence(), times(1)).updateBook(bookInstance);
     }
 }

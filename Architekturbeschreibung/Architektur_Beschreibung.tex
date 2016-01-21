@@ -5,33 +5,59 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage[ngerman]{babel}
 
-\usepackage[left=0.50cm, right=0.50cm, top=0.50cm, bottom=0.50cm]{geometry}
+\usepackage[left=1.50cm, right=1.50cm, top=1.50cm, bottom=1.50cm]{geometry}
 \author{Michael Schoderer}
 \title{Architektur-Beschreibung: Bookstore}
+\date{19 Januar 2016}
+
 \begin{document}
-	\chapter{Bookstore}
-	\section{Beschreibung}
+	\maketitle	
+	\begin{minipage}{\textwidth}
+		\vfill
+		\tableofcontents
+			\listoffigures
+	\end{minipage}
+
+	
+	
+	
+	\chapter{Allgemeines}
+	\section{Beschreibung der Anwendung}
 	Die Java-EE Anwendung 'Bookstore' wurde für die Vorlesung Implementierung von Informationssystemen an der Technischen Hochschule Ingolstadt entwickelt und ermöglicht das Speichern und Verwalten von Dokumenten (PDF, MOBI, TXT, ...).\\
 	\\
 	Die Anwendung ist unter der folgenden URL erreichbar: \url{http://mschoderer.de:8080/bookStore}
+	
 	\section{Architektur der Anwendung}
-	\subsection{Übersicht}
 	Bei der Konzeption und Entwicklung wurde die Anwendung in die im folgenden aufgelisteten Schichten unterteilt:
 	\begin{itemize}
 		\item \textbf{GUI} Die Oberfläche wurde mithilfe von JavaServer Faces (JSF) umgesetzt. Bei der Gestaltung der Oberfläche wurden Templates eingesetzt, damit ein einheitliches Bild der einzelnen Webseiten gewährleistet werden kann
 		\item \textbf{Geschäftslogik} Die Geschäftslogik wurde unabhängig von der graphischen Oberfläche entwickelt, um eine Trennung nach dem MVC-Model zu erreichen
 		\item \textbf{Datenbank} Die Datenbankschicht wurde durch mehrere Interfaces gekapselt und stellt die benötigten Funktionen bereit, um die Domain-Objekte zu in die jeweilige Datenbank zu persistieren		
-		\end{itemize}
+		\end{itemize}	
 		
+		\let\cleardoublepage\clearpage
+	\chapter{Komponenten}
+	Die nachfolgende Abbildung \ref{componentDiagramm} stellt die Komponenten der Anwendung und deren Beziehungen zueinander da.
+	
+		\begin{figure}[ht]
+			\centering
+			\includegraphics[width=0.70\textwidth]{Images/ComponentDiagram.png}
+			\label{componentDiagramm}			
+			\caption[Darstellung der Komponenten]{Darstellung der Komponenten}		
+		\end{figure}
+		\let\cleardoublepage\clearpage	
+		\chapter{Package-Struktur}
+		Die folgende Abbildung \ref{packageStructur} zeigt die Struktur der Packages der Anwendung.
+		\vspace{1cm}		
+		\begin{figure}[ht]
+			\centering
+			\includegraphics[width=1\textwidth]{Images/package.png}
+			\label{packageStructur}			
+			\caption[Packetstrukturdiagramm]{Darstellung der Packetstruktur der Anwendung}		
+		\end{figure}\\
 		
-		
-		
-		\subsection{Package-Struktur}
-		\begin{center}
-		\includegraphics[width=1\textwidth]{Images/package.png}
-		\label{fig1}
-	\end{center}
 	\underline{\textbf{Beschreibung der Packages}}
 		\begin{description}
 			\item[bookstore] \hfill \\
@@ -58,26 +84,36 @@
 		Hier befinden sich die Klassen, die benötigt werden um die SOAP-API der Anwendung bereitzustellen
 		\end{description}
 		
-		\subsection{Datenbank}
-			\begin{center}
-				\includegraphics[width=0.8\textwidth]{Images/database.png}
-				\label{fig2}
-			\end{center}
+		\chapter{Datenbank}
+		\vspace{1cm}
+		
+		\begin{figure}[ht]
+			\centering
+			\includegraphics[width=0.8\textwidth]{Images/database.png}
+			\caption[Datenbankdiagram]{Modell der Datenbank der Anwendung}
+			\label{database}
+		\end{figure}
+		
 		\begin{description}
-			\item[Book] \hfill \\
-				In der Tabelle Book  werden die Informationen zu einem Buch gespeichert
-				\item[DataFileLocation] \hfill \\
-				In der Tabelle DataFileLocation  wird der Speicherort der Dateien auf dem Filesystem festgehalten sowie der Name der Dateien. Die Tabelle DataFileLocation steht in einer 1-zu-1-Beziehung zur Tabelle Book
-				\item[Tag]\hfill \\
-				In dieser Tabelle werden die Tags zu den Büchern gespeichert. Zwischen der Tabelle Tags und der Tabelle Book besteht eine n-zu-m-Beziehung, weshalb die Tags zu den Büchern über die Tabelle Book_Tag verwaltet werden
-				\item[Book_Tag]\hfill \\
-				Diese Tabelle ist eine Mapping-Tabelle zwischen Book und Tag
-				\item[User]\hfill \\
+			\item[\underline{$Book$}] \hfill \\
+				In der Tabelle $Boo$k  werden die Informationen zu einem Buch gespeichert
+			\item[\underline{$DataFileLocation$}] \hfill \\
+			In der Tabelle $DataFileLocation$  wird der Speicherort der Dateien auf dem Filesystem festgehalten sowie der Name der Dateien. Die Tabelle DataFileLocation steht in einer 1-zu-1-Beziehung zur Tabelle $Book$
+			\item[\underline{$Tag$}]\hfill \\
+				In dieser Tabelle werden die Tags zu den Büchern gespeichert. Zwischen der Tabelle Tags und der Tabelle Book besteht eine n-zu-m-Beziehung, weshalb die Tags zu den Büchern über die Tabelle $Book\_Tag$ verwaltet werden
+				\item[\underline{$Book\_Tag$}]\hfill \\
+				Diese Tabelle ist eine Mapping-Tabelle zwischen $Book$ und $Tag$
+				\item[\underline{$User$}]\hfill \\
 				In dieser Tabelle werden die Daten der registierten Benutzer der Anwendung gespeichert
-				\item[UserRole]\hfill \\
-				Die UserRole-Tabelle ordnet jedem Benutzer in der User-Tabelle eine oder mehrere Rollen zu
+				\item[\underline{$UserRole$}]\hfill \\
+				Die $UserRole$-Tabelle ordnet jedem Benutzer in der $User$-Tabelle eine oder mehrere Rollen zu
 		\end{description}
-			
+		\chapter{Webservices}
+		Die beiden Webservices der Anwendung erlauben Zugriff auf die CRUD-Methoden zum Erstellen, Bearbeiten, Lesen und Löschen eines Buches. Die Webservices greifen direkt auf die Klasse $BookService$ der Geschäftslogik zu.
+		\section{REST-API}
+		Die REST-API ist unter \href{http://mschoderer.de:8080/bookStore/api/rest/books}{http://mschoderer.de:8080/bookStore/api/rest/books} erreichbar und bietet über die für REST typischen HTTP-Methoden (GET, POST, PUT, DELETE) zugriff auf die Anwendung. Für die Serialisierung der Objekte verwendet die Schnittstelle das JSON-Format.
+		\section{SOAP-API}
+		Die wsdl-File für die SOAP-API kann unter \href{http://mschoderer.de:8080/bookStore/BooksSoapApi?wsdl}{http://mschoderer.de:8080/bookStore/BooksSoapApi?wsdl} erhalten werden.
 		
 		
 \end{document}

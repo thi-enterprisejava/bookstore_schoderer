@@ -63,7 +63,7 @@ public class BookService implements Serializable {
      * @return Book with the given id
      */
     @PermitAll
-    public Book fetchBookByID(long id) {
+    public Book fetchBookById(long id) {
         return persistence.fetchBookByID(id);
     }
 
