@@ -32,6 +32,7 @@ public class SearchBean implements Serializable {
 
     public String doSearch() {
         searchResults = bookService.fetchAllBooksByTitle(search);
+        search = "";
         return navBean.switchPage(Pages.LIST);
     }
 

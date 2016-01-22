@@ -22,6 +22,7 @@
                                             <f:validator binding="#{emailValidator}"/>
                                         </h:inputText>
                                         <label for="email" class="active">#{msg['login.email']}</label>
+                                        <h:message for="email" style="font-size: small; color: red"/>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -33,6 +34,7 @@
                                             <f:validateLength minimum="5" maximum="20"/>
                                         </h:inputSecret>
                                         <label for="password" class="active">#{msg['login.password']}</label>
+                                        <h:message for="password" style="font-size: small; color: red"/>
                                     </div>
                                 </div>
                             </div>

@@ -22,7 +22,6 @@ import org.junit.runners.Suite;
         CurrentBookBeanSaveTest.class,
         CurrentBookBeanTagTests.class,
         CurrentBookBeanDeleteTest.class,
-        CurrentBookBeanUploadTest.class,
         PageSwitcherBeanTest.class,
         SearchBeanTest.class,
         UserRegistrationBeanTest.class,
@@ -39,7 +38,7 @@ import org.junit.runners.Suite;
         UserServiceTest.class,
 
 
-        //IntegrationTests (longrunning...)
+        //IntegrationTests (long running...)
         UserServiceIntegrationTest.class,
         BookServiceIntegrationTest.class
 })

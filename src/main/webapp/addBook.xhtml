@@ -27,6 +27,7 @@
                             <f:validateLength minimum="3"/>
                         </h:inputText>
                         <label for="bookName" class="black-text">#{msg['add.booktitle']}</label>
+                        <h:message for="bookName" style="font-size: small; color: red"/>
                     </div>
                 </div>
                 <div class="row center detailPane">
@@ -38,6 +39,7 @@
                             <f:validateLength minimum="3"/>
                         </h:inputText>
                         <label for="authorName" class="black-text">#{msg['common.author']}</label>
+                        <h:message for="authorName" style="font-size: small; color: red"/>
                     </div>
                 </div>
                 <div class="row center detailPane">
@@ -51,6 +53,7 @@
                                 <f:validateLength minimum="3" maximum="1024"/>
                             </h:inputTextarea>
                             <label for="textarea1" class="black-text">#{msg['add.description']}</label>
+                            <h:message for="textarea1" style="font-size: small; color: red"/>
                         </div>
                     </div>
                     <div class="row center">
@@ -65,6 +68,7 @@
                                                      maximum="3000"/>
                             </h:inputText>
                             <label for="year" class="black-text">#{msg['add.publishedYear']}</label>
+                            <h:message for="year" style="font-size: small; color: red"/>
                         </div>
                         <div class="input-field col s3 ">
                             <i class="material-icons prefix">input</i>
@@ -72,12 +76,14 @@
                                          value="#{currentBookBean.currentBook.isbn}" name="#{msg['details.isbn']}">
                             </h:inputText>
                             <label for="isbn" class=" black-text">#{msg['details.isbn']}</label>
+                            <h:message for="isbn" style="font-size: small; color: red"/>
                         </div>
                         <h:panelGroup id="addTagGroup" styleClass="input-field col s4">
                             <i class="material-icons prefix">queue</i>
                             <h:inputText id="toAddTag" type="text" class="black-text" name="#{msg['add.tags']}"
                                          value="#{currentBookBean.tagName}"/>
                             <label for="toAddTag" class=" black-text">#{msg['add.tags']}</label>
+                            <h:message for="toAddTag" style="font-size: small; color: red"/>
                         </h:panelGroup>
                         <h:panelGroup styleClass="col s1">
                             <h:commandLink id="searchIcon"
@@ -111,10 +117,12 @@
                                                  styleClass="imagesOnlyMax6MB" name="#{msg['add.imageUpload']}">
                                         <f:validator validatorId="pictureUploadValidator"/>
                                     </h:inputFile>
+
                                 </div>
                                 <div class="file-path-wrapper">
                                     <input class="file-path" type="text"/>
                                 </div>
+                                <h:message for="imageFile" style="font-size: small; color: red"/>
                             </div>
                         </div>
 
@@ -131,6 +139,7 @@
                                 <div class="file-path-wrapper">
                                     <input class="file-path" type="text"/>
                                 </div>
+                                <h:message for="bookFile" style="font-size: small; color: red"/>
                             </div>
                         </div>
                     </div>

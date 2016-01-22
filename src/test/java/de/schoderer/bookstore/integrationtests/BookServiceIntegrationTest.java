@@ -85,19 +85,18 @@ public class BookServiceIntegrationTest {
 
     @Test
     public void thatBookCanBeUpdatedAsAuthorizedUser() throws Exception {
+        Book book = createABook();
+        final String newBookTitle = "HalooNeuesBuch";
+
         authenticatedUser.run(() -> {
-            Book book = createABook();
             bookService.saveBook(book);
-            Long id = book.getId();
-            book.setTitle("HalooNeuesBuch");
 
+            book.setTitle(newBookTitle);
             bookService.updateBook(book);
-
-            List<Book> bookList = bookService.fetchAllBooksByTitle(book.getTitle());
-            Assert.assertFalse(bookList.isEmpty());
-            Assert.assertEquals(id, bookList.get(0).getId());
-
         });
+
+        List<Book> bookList = bookService.fetchAllBooksByTitle(newBookTitle);
+        Assert.assertFalse(bookList.isEmpty());
     }
 
     @Test

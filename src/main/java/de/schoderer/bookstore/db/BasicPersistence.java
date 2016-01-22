@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class BasicPersistence {
 
-    @PersistenceContext
+    @PersistenceContext(name = "primary")
     private javax.persistence.EntityManager em;
 
 

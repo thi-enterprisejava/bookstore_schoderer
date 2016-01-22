@@ -181,4 +181,5 @@ public class BookServiceTest {
 
         Mockito.verify(service.getPersistence(), times(1)).updateBook(bookInstance);
     }
+
 }

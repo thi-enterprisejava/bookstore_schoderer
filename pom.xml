@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.schoderer</groupId>
     <artifactId>bookstore</artifactId>
-    <version>0.1</version>
+    <version>0.2</version>
     <packaging>war</packaging>
     <dependencies>
         <dependency>
@@ -63,7 +63,7 @@
         </dependency>
     </dependencies>
     <build>
-        <finalName>bookStore</finalName>
+        <finalName>bookstore</finalName>
         <plugins>
             <!-- You need the maven dependency plugin to download locally a zip with the server, unless you provide your own, it will download under the /target directory -->
             <plugin>

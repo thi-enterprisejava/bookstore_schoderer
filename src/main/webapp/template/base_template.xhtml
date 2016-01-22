@@ -23,14 +23,23 @@
             <div class="nav-wrapper container">
                 <a id="logo-container" href="#{pageSwitcherBean.switchPage('INDEX')}"
                    class="brand-logo fancyTitleFont">BookStore</a>
-                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a
                             href="#{pageSwitcherBean.switchPage('INDEX')}">#{msg['common.search']}</a></li>
                     <li><h:commandLink
                             action="#{searchBean.fetchAllBooks()}">#{msg['common.all']}</h:commandLink></li>
-                    <li><a
-                            href="#{pageSwitcherBean.switchPage('ADD')}">#{msg['common.add']}</a></li>
+                    <li>
+                        <h:panelGroup rendered="#{empty request.remoteUser}">
+                            <a
+                                    href="#{pageSwitcherBean.switchPage('ADD')}">#{msg['login.login']}</a>
+
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{not empty request.remoteUser}">
+                            <a
+                                    href="#{pageSwitcherBean.switchPage('ADD')}">#{msg['common.add']}</a>
+
+                        </h:panelGroup>
+                    </li>
                     <h:panelGroup rendered="#{not empty request.remoteUser}">
                         <li><h:commandLink
                                 action="#{userRegistrationBean.logout()}">#{msg['login.logout']}</h:commandLink></li>
@@ -39,13 +48,7 @@
             </div>
         </h:form>
     </nav>
-    <h:panelGroup styleClass="container" rendered="#{! empty facesContext.maximumSeverity}">
-        <div class="col s12">
-            <div class="row center detailPane">
-                <h:messages style="color:red;margin:8px;" layout="list"/>
-            </div>
-        </div>
-    </h:panelGroup>
+
 
     <ui:insert name="body">
         Couldn't insert body....
