@@ -131,6 +131,11 @@ public class CurrentBookBean implements Serializable {
         }
     }
 
+    /**
+     * Deletes the currently selected book
+     *
+     * @return address of index page
+     */
     public String deleteBook() {
         bookService.removeBook(currentBook);
         return pageSwitcher.switchPage(Pages.INDEX);

@@ -10,7 +10,6 @@ import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.Serializable;
@@ -25,7 +24,6 @@ import java.util.Random;
 /**
  * Created by Michael Schoderer on 20.01.2016.
  */
-@Named
 @Stateless
 public class BookService implements Serializable {
     private static final Logger LOG = Logger.getLogger(BookService.class);

@@ -31,10 +31,18 @@ public class UserRegistrationBean implements Serializable {
     private String password;
     private User newUser;
 
-    protected String hash256(String data) throws NoSuchAlgorithmException {
-        if (data == null || "".equals(data))
+    /**
+     * Hashes the given String to SHA-256, BASE64, UTF-8 (SHA-512 has currently problems with wildfly 9)
+     * => https://issues.jboss.org/browse/WFLY-4298
+     *
+     * @param password
+     * @return hashedString
+     * @throws NoSuchAlgorithmException
+     */
+    protected String hash256(String password) throws NoSuchAlgorithmException {
+        if (password == null || "".equals(password))
             return null;
-        return Util.createPasswordHash("SHA-256", "BASE64", "UTF-8", null, data);
+        return Util.createPasswordHash("SHA-256", "BASE64", "UTF-8", null, password);
 
     }
 

@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 /**
  * Created by Michael Schoderer on 15.12.2015.
  */
+// ManagedBean necassary, because Injection in validator bean is currently not possible otherwise
 //http://stackoverflow.com/questions/7572335/how-to-inject-in-facesvalidator-with-ejb-persistencecontext-inject-autow
 @ManagedBean
 @RequestScoped

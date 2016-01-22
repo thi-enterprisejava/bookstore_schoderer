@@ -4,6 +4,7 @@ import de.schoderer.bookstore.domain.book.Book;
 import de.schoderer.bookstore.domain.book.DataFileLocation;
 import de.schoderer.bookstore.domain.book.Tag;
 import de.schoderer.bookstore.testUtils.TestFileRule;
+import org.junit.Before;
 import org.mockito.Mockito;
 
 import java.io.File;
@@ -16,6 +17,11 @@ import java.util.Random;
  * Created by michael on 04.01.2016.
  */
 public class BookFixture extends TestFileRule {
+
+    @Before
+    public void setUp() throws Throwable {
+        super.before();
+    }
 
     public Book createBookMock() {
         return Mockito.mock(Book.class);

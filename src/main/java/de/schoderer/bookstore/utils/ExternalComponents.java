@@ -4,7 +4,7 @@ import javax.faces.application.FacesMessage;
 import java.io.Serializable;
 
 /**
- * Created by michael on 22.12.15.
+ * Created by Michael Schoderer on 22.12.15.
  */
 
 public interface ExternalComponents extends Serializable {

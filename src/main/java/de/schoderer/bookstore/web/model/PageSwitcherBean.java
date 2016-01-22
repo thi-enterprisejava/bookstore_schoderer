@@ -18,11 +18,23 @@ public class PageSwitcherBean implements Serializable {
     private Pages lastPage = Pages.INDEX;
     private Pages currentPage;
 
+    /**
+     * Returns the address of a Page from Pages
+     *
+     * @param pageString
+     * @return address
+     */
     public String switchPage(String pageString) {
         Pages page = Pages.valueOf(pageString);
         return switchPage(page);
     }
 
+    /**
+     * Returns the address of a Page from Pages
+     *
+     * @param page
+     * @return address
+     */
     public String switchPage(Pages page) {
         lastPage = currentPage;
         currentPage = page;
@@ -32,12 +44,22 @@ public class PageSwitcherBean implements Serializable {
         return getFileNameWithRedirect(page);
     }
 
+    /**
+     * Jumps one page backwards in the History
+     *
+     * @return address
+     */
     public String backwards() {
         String redirectToLastPage = getFileNameWithRedirect(lastPage);
         switchPage(lastPage);
         return redirectToLastPage;
     }
 
+    /**
+     * Adds the redirect extension for jsf to the page filename
+     *
+     * @return filename with redirect
+     */
     protected String getFileNameWithRedirect(Pages page) {
         return page.getFileName().concat(FACES_REDIRECT);
     }
