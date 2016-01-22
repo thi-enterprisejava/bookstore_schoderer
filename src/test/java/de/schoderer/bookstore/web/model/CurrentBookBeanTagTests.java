@@ -49,11 +49,12 @@ public class CurrentBookBeanTagTests {
     public void ifTagsAreNotAddedIfTagIsEmptyOrNull() throws IOException {
         CurrentBookBean currentBookBean = beanFactory.createCurrentBookMock();
         currentBookBean.doSetCurrentBook();
-        String[] tags = new String[]{"", null};
+        String[] tags = new String[]{"", null, " "};
         Stream.of(tags).forEach(currentBookBean::doAddTags);
         List<Tag> tagList = currentBookBean.getCurrentBook().getTags();
         Assert.assertFalse(tagList.contains(new Tag("")));
         Assert.assertFalse(tagList.contains(new Tag(null)));
+        Assert.assertFalse(tagList.contains(new Tag(" ")));
     }
 
     @Test

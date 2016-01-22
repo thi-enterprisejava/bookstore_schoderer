@@ -70,7 +70,7 @@ public class CurrentBookBean implements Serializable {
      * @param string
      */
     public void doAddTags(String string) {
-        if (string != null && !"".equals(string)) {
+        if (string != null && !"".equals(string.trim())) {
             Stream.of(string.split(","))
                     .map(String::toUpperCase)
                     .distinct()
